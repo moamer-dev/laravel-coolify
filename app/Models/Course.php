@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $guarded = [];
     protected $casts = [
-            'tags' => 'array',
-        ];
-    
-     public function creator()
+        'tags' => 'array',
+    ];
+
+    public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
     }

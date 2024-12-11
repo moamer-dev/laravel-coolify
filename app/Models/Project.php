@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
     protected $guarded = [];
     protected $casts = [
-            'tags' => 'array',
-        ];
+        'tags' => 'array',
+    ];
 
-     public function courses()
+    public function courses()
     {
         return $this->belongsToMany(Course::class, 'course_project');
     }
@@ -32,7 +33,7 @@ class Project extends Model
     {
         return $this->belongsTo(Currency::class);
     }
-    
+
     public function sections()
     {
         return $this->morphMany(Section::class, 'sectionable');
@@ -42,5 +43,4 @@ class Project extends Model
     {
         return $this->belongsToMany(Category::class);
     }
-
 }
