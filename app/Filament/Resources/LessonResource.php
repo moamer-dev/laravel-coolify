@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class LessonResource extends Resource
 {
@@ -23,44 +25,72 @@ class LessonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('section_id')
+                Forms\Components\select::make('section_id')
                     ->required()
-                    ->numeric(),
+                    ->searchable()
+                    ->preload()
+                    ->default(null)
+                    ->relationship('section', 'name'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('slug')
+                //     ->required()
+                //     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_preview')
                     ->required(),
                 Forms\Components\Toggle::make('has_video')
-                    ->required(),
-                Forms\Components\TextInput::make('video_source')
-                    ->required(),
+                    ->required()
+                    ->live()
+                    ->default(false)
+                    ->afterStateUpdated(function (callable $set, $state) {
+                        if ($state === false) {
+                            $set('video_source', null);
+                            $set('youtube_url', null);
+                            $set('vimeo_url', null);
+                            $set('file_path', null);
+                            $set('video_duration', null);
+                        }
+                    }),
+                Forms\Components\Select::make('video_source')
+                    ->required()
+                    ->options([
+                        'youtube' => 'YouTube',
+                        'vimeo' => 'Vimeo',
+                        'file' => 'File',
+                    ])
+                    ->default('free')
+                    ->label('Video Source')
+                    ->live()
+                    ->visible(fn(Get $get): bool => $get('has_video') === true),
                 Forms\Components\TextInput::make('youtube_url')
                     ->maxLength(255)
-                    ->default(null),
+                    ->default(null)
+                    ->label('YouTube URL')
+                    ->visible(fn(Get $get): bool => $get('video_source') === 'youtube'),
                 Forms\Components\TextInput::make('vimeo_url')
                     ->maxLength(255)
-                    ->default(null),
+                    ->default(null)
+                    ->label('Vimeo URL')
+                    ->visible(fn(Get $get): bool => $get('video_source') === 'vimeo'),
                 Forms\Components\TextInput::make('file_path')
                     ->maxLength(255)
-                    ->default(null),
-                Forms\Components\Textarea::make('content')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('duration')
-                    ->maxLength(255)
-                    ->default(null),
+                    ->default(null)
+                    ->label('File Path')
+                    ->visible(fn(Get $get): bool => $get('video_source') === 'file'),
                 Forms\Components\TextInput::make('video_duration')
                     ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('order')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                    ->default(null)
+                    ->label('Duration')
+                    ->visible(fn(Get $get): bool => $get('has_video') === true),
+                Forms\Components\Textarea::make('content')
+                    ->columnSpanFull(),
+                // Forms\Components\TextInput::make('order')
+                //     ->required()
+                //     ->numeric()
+                //     ->default(0),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);

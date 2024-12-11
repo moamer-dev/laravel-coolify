@@ -34,103 +34,103 @@ class CourseResource extends Resource
     {
         return $form
             ->schema([
-            Wizard::make([
-            Wizard\Step::make('Details')
-                ->description('Create a new course.')
-                ->schema([
-                    Section::make('Basic Information')
+                Wizard::make([
+                    Wizard\Step::make('Details')
+                        ->description('Create a new course.')
                         ->schema([
-                            Forms\Components\TextInput::make('name')
-                                ->label('Name')
-                                ->placeholder('Course Name')
-                                ->required()
-                                ->maxLength(255)
-                                ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                                    $slug = Str::slug($state);
-                                    $suffix = '';
+                            Section::make('Basic Information')
+                                ->schema([
+                                    Forms\Components\TextInput::make('name')
+                                        ->label('Name')
+                                        ->placeholder('Course Name')
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                            $slug = Str::slug($state);
+                                            $suffix = '';
 
-                                    // Check if the generated slug already exists in the database
-                                    while (DB::table('courses')->where('slug', $slug . $suffix)->exists()) {
-                                        // If it exists, append a numeric suffix
-                                        $suffix = '-' . ((int) $suffix + 1);
-                                    }
+                                            // Check if the generated slug already exists in the database
+                                            while (DB::table('courses')->where('slug', $slug . $suffix)->exists()) {
+                                                // If it exists, append a numeric suffix
+                                                $suffix = '-' . ((int) $suffix + 1);
+                                            }
 
-                                    $set('slug', $slug . $suffix);
-                                }),
-                            Forms\Components\TextInput::make('slug')
-                                ->required()
-                                ->maxLength(255)
-                                ->readOnly(),
-                            Forms\Components\TextInput::make('short_title')
-                                ->columnSpanFull()
-                                ->default(null),
-                            Forms\Components\Textarea::make('description')
-                                ->required()
-                                ->rows(10)
-                                ->minLength(2)
-                                ->autosize()
-                                ->columnSpanFull(),
-                            Forms\Components\Toggle::make('is_featured')
-                                ->required(),
-                            Forms\Components\Toggle::make('is_best_seller')
-                                ->required(),
+                                            $set('slug', $slug . $suffix);
+                                        }),
+                                    Forms\Components\TextInput::make('slug')
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->readOnly(),
+                                    Forms\Components\TextInput::make('short_title')
+                                        ->columnSpanFull()
+                                        ->default(null),
+                                    Forms\Components\RichEditor::make('description')
+                                        ->required()
+                                        //->rows(10)
+                                        //->minLength(2)
+                                        //->autosize()
+                                        ->columnSpanFull(),
+                                    Forms\Components\Toggle::make('is_featured')
+                                        ->required(),
+                                    Forms\Components\Toggle::make('is_best_seller')
+                                        ->required(),
                                 ])->columnSpan(1)->columns(2)->collapsible()->persistCollapsed(),
-                            
-                    Section::make('Metadata')
+
+                            Section::make('Metadata')
+                                ->schema([
+                                    Forms\Components\Select::make('projects')
+                                        ->label('Connected Projects')
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                        ->columnSpanFull()
+                                        ->relationship('projects', 'name'),
+                                    Forms\Components\Select::make('creator_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('creator.profile', 'firstname'),
+                                    Forms\Components\Select::make('level_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('level', 'name'),
+                                    Forms\Components\Select::make('categories')
+                                        ->label('Categories')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                        ->columnSpanFull()
+                                        ->relationship('categories', 'name'),
+
+                                    Forms\Components\TagsInput::make('tags')
+                                        ->columnSpanFull(),
+                                    Forms\Components\TextInput::make('duration')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\Select::make('status')
+                                        ->required()
+                                        ->options([
+                                            'draft' => 'Draft',
+                                            'published' => 'Published',
+                                            'unpublished' => 'Unpublished',
+                                        ])
+                                        ->default('draft')
+                                        ->label('Status')
+                                        ->reactive(),
+                                    Forms\Components\FileUpload::make('feature_image')
+                                        ->image()
+                                        ->columnSpanFull(),
+                                    Forms\Components\TextInput::make('promo_video')
+                                        ->maxLength(255)
+                                        ->columnSpanFull()
+                                        ->default(null),
+                                ])->columnSpan(1)->columns(2)->collapsible()->collapsible()
+                        ])->columns(2),
+                    Wizard\Step::make('Pricing')
+                        ->description('Set the pricing details for the course.')
                         ->schema([
-                            Forms\Components\Select::make('projects')
-                                ->label('Connected Projects')
-                                ->searchable()
-                                ->preload()
-                                ->multiple()
-                                ->columnSpanFull()
-                                ->relationship('projects', 'name'),
-                            Forms\Components\Select::make('creator_id')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->relationship('creator', 'id'),
-                            Forms\Components\Select::make('level_id')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->relationship('level', 'name'),
-                            Forms\Components\Select::make('categories')
-                                ->label('Categories')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->multiple()
-                                ->columnSpanFull()
-                                ->relationship('categories', 'name'),
-                           
-                            Forms\Components\TagsInput::make('tags')
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('duration')
-                                ->maxLength(255)
-                                ->default(null),
-                            Forms\Components\Select::make('status')
-                                ->required()
-                                ->options([
-                                    'draft' => 'Draft',
-                                    'published' => 'Published',
-                                    'unpublished' => 'Unpublished',
-                                ])
-                                ->default('draft')
-                                ->label('Status')
-                                ->reactive(),
-                            Forms\Components\FileUpload::make('feature_image')
-                                ->image()
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('promo_video')
-                                ->maxLength(255)
-                                ->columnSpanFull()
-                                ->default(null),
-                        ])->columnSpan(1)->columns(2)->collapsible()->collapsible()
-                ])->columns(2),
-                Wizard\Step::make('Pricing')
-                    ->description('Set the pricing details for the course.')
-                    ->schema([
                             Forms\Components\Select::make('price_type')
                                 ->live()
                                 ->required()
@@ -156,12 +156,12 @@ class CourseResource extends Resource
                                 ->numeric()
                                 ->default(null)
                                 ->prefix('$')
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\Select::make('currency_id')
                                 ->searchable()
                                 ->preload()
                                 ->relationship('currency', 'name')
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\Select::make('discount_type')
                                 ->live()
                                 ->options([
@@ -171,26 +171,130 @@ class CourseResource extends Resource
                                 ->default(null)
                                 ->label('Discount Type')
                                 ->reactive()
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\TextInput::make('discount_price')
                                 ->numeric()
                                 ->default(null)
-                            ->visible(fn (Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'fixed_amount'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'fixed_amount'),
                             Forms\Components\TextInput::make('discount_percentage')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'percentage'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'percentage'),
                             Forms\Components\TextInput::make('tax')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\TextInput::make('vat')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
-                          ])->columns(2),  
-                
-            ])->persistStepInQueryString()->submitAction(new HtmlString(Blade::render(<<<BLADE
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
+                        ])->columns(2),
+                    Wizard\Step::make('Curriculum')
+                        ->description('Create and organize the curriculum for the course.')
+                        ->schema([
+                            Forms\Components\Builder::make('sections')
+                                ->label('Sections')
+                                ->blocks([
+                                    Forms\Components\Builder\Block::make('section')
+                                        ->label('Section')
+                                        ->schema([
+                                            Forms\Components\TextInput::make('name')
+                                                ->label('Section Name')
+                                                ->live(onBlur: true)
+                                                ->required()
+                                                ->maxLength(255),
+                                            Forms\Components\Textarea::make('description')
+                                                ->label('Section Description')
+                                                ->maxLength(65535),
+                                            Forms\Components\Builder::make('lessons')
+                                                ->label('Lessons')
+                                                ->blocks([
+                                                    Forms\Components\Builder\Block::make('lesson')
+                                                        ->label('Lesson')
+                                                        ->schema([
+                                                            Forms\Components\TextInput::make('name')
+                                                                ->label('Lesson Name')
+                                                                ->live(onBlur: true)
+                                                                ->required()
+                                                                ->maxLength(255),
+                                                            // Forms\Components\TextInput::make('slug')
+                                                            //     ->label('Slug')
+                                                            //     ->maxLength(255)
+                                                            //     ->helperText('Leave empty to auto-generate from the name'),
+                                                            Forms\Components\Toggle::make('is_preview')
+                                                                ->required(),
+                                                            Forms\Components\Toggle::make('has_video')
+                                                                ->required()
+                                                                ->live()
+                                                                ->default(false)
+                                                                ->afterStateUpdated(function (callable $set, $state) {
+                                                                    if ($state === false) {
+                                                                        $set('video_source', null);
+                                                                        $set('youtube_url', null);
+                                                                        $set('vimeo_url', null);
+                                                                        $set('file_path', null);
+                                                                        $set('video_duration', null);
+                                                                    }
+                                                                }),
+                                                            Forms\Components\Select::make('video_source')
+                                                                ->required()
+                                                                ->options([
+                                                                    'youtube' => 'YouTube',
+                                                                    'vimeo' => 'Vimeo',
+                                                                    'file' => 'File',
+                                                                ])
+                                                                ->default('free')
+                                                                ->label('Video Source')
+                                                                ->live()
+                                                                ->visible(fn(Get $get): bool => $get('has_video') === true),
+                                                            Forms\Components\TextInput::make('youtube_url')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('YouTube URL')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'youtube'),
+                                                            Forms\Components\TextInput::make('vimeo_url')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('Vimeo URL')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'vimeo'),
+                                                            Forms\Components\TextInput::make('file_path')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('File Path')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'file'),
+                                                            Forms\Components\TextInput::make('video_duration')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('Duration')
+                                                                ->visible(fn(Get $get): bool => $get('has_video') === true),
+                                                            Forms\Components\Textarea::make('content')
+                                                                ->columnSpanFull(),
+                                                            Forms\Components\Toggle::make('is_active')
+                                                                ->required(),
+                                                        ])->label(function (?array $state): string {
+                                                            if ($state === null) {
+                                                                return 'Heading';
+                                                            }
+
+                                                            return $state['name'] ?? 'Untitled heading';
+                                                        }),
+                                                ])->blockNumbers(false)
+                                                ->collapsible()
+                                                ->reorderable()
+                                                ->cloneable(),
+                                        ])->label(function (?array $state): string {
+                                            if ($state === null) {
+                                                return 'Heading';
+                                            }
+
+                                            return $state['name'] ?? 'Untitled heading';
+                                        }),
+                                ])->blockNumbers(false)
+                                ->collapsible()
+                                ->reorderable(),
+                        ])->columns(1),
+
+                ])->persistStepInQueryString()->submitAction(new HtmlString(Blade::render(<<<BLADE
                 <x-filament::button
                     type="submit"
                     size="sm"
@@ -198,7 +302,7 @@ class CourseResource extends Resource
                     Submit
                 </x-filament::button>
             BLADE))),
-                    ])->columns(1);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -219,7 +323,12 @@ class CourseResource extends Resource
                 Tables\Columns\TextColumn::make('price_type'),
                 Tables\Columns\TextColumn::make('price')
                     ->money()
-                    ->sortable(),
+                    ->sortable()
+                    ->getStateUsing(function ($record) {
+                        return $record->price_type === 'free' ? 'Free' : $record->price;
+                    })
+                    ->badge(fn(string $state): bool => $state === 'Free')
+                    ->color(fn(string $state): string => $state === 'Free' ? 'success' : 'secondary'),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
@@ -230,7 +339,7 @@ class CourseResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-             ->filters([
+            ->filters([
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\TrashedFilter::make(),
             ])

@@ -24,21 +24,45 @@ class SectionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Section Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('order')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(0)
+                    ->required(),
                 Forms\Components\Textarea::make('description')
+                    ->label('Description')
+                    ->maxLength(65535)
+                    ->nullable()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('sectionable_id')
+                Forms\Components\Select::make('sectionable_type')
+                    ->label('Assign To')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('sectionable_type')
+                    ->options([
+                        'App\Models\Course' => 'Course',
+                        'App\Models\Project' => 'Project',
+                    ])
+                    ->reactive()
+                    ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
+
+                Forms\Components\Select::make('sectionable_id')
+                    ->label('Specific Course or Project')
                     ->required()
-                    ->maxLength(255),
+                    ->searchable()
+                    ->options(function ($get) {
+                        if ($get('sectionable_type') === 'App\Models\Course') {
+                            return \App\Models\Course::pluck('name', 'id');
+                        } elseif ($get('sectionable_type') === 'App\Models\Project') {
+                            return \App\Models\Project::pluck('name', 'id');
+                        }
+                        return [];
+                    })
+                    ->reactive(),
                 Forms\Components\Toggle::make('is_active')
+                    ->label('Active')
+                    ->default(true)
                     ->required(),
             ]);
     }
@@ -52,7 +76,8 @@ class SectionResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('sectionable_id')
+                Tables\Columns\TextColumn::make('sectionable.name')
+                    ->label('Course/Project')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sectionable_type')
