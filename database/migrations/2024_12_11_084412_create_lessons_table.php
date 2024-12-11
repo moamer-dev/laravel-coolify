@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id');
             $table->string('name');
-            $table->string('slug')->unique();
+            //$table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->boolean('is_preview')->default(false);
             $table->boolean('has_video')->default(true);
@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('vimeo_url')->nullable();
             $table->string('file_path')->nullable();
             $table->text('content')->nullable();
-            $table->string('duration')->nullable();
             $table->string('video_duration')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
@@ -32,7 +31,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
-                });
+        });
     }
 
     /**
