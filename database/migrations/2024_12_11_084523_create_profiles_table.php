@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('firstname');
-            $table->string('lastname');
             $table->unsignedBigInteger('country_id');
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
@@ -31,7 +29,6 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries');
-
         });
     }
 

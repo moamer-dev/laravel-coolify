@@ -11,26 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lessons', function (Blueprint $table) {
+        Schema::create('zaytonahs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('section_id');
             $table->string('name');
-            //$table->string('slug')->unique();
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->boolean('is_preview')->default(false);
+            $table->longText('content')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('is_free')->default(false);
             $table->boolean('has_video')->default(true);
             $table->enum('video_source', ['youtube', 'vimeo', 'file'])->nullable();
             $table->string('youtube_url')->nullable();
             $table->string('vimeo_url')->nullable();
             $table->string('file_path')->nullable();
-            $table->text('content')->nullable();
             $table->string('video_duration')->nullable();
             $table->integer('order')->default(0);
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->boolean('is_active')->default(false);
             $table->softDeletes();
-
-            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lessons');
+        Schema::dropIfExists('zaytonahs');
     }
 };
