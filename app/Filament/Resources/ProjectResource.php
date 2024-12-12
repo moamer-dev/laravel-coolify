@@ -24,109 +24,114 @@ use Filament\Forms\Components\Section;
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Courses';
+    protected static ?int $navigationSort = 2;
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-            Wizard::make([
-            Wizard\Step::make('Details')
-                ->description('Create a new project.')
-                ->schema([
-                    Section::make('Basic Information')
+                Wizard::make([
+                    Wizard\Step::make('Details')
+                        ->description('Create a new project.')
                         ->schema([
-                            Forms\Components\TextInput::make('name')
-                                ->label('Name')
-                                ->placeholder('Project Name')
-                                ->required()
-                                ->maxLength(255)
-                                ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                                    $slug = Str::slug($state);
-                                    $suffix = '';
+                            Section::make('Basic Information')
+                                ->schema([
+                                    Forms\Components\TextInput::make('name')
+                                        ->label('Name')
+                                        ->placeholder('Project Name')
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                            $slug = Str::slug($state);
+                                            $suffix = '';
 
-                                    // Check if the generated slug already exists in the database
-                                    while (DB::table('projects')->where('slug', $slug . $suffix)->exists()) {
-                                        // If it exists, append a numeric suffix
-                                        $suffix = '-' . ((int) $suffix + 1);
-                                    }
+                                            // Check if the generated slug already exists in the database
+                                            while (DB::table('projects')->where('slug', $slug . $suffix)->exists()) {
+                                                // If it exists, append a numeric suffix
+                                                $suffix = '-' . ((int) $suffix + 1);
+                                            }
 
-                                    $set('slug', $slug . $suffix);
-                                }),
-                            Forms\Components\TextInput::make('slug')
-                                ->required()
-                                ->maxLength(255)
-                                ->readOnly(),
-                            Forms\Components\TextInput::make('short_title')
-                                ->columnSpanFull()
-                                ->default(null),
-                            Forms\Components\Textarea::make('description')
-                                ->required()
-                                ->rows(10)
-                                ->minLength(2)
-                                ->autosize()
-                                ->columnSpanFull(),
-                            Forms\Components\Toggle::make('is_featured')
-                                ->required(),
-                            Forms\Components\Toggle::make('is_best_seller')
-                                ->required(),
+                                            $set('slug', $slug . $suffix);
+                                        }),
+                                    Forms\Components\TextInput::make('slug')
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->readOnly(),
+                                    Forms\Components\TextInput::make('short_title')
+                                        ->columnSpanFull()
+                                        ->default(null),
+                                    Forms\Components\Textarea::make('description')
+                                        ->required()
+                                        ->rows(10)
+                                        ->minLength(2)
+                                        ->autosize()
+                                        ->columnSpanFull(),
+                                    Forms\Components\Toggle::make('is_featured')
+                                        ->required(),
+                                    Forms\Components\Toggle::make('is_best_seller')
+                                        ->required(),
                                 ])->columnSpan(1)->columns(2)->collapsible()->persistCollapsed(),
-                            
-                    Section::make('Metadata')
+
+                            Section::make('Metadata')
+                                ->schema([
+                                    Forms\Components\Select::make('courses')
+                                        ->label('Connected Courses')
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                        ->columnSpanFull()
+                                        ->relationship('courses', 'name'),
+                                    Forms\Components\Select::make('creator_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('creator', 'id'),
+                                    Forms\Components\Select::make('level_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('level', 'name'),
+                                    Forms\Components\Select::make('categories')
+                                        ->label('Categories')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                        ->columnSpanFull()
+                                        ->relationship('categories', 'name'),
+                                    Forms\Components\TagsInput::make('tags')
+                                        ->columnSpanFull(),
+                                    Forms\Components\TextInput::make('duration')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\Select::make('status')
+                                        ->required()
+                                        ->options([
+                                            'draft' => 'Draft',
+                                            'published' => 'Published',
+                                            'unpublished' => 'Unpublished',
+                                        ])
+                                        ->default('draft')
+                                        ->label('Status')
+                                        ->reactive(),
+                                    Forms\Components\FileUpload::make('feature_image')
+                                        ->image()
+                                        ->columnSpanFull(),
+                                    Forms\Components\TextInput::make('promo_video')
+                                        ->maxLength(255)
+                                        ->columnSpanFull()
+                                        ->default(null),
+                                ])->columnSpan(1)->columns(2)->collapsible()->collapsible()
+                        ])->columns(2),
+                    Wizard\Step::make('Pricing')
+                        ->description('Set the pricing details for the course.')
                         ->schema([
-                            Forms\Components\Select::make('courses')
-                                ->label('Connected Courses')
-                                ->searchable()
-                                ->preload()
-                                ->multiple()
-                                ->columnSpanFull()
-                                ->relationship('courses', 'name'),
-                            Forms\Components\Select::make('creator_id')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->relationship('creator', 'id'),
-                            Forms\Components\Select::make('level_id')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->relationship('level', 'name'),
-                            Forms\Components\Select::make('categories')
-                                ->label('Categories')
-                                ->required()
-                                ->searchable()
-                                ->preload()
-                                ->multiple()
-                                ->columnSpanFull()
-                                ->relationship('categories', 'name'),
-                            Forms\Components\TagsInput::make('tags')
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('duration')
-                                ->maxLength(255)
-                                ->default(null),
-                            Forms\Components\Select::make('status')
-                                ->required()
-                                ->options([
-                                    'draft' => 'Draft',
-                                    'published' => 'Published',
-                                    'unpublished' => 'Unpublished',
-                                ])
-                                ->default('draft')
-                                ->label('Status')
-                                ->reactive(),
-                            Forms\Components\FileUpload::make('feature_image')
-                                ->image()
-                                ->columnSpanFull(),
-                            Forms\Components\TextInput::make('promo_video')
-                                ->maxLength(255)
-                                ->columnSpanFull()
-                                ->default(null),
-                        ])->columnSpan(1)->columns(2)->collapsible()->collapsible()
-                ])->columns(2),
-                Wizard\Step::make('Pricing')
-                    ->description('Set the pricing details for the course.')
-                    ->schema([
                             Forms\Components\Select::make('price_type')
                                 ->live()
                                 ->required()
@@ -152,12 +157,12 @@ class ProjectResource extends Resource
                                 ->numeric()
                                 ->default(null)
                                 ->prefix('$')
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\Select::make('currency_id')
                                 ->searchable()
                                 ->preload()
                                 ->relationship('currency', 'name')
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\Select::make('discount_type')
                                 ->live()
                                 ->options([
@@ -167,26 +172,26 @@ class ProjectResource extends Resource
                                 ->default(null)
                                 ->label('Discount Type')
                                 ->reactive()
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\TextInput::make('discount_price')
                                 ->numeric()
                                 ->default(null)
-                            ->visible(fn (Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'fixed_amount'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'fixed_amount'),
                             Forms\Components\TextInput::make('discount_percentage')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'percentage'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid' && $get('discount_type') === 'percentage'),
                             Forms\Components\TextInput::make('tax')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                             Forms\Components\TextInput::make('vat')
                                 ->numeric()
                                 ->default(null)
-                                ->visible(fn (Get $get): bool => $get('price_type') === 'paid'),
-                          ])->columns(2),  
-                
-            ])->persistStepInQueryString()->submitAction(new HtmlString(Blade::render(<<<BLADE
+                                ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
+                        ])->columns(2),
+
+                ])->persistStepInQueryString()->submitAction(new HtmlString(Blade::render(<<<BLADE
                 <x-filament::button
                     type="submit"
                     size="sm"
@@ -194,7 +199,7 @@ class ProjectResource extends Resource
                     Submit
                 </x-filament::button>
             BLADE))),
-                    ])->columns(1);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -219,8 +224,8 @@ class ProjectResource extends Resource
                     ->getStateUsing(function ($record) {
                         return $record->price_type === 'free' ? 'Free' : $record->price;
                     })
-                    ->badge(fn (string $state): bool => $state === 'Free')
-                    ->color(fn (string $state): string => $state === 'Free' ? 'success' : 'secondary'),
+                    ->badge(fn(string $state): bool => $state === 'Free')
+                    ->color(fn(string $state): string => $state === 'Free' ? 'success' : 'secondary'),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
@@ -231,7 +236,7 @@ class ProjectResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-             ->filters([
+            ->filters([
                 Tables\Filters\TrashedFilter::make(),
                 Tables\Filters\TrashedFilter::make(),
             ])

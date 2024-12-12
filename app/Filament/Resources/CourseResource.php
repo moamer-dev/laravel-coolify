@@ -20,15 +20,19 @@ use Filament\Forms\Components\Wizard;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
 use Filament\Forms\Components\Section;
-
-
+use Filament\Support\Enums\Alignment;
 
 
 class CourseResource extends Resource
 {
     protected static ?string $model = Course::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Courses';
+    protected static ?int $navigationSort = 1;
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -89,7 +93,7 @@ class CourseResource extends Resource
                                         ->required()
                                         ->searchable()
                                         ->preload()
-                                        ->relationship('creator.profile', 'firstname'),
+                                        ->relationship('creator', 'name'),
                                     Forms\Components\Select::make('level_id')
                                         ->required()
                                         ->searchable()
@@ -278,7 +282,11 @@ class CourseResource extends Resource
 
                                                             return $state['name'] ?? 'Untitled heading';
                                                         }),
-                                                ])->blockNumbers(false)
+                                                ])
+                                                ->addActionLabel('Add a new lesson')
+                                                ->addActionAlignment(Alignment::Start)
+                                                ->reorderableWithButtons()
+                                                ->blockNumbers(false)
                                                 ->collapsible()
                                                 ->reorderable()
                                                 ->cloneable(),
@@ -289,8 +297,13 @@ class CourseResource extends Resource
 
                                             return $state['name'] ?? 'Untitled heading';
                                         }),
-                                ])->blockNumbers(false)
+                                ])
+                                ->addActionLabel('Add a new section')
+                                ->addActionAlignment(Alignment::Start)
+                                ->reorderableWithButtons()
+                                ->blockNumbers(false)
                                 ->collapsible()
+                                ->cloneable()
                                 ->reorderable(),
                         ])->columns(1),
 

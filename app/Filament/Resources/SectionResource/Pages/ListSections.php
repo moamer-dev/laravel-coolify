@@ -4,9 +4,9 @@ namespace App\Filament\Resources\SectionResource\Pages;
 
 use App\Filament\Resources\SectionResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 
-class ManageSections extends ManageRecords
+class ListSections extends ListRecords
 {
     protected static string $resource = SectionResource::class;
 

@@ -16,8 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ProfileResource extends Resource
 {
     protected static ?string $model = Profile::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Users';
+    protected static ?int $navigationSort = 2;
+    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -62,9 +63,8 @@ class ProfileResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_public')
                     ->required(),
-                Forms\Components\TextInput::make('avatar')
-                    ->maxLength(255)
-                    ->default(null),
+                Forms\Components\FileUpload::make('avatar')
+                    ->image(),
             ]);
     }
 
@@ -138,8 +138,8 @@ class ProfileResource extends Resource
             'edit' => Pages\EditProfile::route('/{record}/edit'),
         ];
     }
-    
-     public static function getEloquentQuery(): Builder
+
+    public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([

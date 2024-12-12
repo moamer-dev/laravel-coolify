@@ -1,41 +1,30 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\SectionResource\RelationManagers;
 
-use App\Filament\Resources\LessonResource\Pages;
-use App\Filament\Resources\LessonResource\RelationManagers;
-use App\Models\Lesson;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 
-class LessonResource extends Resource
+class LessonsRelationManager extends RelationManager
 {
-    protected static ?string $model = Lesson::class;
-    protected static ?string $navigationGroup = 'Courses';
-    protected static ?int $navigationSort = 4;
-    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
+    protected static string $relationship = 'lessons';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\select::make('section_id')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->default(null)
-                    ->relationship('section', 'name'),
+                // Forms\Components\select::make('section_id')
+                //     ->required()
+                //     ->searchable()
+                //     ->preload()
+                //     ->default(null)
+                //     ->relationship('section', 'name'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -101,52 +90,24 @@ class LessonResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('section.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                // Tables\Columns\TextColumn::make('slug')
-                //     ->searchable(),
+                Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\IconColumn::make('is_preview')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('has_video')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('video_source'),
-                Tables\Columns\TextColumn::make('youtube_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('vimeo_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('file_path')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('duration')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('video_duration')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                Tables\Filters\TrashedFilter::make()
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -160,21 +121,9 @@ class LessonResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ManageLessons::route('/'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
+            ])
+            ->modifyQueryUsing(fn(Builder $query) => $query->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ]));
     }
 }

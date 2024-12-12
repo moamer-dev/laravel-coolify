@@ -12,39 +12,74 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Blog';
+    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('user_id')
+                    ->label('Author')
+                    ->helperText('Will be the user who created the post if left empty')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('user', 'name'),
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->reactive()
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                        $slug = Str::slug($state);
+                        $suffix = '';
+                        while (DB::table('posts')->where('slug', $slug . $suffix)->exists()) {
+                            $suffix = '-' . ((int) $suffix + 1);
+                        }
+
+                        $set('slug', $slug . $suffix);
+                    }),
                 Forms\Components\TextInput::make('slug')
+                    ->helperText('Will be automatically generated from the title')
                     ->required()
+                    ->readOnly()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
                     ->image(),
-                Forms\Components\TextInput::make('category_id')
+                Forms\Components\Select::make('category_id')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('tags')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\Textarea::make('content')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('category', 'name'),
+                Forms\Components\TagsInput::make('tags')
+                    ->helperText('Add a tage and press enter')
+                    ->reorderable()
+                    ->nestedRecursiveRules([
+                        'min:3',
+                        'max:255',
+                    ]),
+                Forms\Components\RichEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->required()
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'unpublished' => 'Unpublished',
+                    ])
+                    ->default('draft'),
             ]);
     }
 

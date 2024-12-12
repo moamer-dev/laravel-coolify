@@ -30,4 +30,9 @@ class Category extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

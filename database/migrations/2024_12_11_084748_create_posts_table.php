@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id');
-            $table->string('tags')->nullable();
+            $table->json('tags')->nullable();
             $table->text('content');
             $table->enum('status', ['draft', 'published', 'unpublished'])->default('draft');
 
