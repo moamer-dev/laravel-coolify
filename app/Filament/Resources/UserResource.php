@@ -81,7 +81,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->formatStateUsing(function ($state, $record) {
-                        $avatarUrl = $record->profile->avatar ? asset('storage/' . $record->profile->avatar) : 'https://via.placeholder.com/40';
+                        $avatarUrl = $record->profile && $record->profile->avatar
+                            ? asset('storage/' . $record->profile->avatar)
+                            : 'https://via.placeholder.com/40';
+
                         return view('components.avatar-with-name', [
                             'avatarUrl' => $avatarUrl,
                             'name' => $state,
