@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Split;
 
 class ProfileResource extends Resource
 {
@@ -24,61 +26,71 @@ class ProfileResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->relationship('user', 'id'),
-                Forms\Components\TextInput::make('firstname')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('lastname')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('country_id')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->relationship('country', 'name'),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('whatsapp')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('facebook')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('instagram')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('github')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('linkedin')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\Textarea::make('bio')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_public')
-                    ->required(),
-                Forms\Components\FileUpload::make('avatar')
-                    ->image(),
-            ]);
+                Split::make([
+                    Section::make('User Information')
+                        ->schema([
+                            Section::make('Basic Information')
+                                ->schema([
+                                    Forms\Components\Select::make('user_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('user', 'name'),
+                                    Forms\Components\Select::make('country_id')
+                                        ->required()
+                                        ->searchable()
+                                        ->preload()
+                                        ->relationship('country', 'name'),
+                                    Forms\Components\TextInput::make('phone')
+                                        ->tel()
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\Textarea::make('bio')
+                                        ->columnSpanFull(),
+                                ])->columns(2)->collapsible()->compact(),
+
+                            // Social Media Section
+                            Section::make('Social Media')
+                                ->schema([
+                                    Forms\Components\TextInput::make('whatsapp')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\TextInput::make('facebook')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\TextInput::make('instagram')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\TextInput::make('github')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                    Forms\Components\TextInput::make('linkedin')
+                                        ->maxLength(255)
+                                        ->default(null),
+                                ])->columns(2)->collapsible()->compact(), // Optional: Adjust columns for layout
+                        ]),
+
+                    Section::make('Additional Information')
+                        ->schema([
+                            Forms\Components\Toggle::make('is_public')
+                                ->required(),
+                            Forms\Components\FileUpload::make('avatar')
+                                ->image(),
+                        ])->grow(false),
+                ])->from('md')
+            ])->columns(1);
     }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Name')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('firstname')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('lastname')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('country.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')

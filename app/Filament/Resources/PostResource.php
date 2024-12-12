@@ -16,6 +16,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Split;
 
 class PostResource extends Resource
 {
@@ -31,56 +33,64 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->label('Author')
-                    ->helperText('Will be the user who created the post if left empty')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('user', 'name'),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->reactive()
-                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                        $slug = Str::slug($state);
-                        $suffix = '';
-                        while (DB::table('posts')->where('slug', $slug . $suffix)->exists()) {
-                            $suffix = '-' . ((int) $suffix + 1);
-                        }
+                Split::make([
+                    Section::make('Post Content')
+                        ->schema([
+                            Forms\Components\TextInput::make('title')
+                                ->required()
+                                ->maxLength(255)
+                                ->reactive()
+                                ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                    $slug = Str::slug($state);
+                                    $suffix = '';
+                                    while (DB::table('posts')->where('slug', $slug . $suffix)->exists()) {
+                                        $suffix = '-' . ((int) $suffix + 1);
+                                    }
 
-                        $set('slug', $slug . $suffix);
-                    }),
-                Forms\Components\TextInput::make('slug')
-                    ->helperText('Will be automatically generated from the title')
-                    ->required()
-                    ->readOnly()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\Select::make('category_id')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->relationship('category', 'name'),
-                Forms\Components\TagsInput::make('tags')
-                    ->helperText('Add a tage and press enter')
-                    ->reorderable()
-                    ->nestedRecursiveRules([
-                        'min:3',
-                        'max:255',
-                    ]),
-                Forms\Components\RichEditor::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('status')
-                    ->required()
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                        'unpublished' => 'Unpublished',
-                    ])
-                    ->default('draft'),
-            ]);
+                                    $set('slug', $slug . $suffix);
+                                }),
+                            Forms\Components\TextInput::make('slug')
+                                ->helperText('Will be automatically generated from the title')
+                                ->required()
+                                ->readOnly()
+                                ->maxLength(255),
+                            Forms\Components\RichEditor::make('content')
+                                ->required()
+                                ->columnSpanFull(),
+                        ])->columns(2),
+                    Section::make('Post Meta')
+                        ->schema([
+                            Forms\Components\Select::make('user_id')
+                                ->label('Author')
+                                ->helperText('Will be the user who created the post if left empty')
+                                ->searchable()
+                                ->preload()
+                                ->relationship('user', 'name'),
+                            Forms\Components\Select::make('status')
+                                ->required()
+                                ->options([
+                                    'draft' => 'Draft',
+                                    'published' => 'Published',
+                                    'unpublished' => 'Unpublished',
+                                ])
+                                ->default('draft'),
+                            Forms\Components\Select::make('category_id')
+                                ->required()
+                                ->searchable()
+                                ->preload()
+                                ->relationship('category', 'name'),
+                            Forms\Components\TagsInput::make('tags')
+                                ->helperText('Add a tage and press enter')
+                                ->reorderable()
+                                ->nestedRecursiveRules([
+                                    'min:3',
+                                    'max:255',
+                                ]),
+                            Forms\Components\FileUpload::make('image')
+                                ->image(),
+                        ])->grow(false),
+                ])->from('md')
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

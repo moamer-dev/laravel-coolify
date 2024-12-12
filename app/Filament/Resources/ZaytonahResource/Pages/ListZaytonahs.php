@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\SectionResource\Pages;
+namespace App\Filament\Resources\ZaytonahResource\Pages;
 
-use App\Filament\Resources\SectionResource;
+use App\Filament\Resources\ZaytonahResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSections extends ListRecords
+class ListZaytonahs extends ListRecords
 {
-
-    protected static string $resource = SectionResource::class;
+    protected static string $resource = ZaytonahResource::class;
 
     protected function getHeaderActions(): array
     {

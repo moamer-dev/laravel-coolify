@@ -20,6 +20,7 @@ use Filament\Forms\Components\Wizard;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
 use Filament\Forms\Components\Section;
+use Filament\Support\Enums\Alignment;
 
 class ProjectResource extends Resource
 {
@@ -190,6 +191,118 @@ class ProjectResource extends Resource
                                 ->default(null)
                                 ->visible(fn(Get $get): bool => $get('price_type') === 'paid'),
                         ])->columns(2),
+                    Wizard\Step::make('Curriculum')
+                        ->description('Create and organize the curriculum for the course.')
+                        ->schema([
+                            Forms\Components\Builder::make('sections')
+                                ->label('Sections')
+                                ->blocks([
+                                    Forms\Components\Builder\Block::make('section')
+                                        ->label('Section')
+                                        ->schema([
+                                            Forms\Components\TextInput::make('name')
+                                                ->label('Section Name')
+                                                ->live(onBlur: true)
+                                                ->required()
+                                                ->maxLength(255),
+                                            Forms\Components\Textarea::make('description')
+                                                ->label('Section Description')
+                                                ->maxLength(65535),
+                                            Forms\Components\Builder::make('lessons')
+                                                ->label('Lessons')
+                                                ->blocks([
+                                                    Forms\Components\Builder\Block::make('lesson')
+                                                        ->label('Lesson')
+                                                        ->schema([
+                                                            Forms\Components\TextInput::make('name')
+                                                                ->label('Lesson Name')
+                                                                ->live(onBlur: true)
+                                                                ->required()
+                                                                ->maxLength(255),
+                                                            // Forms\Components\TextInput::make('slug')
+                                                            //     ->label('Slug')
+                                                            //     ->maxLength(255)
+                                                            //     ->helperText('Leave empty to auto-generate from the name'),
+                                                            Forms\Components\Toggle::make('is_preview')
+                                                                ->required(),
+                                                            Forms\Components\Toggle::make('has_video')
+                                                                ->required()
+                                                                ->live()
+                                                                ->default(false)
+                                                                ->afterStateUpdated(function (callable $set, $state) {
+                                                                    if ($state === false) {
+                                                                        $set('video_source', null);
+                                                                        $set('youtube_url', null);
+                                                                        $set('vimeo_url', null);
+                                                                        $set('file_path', null);
+                                                                        $set('video_duration', null);
+                                                                    }
+                                                                }),
+                                                            Forms\Components\Select::make('video_source')
+                                                                ->required()
+                                                                ->options([
+                                                                    'youtube' => 'YouTube',
+                                                                    'vimeo' => 'Vimeo',
+                                                                    'file' => 'File',
+                                                                ])
+                                                                ->label('Video Source')
+                                                                ->live()
+                                                                ->visible(fn(Get $get): bool => $get('has_video') === true),
+                                                            Forms\Components\TextInput::make('youtube_url')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('YouTube URL')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'youtube'),
+                                                            Forms\Components\TextInput::make('vimeo_url')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('Vimeo URL')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'vimeo'),
+                                                            Forms\Components\TextInput::make('file_path')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('File Path')
+                                                                ->visible(fn(Get $get): bool => $get('video_source') === 'file'),
+                                                            Forms\Components\TextInput::make('video_duration')
+                                                                ->maxLength(255)
+                                                                ->default(null)
+                                                                ->label('Duration')
+                                                                ->visible(fn(Get $get): bool => $get('has_video') === true),
+                                                            Forms\Components\Textarea::make('content')
+                                                                ->columnSpanFull(),
+                                                            Forms\Components\Toggle::make('is_active')
+                                                                ->required(),
+                                                        ])->label(function (?array $state): string {
+                                                            if ($state === null) {
+                                                                return 'Heading';
+                                                            }
+
+                                                            return $state['name'] ?? 'Untitled heading';
+                                                        }),
+                                                ])
+                                                ->addActionLabel('Add a new lesson')
+                                                ->addActionAlignment(Alignment::Start)
+                                                ->reorderableWithButtons()
+                                                ->blockNumbers(false)
+                                                ->collapsible()
+                                                ->reorderable()
+                                                ->cloneable(),
+                                        ])->label(function (?array $state): string {
+                                            if ($state === null) {
+                                                return 'Heading';
+                                            }
+
+                                            return $state['name'] ?? 'Untitled heading';
+                                        }),
+                                ])
+                                ->addActionLabel('Add a new section')
+                                ->addActionAlignment(Alignment::Start)
+                                ->reorderableWithButtons()
+                                ->blockNumbers(false)
+                                ->collapsible()
+                                ->cloneable()
+                                ->reorderable(),
+                        ])->columns(1),
 
                 ])->persistStepInQueryString()->submitAction(new HtmlString(Blade::render(<<<BLADE
                 <x-filament::button

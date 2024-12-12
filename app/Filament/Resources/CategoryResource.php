@@ -13,6 +13,10 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Clusters\Taxonomies;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -33,9 +37,19 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->reactive()
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                        $slug = Str::slug($state);
+                        $suffix = '';
+                        while (DB::table('categories')->where('slug', $slug . $suffix)->exists()) {
+                            $suffix = '-' . ((int) $suffix + 1);
+                        }
+                        $set('slug', $slug . $suffix);
+                    }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->readOnly()
                     ->maxLength(255),
                 Forms\Components\Select::make('parent_id')
                     ->searchable()

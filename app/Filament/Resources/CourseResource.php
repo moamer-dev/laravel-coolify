@@ -52,13 +52,9 @@ class CourseResource extends Resource
                                         ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
                                             $slug = Str::slug($state);
                                             $suffix = '';
-
-                                            // Check if the generated slug already exists in the database
                                             while (DB::table('courses')->where('slug', $slug . $suffix)->exists()) {
-                                                // If it exists, append a numeric suffix
                                                 $suffix = '-' . ((int) $suffix + 1);
                                             }
-
                                             $set('slug', $slug . $suffix);
                                         }),
                                     Forms\Components\TextInput::make('slug')
@@ -70,9 +66,6 @@ class CourseResource extends Resource
                                         ->default(null),
                                     Forms\Components\RichEditor::make('description')
                                         ->required()
-                                        //->rows(10)
-                                        //->minLength(2)
-                                        //->autosize()
                                         ->columnSpanFull(),
                                     Forms\Components\Toggle::make('is_featured')
                                         ->required(),
@@ -107,7 +100,6 @@ class CourseResource extends Resource
                                         ->multiple()
                                         ->columnSpanFull()
                                         ->relationship('categories', 'name'),
-
                                     Forms\Components\TagsInput::make('tags')
                                         ->columnSpanFull(),
                                     Forms\Components\TextInput::make('duration')
@@ -247,7 +239,6 @@ class CourseResource extends Resource
                                                                     'vimeo' => 'Vimeo',
                                                                     'file' => 'File',
                                                                 ])
-                                                                ->default('free')
                                                                 ->label('Video Source')
                                                                 ->live()
                                                                 ->visible(fn(Get $get): bool => $get('has_video') === true),

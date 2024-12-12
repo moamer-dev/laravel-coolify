@@ -56,6 +56,9 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Courses')
                     ->icon('heroicon-o-book-open'),
                 NavigationGroup::make()
+                    ->label('Series')
+                    ->icon('heroicon-o-user-group'),
+                NavigationGroup::make()
                     ->label('Taxonomies')
                     ->icon('heroicon-o-tag'),
                 NavigationGroup::make()
@@ -67,8 +70,8 @@ class AdminPanelProvider extends PanelProvider
                 //     ->collapsed(),
             ])
             ->navigationItems([
-                NavigationItem::make('Analytics')
-                    ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                NavigationItem::make('Website')
+                    ->url('/', shouldOpenInNewTab: true)
                     ->icon('heroicon-o-presentation-chart-line')
                     ->sort(3),
                 NavigationItem::make('dashboard')

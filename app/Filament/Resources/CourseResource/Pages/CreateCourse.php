@@ -3,10 +3,8 @@
 namespace App\Filament\Resources\CourseResource\Pages;
 
 use App\Filament\Resources\CourseResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\Course;
-use Illuminate\Support\Str;
 
 class CreateCourse extends CreateRecord
 {
@@ -28,11 +26,9 @@ class CreateCourse extends CreateRecord
 
             foreach ($lessons as $lessonData) {
                 $lessonAttributes = $lessonData['data'];
-                //$lessonAttributes['slug'] = $lessonAttributes['slug'] ?? Str::slug($lessonAttributes['name']);
                 $section->lessons()->create($lessonAttributes);
             }
         }
-        dd($data);
         return $data;
     }
 }

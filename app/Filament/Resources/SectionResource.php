@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SectionResource\RelationManagers\LessonsRelationManager;
+use Filament\Forms\Components\Section as SectionComponent;
 
 class SectionResource extends Resource
 {
@@ -28,47 +29,45 @@ class SectionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Section Name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('order')
-                    ->required()
-                    ->numeric()
-                    ->default(0)
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label('Description')
-                    ->maxLength(65535)
-                    ->nullable()
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('sectionable_type')
-                    ->label('Assign To')
-                    ->required()
-                    ->options([
-                        'App\Models\Course' => 'Course',
-                        'App\Models\Project' => 'Project',
-                    ])
-                    ->reactive()
-                    ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
+                SectionComponent::make('User Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Section Name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Description')
+                            ->maxLength(65535)
+                            ->nullable()
+                            ->columnSpanFull(),
+                        Forms\Components\Select::make('sectionable_type')
+                            ->label('Assign To')
+                            ->required()
+                            ->options([
+                                'App\Models\Course' => 'Course',
+                                'App\Models\Project' => 'Project',
+                            ])
+                            ->reactive()
+                            ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
 
-                Forms\Components\Select::make('sectionable_id')
-                    ->label('Specific Course or Project')
-                    ->required()
-                    ->searchable()
-                    ->options(function ($get) {
-                        if ($get('sectionable_type') === 'App\Models\Course') {
-                            return \App\Models\Course::pluck('name', 'id');
-                        } elseif ($get('sectionable_type') === 'App\Models\Project') {
-                            return \App\Models\Project::pluck('name', 'id');
-                        }
-                        return [];
-                    })
-                    ->reactive(),
-                Forms\Components\Toggle::make('is_active')
-                    ->label('Active')
-                    ->default(true)
-                    ->required(),
+                        Forms\Components\Select::make('sectionable_id')
+                            ->label('Specific Course or Project')
+                            ->required()
+                            ->searchable()
+                            ->options(function ($get) {
+                                if ($get('sectionable_type') === 'App\Models\Course') {
+                                    return \App\Models\Course::pluck('name', 'id');
+                                } elseif ($get('sectionable_type') === 'App\Models\Project') {
+                                    return \App\Models\Project::pluck('name', 'id');
+                                }
+                                return [];
+                            })
+                            ->reactive(),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('Active')
+                            ->default(true)
+                            ->required(),
+                    ])
             ]);
     }
 
@@ -77,16 +76,18 @@ class SectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('order')
-                    ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sectionable.name')
-                    ->label('Course/Project')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Course/Project'),
                 Tables\Columns\TextColumn::make('sectionable_type')
-                    ->searchable(),
+                    ->label('Connected to')
+                    ->searchable()
+                    ->formatStateUsing(fn($state, $record) => match ($state) {
+                        'App\Models\Course' => 'Course',
+                        'App\Models\Project' => 'Project',
+                        default => 'Unknown',
+                    }),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -104,6 +105,16 @@ class SectionResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
+                Tables\Filters\SelectFilter::make('sectionable_type')
+                    ->options([
+                        'App\Models\Course' => 'Course',
+                        'App\Models\Project' => 'Project',
+                    ]),
+                Tables\Filters\SelectFilter::make('is_active')
+                    ->options([
+                        1 => 'Active',
+                        0 => 'Inactive',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

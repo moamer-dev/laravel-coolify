@@ -46,8 +46,6 @@ class UserResource extends Resource
                 SectionComponent::make('Profile Information')
                     ->relationship('profile')
                     ->schema([
-                        TextInput::make('firstname'),
-                        TextInput::make('lastname'),
                         TextInput::make('phone')
                             ->tel(),
                         TextInput::make('whatsapp')

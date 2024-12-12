@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Tables\Actions\EditAction;
+
 
 class LessonResource extends Resource
 {
@@ -30,20 +32,15 @@ class LessonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\select::make('section_id')
-                    ->required()
-                    ->searchable()
-                    ->preload()
-                    ->default(null)
-                    ->relationship('section', 'name'),
                 Forms\Components\TextInput::make('name')
+                    ->label('Lesson Name')
+                    ->live(onBlur: true)
                     ->required()
                     ->maxLength(255),
                 // Forms\Components\TextInput::make('slug')
-                //     ->required()
-                //     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
+                //     ->label('Slug')
+                //     ->maxLength(255)
+                //     ->helperText('Leave empty to auto-generate from the name'),
                 Forms\Components\Toggle::make('is_preview')
                     ->required(),
                 Forms\Components\Toggle::make('has_video')
@@ -66,7 +63,6 @@ class LessonResource extends Resource
                         'vimeo' => 'Vimeo',
                         'file' => 'File',
                     ])
-                    ->default('free')
                     ->label('Video Source')
                     ->live()
                     ->visible(fn(Get $get): bool => $get('has_video') === true),
@@ -92,10 +88,6 @@ class LessonResource extends Resource
                     ->visible(fn(Get $get): bool => $get('has_video') === true),
                 Forms\Components\Textarea::make('content')
                     ->columnSpanFull(),
-                // Forms\Components\TextInput::make('order')
-                //     ->required()
-                //     ->numeric()
-                //     ->default(0),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);
@@ -116,20 +108,8 @@ class LessonResource extends Resource
                     ->boolean(),
                 Tables\Columns\IconColumn::make('has_video')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('video_source'),
-                Tables\Columns\TextColumn::make('youtube_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('vimeo_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('file_path')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('duration')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('video_duration')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -153,6 +133,30 @@ class LessonResource extends Resource
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
+                EditAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        if (isset($data['has_video']) && $data['has_video'] === false) {
+                            $data['video_source'] = null;
+                            $data['youtube_url'] = null;
+                            $data['vimeo_url'] = null;
+                            $data['file_path'] = null;
+                            $data['video_duration'] = null;
+                        }
+                        if (isset($data['video_source'])) {
+                            if ($data['video_source'] === 'youtube') {
+                                $data['vimeo_url'] = null;
+                                $data['file_path'] = null;
+                            } elseif ($data['video_source'] === 'vimeo') {
+                                $data['youtube_url'] = null;
+                                $data['file_path'] = null;
+                            } elseif ($data['video_source'] === 'file') {
+                                $data['youtube_url'] = null;
+                                $data['vimeo_url'] = null;
+                            }
+                        }
+
+                        return $data;
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
