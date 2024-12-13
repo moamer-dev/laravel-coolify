@@ -1,0 +1,18 @@
+[
+    {
+        "type": "Directory",
+        "name": "/Users/mohamedamer/Documents/laravel/zaytonaah_backend/resources/views",
+        "parent_id": null,
+        "workspaceRoot": "/Users/mohamedamer/Documents/laravel/zaytonaah_backend",
+        "workspacePath": "resources/views",
+        "id": "czfOxSIo8AF2wuCa"
+    },
+    {
+        "type": "File",
+        "name": "/Users/mohamedamer/Documents/laravel/zaytonaah_backend/routes/web.php",
+        "parent_id": null,
+        "workspaceRoot": "/Users/mohamedamer/Documents/laravel/zaytonaah_backend",
+        "workspacePath": "routes/web.php",
+        "id": "0axt7zeTBsgmqNfZ"
+    }
+]
