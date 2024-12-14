@@ -8,7 +8,7 @@
      <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
          <!--begin::Item-->
          <li class="breadcrumb-item text-muted">
-             <a href="index.html" class="text-muted text-hover-primary">Home</a>
+             <a href="/" class="text-muted text-hover-primary">Home</a>
          </li>
          <!--end::Item-->
          <!--begin::Item-->
@@ -17,7 +17,9 @@
          </li>
          <!--end::Item-->
          <!--begin::Item-->
-         <li class="breadcrumb-item text-muted">Account</li>
+         <li class="breadcrumb-item text-muted">
+             <a href="/dashboard" class="text-muted text-hover-primary">Dashboard</a>
+         </li>
          <!--end::Item-->
          <!--begin::Item-->
          <li class="breadcrumb-item">
@@ -25,7 +27,7 @@
          </li>
          <!--end::Item-->
          <!--begin::Item-->
-         <li class="breadcrumb-item text-gray-900">Overview</li>
+         <li class="breadcrumb-item text-gray-900">{{ Auth::user()->name }}</li>
          <!--end::Item-->
      </ul>
      <!--end::Breadcrumb-->

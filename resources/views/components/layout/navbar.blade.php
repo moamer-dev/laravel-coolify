@@ -22,7 +22,7 @@
                     </button>
                     <!--end::Header toggle-->
                     <!--begin::Logo-->
-                    <a href="index.html" class="d-flex align-items-center me-lg-20 me-5">
+                    <a href="/" class="d-flex align-items-center me-lg-20 me-5">
                         <img alt="Logo" src="{{ asset('assets') }}/media/logos/demo-35-small.svg"
                             class="h-20px d-sm-none d-inline" />
                         <img alt="Logo" src="{{ asset('assets') }}/media/logos/demo-35.svg"
