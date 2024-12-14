@@ -11,35 +11,51 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+
+    public function overview(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user()->load('profile');
+        return view('dashboard.profile.overview', compact('user'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
+    public function settings(Request $request): View
+    {
+        $user = $request->user()->load('profile');
+        return view('dashboard.profile.settings', compact('user'));
+    }
+
+    public function billing(Request $request): View
+    {
+        $user = $request->user()->load('profile');
+        return view('dashboard.profile.billing', compact('user'));
+    }
+
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+
+        $validated = $request->validated();
+        $user = $request->user();
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->profile->update([
+            'phone' => $validated['phone'] ?? null,
+            'bio' => $validated['bio'] ?? null,
+            'country_id' => $validated['country_id'] ?? null,
+            'is_public' => $validated['is_public'] ?? false, // Ensure boolean
+        ]);
+
+        return Redirect::route('profile.settings')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
