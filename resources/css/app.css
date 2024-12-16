@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.course-image {
+    max-height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
