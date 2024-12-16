@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
+use App\Livewire\Courses\Learn;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +12,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/learn', function () {
+    return view('dashboard.learn.index');
+})->name('learn');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'overview'])->name('profile.overview');
