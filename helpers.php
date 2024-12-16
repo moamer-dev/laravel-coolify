@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Auth;
  * @param  int     $limit           The maximum number of records to retrieve (optional).
  * @return \Illuminate\Database\Eloquent\Collection
  */
+function getFormattedPrice($course)
+{
+    if ($course->price_type === 'free') {
+        return 'Free';
+    }
+    return $course->currency->symbol . number_format($course->price, 2);
+}
 function getYouTubeVideoId($url)
 {
     // Extract video ID from various YouTube URL formats
