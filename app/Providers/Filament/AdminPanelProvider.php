@@ -56,6 +56,9 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Courses')
                     ->icon('heroicon-o-book-open'),
                 NavigationGroup::make()
+                    ->label('Quizzes')
+                    ->icon('heroicon-o-book-open'),
+                NavigationGroup::make()
                     ->label('Series')
                     ->icon('heroicon-o-user-group'),
                 NavigationGroup::make()
