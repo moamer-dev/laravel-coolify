@@ -51,7 +51,6 @@ class UserResource extends Resource
                         TextInput::make('whatsapp')
                             ->tel(),
                         Forms\Components\Select::make('country_id')
-                            ->required()
                             ->searchable()
                             ->preload()
                             ->relationship('country', 'name'),

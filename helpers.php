@@ -18,13 +18,43 @@ use Illuminate\Support\Facades\Auth;
  * @param  int     $limit           The maximum number of records to retrieve (optional).
  * @return \Illuminate\Database\Eloquent\Collection
  */
-function getFormattedPrice($course)
+function getFormattedPriceBack($course)
 {
     if ($course->price_type === 'free') {
         return 'Free';
+    } 
+    if ($course->price_type === 'paid') {
+        if ($course->discount_type ==='fixed_amount') {
+            return $course->currency->symbol . number_format($course->price - $course->discount_price, 2);
+        } else if ($course->discount_type === 'percentage') {
+            return $course->currency->symbol . number_format($course->price - ($course->price * $course->discount_percentage / 100), 2);
+        } else {
+            return $course->currency->symbol . number_format($course->price, 2);
+        }
     }
-    return $course->currency->symbol . number_format($course->price, 2);
 }
+
+function getFormattedPriceFront($course)
+{
+    if ($course->price_type === 'free') {
+        return '<span class="fw-semibold text-success">Free</span>';
+    } 
+
+    if ($course->price_type === 'paid') {
+        $symbol = $course->currency->symbol;
+
+        if ($course->discount_type === 'fixed_amount') {
+            $discountedPrice = $course->price - $course->discount_price;
+            return '<span class="fw-semibold text-success"><s class="text-danger">' . $symbol . number_format($course->price, 2) . '</s> ' . $symbol . number_format($discountedPrice, 2) . '</span>';
+        } elseif ($course->discount_type === 'percentage') {
+            $discountedPrice = $course->price - ($course->price * $course->discount_percentage / 100);
+            return '<span class="fw-semibold text-success"><s class="text-danger">' . $symbol . number_format($course->price, 2) . '</s> ' . $symbol . number_format($discountedPrice, 2) . '</span>';
+        } else {
+            return '<span class="fw-semibold">' . $symbol . number_format($course->price, 2) . '</span>';
+        }
+    }
+}
+
 function getYouTubeVideoId($url)
 {
     // Extract video ID from various YouTube URL formats

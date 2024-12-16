@@ -55,22 +55,21 @@
                  <!--end::Col-->
              </div>
          @endif
-         @if ($user->profile->country->name != null)
-             <div class="row mb-7">
-                 <!--begin::Label-->
-                 <label class="col-lg-4 fw-semibold text-muted">Country
-                     <span class="ms-1" data-bs-toggle="tooltip" aria-label="Country of origination"
-                         data-bs-original-title="Country of origination" data-kt-initialized="1">
-                         <i class="ki-outline ki-information fs-7"></i>
-                     </span></label>
-                 <!--end::Label-->
-                 <!--begin::Col-->
-                 <div class="col-lg-8">
-                     <span class="fw-bold fs-6 text-gray-800">{{ $user->profile->country->name }}</span>
-                 </div>
-                 <!--end::Col-->
-             </div>
-         @endif
+         @if ($user->profile->country?->name)
+            <div class="row mb-7">
+                <!-- Label -->
+                <label class="col-lg-4 fw-semibold text-muted">
+                    Country
+                    <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                        <i class="ki-outline ki-information fs-7"></i>
+                    </span>
+                </label>
+                <!-- Value -->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">{{ $user->profile->country->name }}</span>
+                </div>
+            </div>
+        @endif 
          @if ($user->profile->bio != null)
              <div class="row mb-7">
                  <!--begin::Label-->

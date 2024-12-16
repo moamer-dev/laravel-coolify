@@ -56,7 +56,6 @@ class SeriesResource extends Resource
                             ->relationship('category', 'name'),
                         Forms\Components\Select::make('zaytonahs')
                             ->label('Zaytonahs')
-                            ->required()
                             ->searchable()
                             ->preload()
                             ->multiple()

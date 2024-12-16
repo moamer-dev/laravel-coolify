@@ -36,6 +36,7 @@ class EditCourse extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
+      
         if (isset($data['price_type']) && $data['price_type'] === 'free') {
             $data['price'] = null;
             $data['tax'] = null;
@@ -52,6 +53,11 @@ class EditCourse extends EditRecord
             } elseif ($data['discount_type'] === 'percentage') {
                 $data['discount_price'] = null;
             }
+        }
+
+        if (!isset($data['discount_type']) || $data['discount_type'] === null) {
+            $data['discount_price'] = null;
+            $data['discount_percentage'] = null;
         }
 
         $sections = $data['sections'] ?? [];

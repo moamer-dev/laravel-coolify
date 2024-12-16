@@ -329,7 +329,7 @@ class CourseResource extends Resource
                     ->money()
                     ->sortable()
                     ->getStateUsing(function ($record) {
-                        return $record->price_type === 'free' ? 'Free' : $record->price;
+                        return $record->price_type === 'free' ? 'Free' : getFormattedPriceBack($record);
                     })
                     ->badge(fn(string $state): bool => $state === 'Free')
                     ->color(fn(string $state): string => $state === 'Free' ? 'success' : 'secondary'),

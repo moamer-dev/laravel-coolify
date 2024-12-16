@@ -1,11 +1,11 @@
  <!--begin::Header secondary-->
- <div class="app-header-secondary">
+ <div class="app-header-secondary" style="direction: ltr">
      <!--begin::Header secondary container-->
      <div class="app-container container-xxl" id="kt_app_header_secondary_container">
          <!--begin::Wrapper slider-->
          <div class="app-header-slider d-flex flex-stack h-100">
              <!--begin::Slider button-->
-             <button class="btn btn-icon btn-color-gray-500 btn-active-color-primary ms-xxl-n18"
+             <button class="btn btn-icon btn-color-gray-500 btn-active-color-primary ms-xxl-n18" 
                  id="kt_app_header_slider_prev">
                  <i class="ki-outline ki-left-square fs-2x"></i>
              </button>
@@ -13,14 +13,14 @@
              <!--begin::Header slider-->
              <div class="tns tns-fit w-100">
                  <!--begin::Slider-->
-                 <div data-tns="true" data-tns-loop="false" data-tns-swipe-angle="false" data-tns-speed="2000"
-                     data-tns-autoplay="true" data-tns-autoplay-timeout="10000" data-tns-controls="true"
+                 <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000"
+                     data-tns-autoplay="true" data-tns-autoplay-timeout="10000" data-tns-controls="false"
                      data-tns-nav="false" data-tns-items="1" data-tns-gutter="0"
                      data-tns-responsive="{470: {items: 2}, 670: {items: 3, gutter: 15}, 992: {items: 5, gutter: 20}, 1300: {items: 6, gutter: 40}}"
                      data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_app_header_slider_prev"
                      data-tns-next-button="#kt_app_header_slider_next">
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -39,7 +39,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/activity.html"
+                     <a style="direction: rtl" href="pages/social/activity.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -58,7 +58,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -77,7 +77,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/followers.html"
+                     <a style="direction: rtl" href="pages/social/followers.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -96,7 +96,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -115,7 +115,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/settings.html"
+                     <a style="direction: rtl" href="pages/social/settings.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -134,7 +134,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -153,7 +153,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -172,7 +172,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/followers.html"
+                     <a style="direction: rtl" href="pages/social/followers.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -191,7 +191,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -210,7 +210,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/activity.html"
+                     <a style="direction: rtl" href="pages/social/activity.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -229,7 +229,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -248,7 +248,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/followers.html"
+                     <a style="direction: rtl" href="pages/social/followers.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">
@@ -267,7 +267,7 @@
                      </a>
                      <!--end::Item-->
                      <!--begin::Item-->
-                     <a href="pages/social/feeds.html"
+                     <a style="direction: rtl" href="pages/social/feeds.html"
                          class="parent-hover cursor-pointer d-flex align-items-center flex-md-row-fluid py-lg-2 px-0">
                          <!--begin::Symbol-->
                          <div class="symbol symbol-35px symbol-lg-40px me-3">

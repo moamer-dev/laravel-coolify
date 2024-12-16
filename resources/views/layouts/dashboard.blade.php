@@ -50,7 +50,9 @@
             <div class="app-wrapper flex-column flex-row-fluid bg-gray-100" id="kt_app_wrapper">
                 <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div style="min-height: 78vh;">
                         @yield('content')
+                        </div>
                         @include('components.layout.footer')
                     </div>
                 </div>
