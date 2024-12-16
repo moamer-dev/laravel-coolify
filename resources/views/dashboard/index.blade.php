@@ -7,7 +7,7 @@
         <!--begin::Row-->
         <div class="row g-5 g-xxl-10">
             <!--begin::Col-->
-            <div class="col-xxl-4 mb-xxl-10 bg-gray-100 pt-4 rounded-1">
+            <div class="col-xxl-4 mb-xxl-10 bg-gray-100">
                 <!--begin::Card Widget 22-->
                 <div class="card card-reset mb-5 mb-xl-10">
                     <!--begin::Body-->
@@ -69,7 +69,7 @@
                                     <!--begin::Body-->
                                     <div class="card-body p-0">
                                         <!--begin::Items-->
-                                        <a href="pages/contact.html"
+                                        <a href="{{ route('learn') }}"
                                             class="btn btn-active-color-primary px-7 py-6 text-start w-100">
                                             <!--begin::Icon-->
                                             <i class="ki-outline ki-message-edit fs-2x fs-lg-2hx text-gray-500 ms-n1"></i>

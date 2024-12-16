@@ -2,7 +2,7 @@
  <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
      <!--begin::Title-->
      <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-         Account Overview</h1>
+         {{ $title }}</h1>
      <!--end::Title-->
      <!--begin::Breadcrumb-->
      <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -27,7 +27,7 @@
          </li>
          <!--end::Item-->
          <!--begin::Item-->
-         <li class="breadcrumb-item text-gray-900">{{ Auth::user()->name }}</li>
+         <li class="breadcrumb-item text-gray-900">{{ $active }}</li>
          <!--end::Item-->
      </ul>
      <!--end::Breadcrumb-->

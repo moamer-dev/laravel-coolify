@@ -7,6 +7,7 @@
             <!--begin::Col-->
             <div class="col-7 ps-xl-13">
                 <!--begin::Text-->
+                <h1 class="text-white fw-bolder fs-1 fs-xxl-3 mb-8">{{ $course->name }}</h1>
                 <span class="fw-semibold text-white fs-6 mb-8 d-block opacity-75">{{ $course->short_title }}</span>
                 <!--end::Text-->
                 <!--begin::Items-->

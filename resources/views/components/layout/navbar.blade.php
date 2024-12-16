@@ -1,7 +1,10 @@
 <!--begin::Header-->
 @php
-    $user = Auth::user()->load('profile');
-    Debugbar::info($user);
+    if (Auth::user()) {
+        $user = Auth::user()->load('profile');
+        Debugbar::info($user);
+    }
+
 @endphp
 <div id="kt_app_header" class="app-header">
     <!--begin::Header primary-->
@@ -49,7 +52,22 @@
                     <!--end::Menu wrapper-->
                 </div>
                 <!--end::Chat-->
-                @include('components.navbar.nav-user-menu')
+                @if (Auth::user())
+                    @include('components.navbar.nav-user-menu')
+                @else
+                    <div class="app-navbar-item">
+                        <!--begin::Menu- wrapper-->
+                        <div class="btn btn-icon btn-icon-gray-600 btn-active-color-primary"
+                            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                            data-kt-menu-placement="bottom">
+                            <a href="{{ route('login') }}"
+                                class="btn btn-icon btn-icon-gray-600 btn-active-color-primary position-relative">
+                                <i class="ki-outline
+                        ki-user fs-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
             <!--end::Navbar-->
         </div>
