@@ -137,7 +137,7 @@
                             </div>
                             <div class="row row-cols-lg-12 row-cols-1 mt-3">
                                 <div class="col-12">
-                                    @if ($score >= $quiz->passing_percentage)
+                                    @if ($score >= $quiz->passing_score)
                                         <div class="alert bg-light-success fade show" role="alert">
                                             <p>Your score: <strong>{{ $score }} </strong> out of
                                                 <strong>{{ $totalQuestionsPoints }}</strong>

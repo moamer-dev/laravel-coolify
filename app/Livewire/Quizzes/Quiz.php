@@ -106,9 +106,14 @@ class Quiz extends Component
     public function submitQuiz()
     {
         $this->score = 0;
+        $user = Auth::user();
+        $quizAttempt = QuizAttempt::create([
+            'user_id' => $user->id,
+            'quiz_id' => $this->quizId,
+            'score' => $this->score,
+        ]);
         foreach ($this->answers as $questionId => $optionId) {
             $option = QuestionOption::find($optionId);
-
             if ($option && $option->is_correct) {
                 $question = $option->question;
                 $this->score += $question->points;
@@ -118,19 +123,24 @@ class Quiz extends Component
                     'quiz_id' => $this->quizId,
                     'question_id' => $questionId,
                     'option_id' => $optionId,
+                    'quiz_attempt_id' => $quizAttempt->id,
                 ]);
             } else {
                 $this->worngAnswers++;
+                Answer::create([
+                    'user_id' => Auth::user()->id,
+                    'quiz_id' => $this->quizId,
+                    'question_id' => $questionId,
+                    'option_id' => $optionId,
+                    'quiz_attempt_id' => $quizAttempt->id,
+                ]);
             }
+
+            $quizAttempt->update([
+                'score' => $this->score,
+            ]);
+            $quizAttempt->save();
         }
-
-        $user = Auth::user();
-
-        QuizAttempt::create([
-            'user_id' => $user->id,
-            'quiz_id' => $this->quizId,
-            'score' => $this->score,
-        ]);
 
         $this->isSubmitted = true;
         $this->isFinished = true;

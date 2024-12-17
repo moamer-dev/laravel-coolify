@@ -25,6 +25,7 @@
                             <th>Quiz</th>
                             <th>Score</th>
                             <th>Status</th>
+                            <th>Date</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -42,8 +43,10 @@
                                         <span class="badge bg-danger">Failed</span>
                                     @endif
                                 </td>
+                                <td>{{ $quizAttempt->created_at->diffForHumans() }}</td>
                                 <td>
-                                    <a href="{{ route('quiz.attempt.show', ['attemptId' => $quizAttempt->id]) }}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{ route('quiz.attempt.show', ['attemptId' => $quizAttempt->id]) }}"
+                                        class="btn btn-primary btn-sm">View</a>
                                     <a href="#" wire:click.prevent="delete({{ $quizAttempt->id }})"
                                         class="btn btn-danger btn-sm">Delete</a>
                             </tr>

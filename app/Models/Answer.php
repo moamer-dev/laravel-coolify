@@ -32,4 +32,9 @@ class Answer extends Model
     {
         return $this->belongsTo(Quiz::class);
     }
+
+    public function quizAttempt()
+    {
+        return $this->belongsTo(QuizAttempt::class);
+    }
 }
