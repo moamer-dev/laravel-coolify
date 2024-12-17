@@ -1,3 +1,6 @@
+{{-- @php 
+dd($model);
+@endphp --}}
 <div class="col-lg-4 col-md-6 mb-4">
     <div class="card">
         <a href="{{ route('course.view', [$item->slug]) }}">

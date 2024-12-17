@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuizAttemptController;
 use App\Livewire\Quizzes\Quiz;
 use App\Livewire\Courses\Learn;
 
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/course/{slug}', [CourseController::class, 'view'])->name('course.view');
     Route::get('/quiz/{slug}', Quiz::class)->name('quiz.index');
     Route::get('/profile/quiz-attempts', [UserController::class, 'quizAttempts'])->name('user.quiz-attempts');
+    Route::get('/quiz-attempts/{attemptId}', [QuizAttemptController::class, 'show'])->name('quiz.attempt.show');
+
     //Route::get('/quiz/{slug}', Quiz::class)->name('quiz.index');
 });
 

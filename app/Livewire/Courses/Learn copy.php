@@ -7,9 +7,9 @@ use Livewire\Component;
 use App\Models\Course;
 use App\Models\Project;
 use App\Models\Series;
+use App\Models\Quiz;
 use App\Models\Category;
 use App\Models\Level;
-use App\Models\Quiz;
 
 class Learn extends Component
 {
@@ -21,8 +21,6 @@ class Learn extends Component
     public $selectedCategories = [];
     #[Url(as: 'l')]
     public $selectedLevels = [];
-    #[Url(as: 't')]
-    public $selectedTypes = [];
     #[Url(as: 's')]
     public $sortBy = 'Newest';
 
@@ -31,7 +29,7 @@ class Learn extends Component
         $this->loadItems();
     }
 
-  public function loadItems()
+   public function loadItems()
     {
         $query = match ($this->model) {
             'courses' => Course::query(),
@@ -41,18 +39,22 @@ class Learn extends Component
             default => Course::query(),
         };
 
+        // Apply category filter
         if (!empty($this->selectedCategories)) {
             $query = $this->applyCategoryFilter($query);
         }
 
-        if ($this->model !== 'series' && !empty($this->selectedLevels)) {
+        // Apply type filter for quizzes only
+        if ($this->model === 'quizzes' && request()->has('type')) {
+            $query->where('type', request()->get('type'));
+        }
+
+        // Apply level filter (not applicable for series or quizzes)
+        if (!in_array($this->model, ['series', 'quizzes']) && !empty($this->selectedLevels)) {
             $query->whereIn('level_id', $this->selectedLevels);
         }
 
-        if ($this->model === 'quizzes' && !empty($this->selectedTypes)) {
-            $query->whereIn('type', $this->selectedTypes);
-        }
-
+        // Sorting logic
         $query = match ($this->sortBy) {
             'Newest' => $query->latest(),
             'Oldest' => $query->oldest(),
@@ -62,6 +64,7 @@ class Learn extends Component
             default => $query,
         };
 
+        // Fetch items with relationships based on model
         $this->items = match ($this->model) {
             'courses', 'projects' => $query->with('creator', 'categories', 'level')->get(),
             'series' => $query->with('category')->get(),
@@ -70,13 +73,10 @@ class Learn extends Component
         };
     }
 
+
     private function applyCategoryFilter($query)
     {
-        if ($this->model === 'quizzes') {
-        return $query->whereIn('category_id', $this->selectedCategories);
-        }
-
-        if ($this->model === 'series') {
+        if ($this->model === 'series' || $this->model === 'quizzes') {
             return $query->whereIn('category_id', $this->selectedCategories);
         }
 
@@ -85,17 +85,13 @@ class Learn extends Component
         });
     }
 
+
     public function updatedSelectedCategories()
     {
         $this->loadItems();
     }
 
     public function updatedSelectedLevels()
-    {
-        $this->loadItems();
-    }
-
-    public function updatedSelectedTypes()
     {
         $this->loadItems();
     }
@@ -114,7 +110,7 @@ class Learn extends Component
 
     public function render()
     {
-        $levels = $this->model !== 'series' ? Level::all() : collect(); // Hide levels for Series
+        $levels = $this->model !== 'series' ? Level::all() : collect();
         $categories = Category::all();
         return view('livewire.courses.learn', compact('levels', 'categories'));
     }

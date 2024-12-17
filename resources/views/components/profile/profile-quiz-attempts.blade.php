@@ -43,7 +43,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{ route('quiz.attempt.show', ['attemptId' => $quizAttempt->id]) }}" class="btn btn-primary btn-sm">View</a>
                                     <a href="#" wire:click.prevent="delete({{ $quizAttempt->id }})"
                                         class="btn btn-danger btn-sm">Delete</a>
                             </tr>

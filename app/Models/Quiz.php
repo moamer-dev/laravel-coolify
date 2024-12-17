@@ -34,4 +34,9 @@ class Quiz extends Model
     {
         return $this->hasOneThrough(Course::class, Section::class, 'id', 'id', 'section_id', 'course_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

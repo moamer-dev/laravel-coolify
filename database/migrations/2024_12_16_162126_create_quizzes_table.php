@@ -17,17 +17,20 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->enum('type', ['assessment', 'interview', 'course', 'challenge'])->nullable();
             $table->boolean('is_timed')->default(0);
             $table->integer('duration')->nullable();
-            $table->enum('duration_unit', ['minutes', 'hours'])->nullable()->default('minutes');
-            $table->integer('passing_percentage')->default(0);
-            $table->integer('retake_attempts')->default(0);
-            $table->boolean('is_reviewable')->default(0);
-            $table->boolean('is_active')->default(1);
+            $table->enum('duration_unit', ['minutes', 'hours'])->nullable();
+            $table->integer('passing_score')->nullable()->default(0);
+            $table->integer('retake_attempts')->nullable()->default(0);
+            $table->boolean('is_reviewable')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

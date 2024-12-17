@@ -35,4 +35,14 @@ class Category extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

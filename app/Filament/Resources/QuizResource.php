@@ -61,30 +61,37 @@ class QuizResource extends Resource
                                 ->readOnly(),
                             Textarea::make('description')
                                 ->label('Description')
-                                ->required()
                                 ->placeholder('Description'),
-                            Toggle::make('is_timed')
+                            TextInput::make('retake_attempts')
+                                ->label('Retake Attempts')
+                                ->placeholder('Retake Attempts')
+                                ->numeric(),
+                            TextInput::make('passing_score')
+                                ->label('Passing Score')
+                                ->placeholder('Passing Score')
+                                ->numeric(),
+                                 Toggle::make('is_timed')
+                                ->live()
                                 ->label('Has Timer?')
-                                ->default(false),
+                                ->default(false)
+                                ->afterStateUpdated(function (callable $set, $state) {
+                                    if ($state == false) {
+                                        $set('duration', null);
+                                        $set('duration_unit', null);
+                                    }
+                                }),
                             TextInput::make('duration')
                                 ->label('Duration')
-                                ->required()
-                                ->placeholder('Duration'),
+                                ->placeholder('Duration')
+                                ->numeric()
+                                ->visible(fn(Get $get): bool => $get('is_timed') == true),
                             Select::make('duration_unit')
                                 ->label('Duration Unit')
                                 ->options([
                                     'minutes' => 'Minutes',
                                     'hours' => 'Hours',
-                                    'days' => 'Days',
                                 ])
-                                ->required(),
-                            TextInput::make('retake_attempts')
-                                ->label('Retake Attempts')
-                                ->required()
-                                ->placeholder('Retake Attempts'),
-                            TextInput::make('passing_percentage')
-                                ->label('Passing Score')
-                                ->required(),
+                                ->visible(fn(Get $get): bool => $get('is_timed') == true),
                         ])->columns(2),
                     Section_Model::make('Options')
                         ->schema([
@@ -92,21 +99,34 @@ class QuizResource extends Resource
                                 ->default(false),
                             Toggle::make('is_reviewable')
                                 ->default(false),
+                            Select::make('type')
+                                ->live()
+                                ->label('Quiz Type')
+                                ->options([
+                                    'assessment' => 'Assessment',
+                                    'interview' => 'Interview',
+                                    'course' => 'Course',
+                                    'challenge' => 'Challenge',
+                                ]),
                             Select::make('course_id')
                                 ->live()
                                 ->label('Course')
                                 ->searchable()
-                                ->options(fn() => Course::pluck('name', 'id')) // Fetch courses
+                                ->options(fn() => Course::pluck('name', 'id'))
                                 ->preload()
                                 ->reactive()
-                                ->afterStateUpdated(fn(Set $set) => $set('section_id', null)), // Reset section when course changes
-                            // Section selection
+                                ->afterStateUpdated(fn(Set $set) => $set('section_id', null))
+                                ->visible(fn(Get $get): bool => $get('type') === 'course'),
                             Select::make('section_id')
                                 ->label('Section')
                                 ->searchable()
                                 ->options(fn(Get $get) => Section::where('sectionable_type', Course::class)
                                     ->where('sectionable_id', $get('course_id'))
                                     ->pluck('name', 'id'))
+                                ->visible(fn(Get $get): bool => $get('type') == 'course'),
+                            Select::make('category_id')
+                                ->label('Category')
+                                ->relationship('category', 'name'),
                         ])->grow(false),
                 ])->from('md')
             ])->columns(1);
@@ -123,8 +143,9 @@ class QuizResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_reviewable')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('category.name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('deleted_at')

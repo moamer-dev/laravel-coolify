@@ -18,7 +18,7 @@ dd($items);
                     </ul>
                 </div>
             </div>
-            @if ($model === 'projects' || $model === 'courses')
+            @if ($model !== 'series')
             <div class="card mt-4">
                 <div class="card-body">
                     <h5 class="mb-3">Levels</h5>
@@ -34,36 +34,18 @@ dd($items);
                 </div>
             </div>
             @endif
-            @if ($model === 'quizzes')
-                <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="mb-3">Quiz Type</h5>
-                    <ul class="list-unstyled">
-                            <li>
-                                <input type="checkbox" wire:model.live="selectedTypes" value="assessment" 
-                                    id="levelCheck-Assessment">
-                                <label for="levelCheck-assessment">Assessment</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" wire:model.live="selectedTypes" value="interview" 
-                                    id="levelCheck-interview">
-                                <label for="levelCheck-interview">interview</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" wire:model.live="selectedTypes" value="course" 
-                                    id="levelCheck-course">
-                                <label for="levelCheck-course">course</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" wire:model.live="selectedTypes" value="challenge" 
-                                    id="levelCheck-challenge">
-                                <label for="levelCheck-challenge">Challenge</label>
-                            </li>
-                    </ul>
-                </div>
+            {{-- @if ($model === 'quizzes')
+            <div class="mb-3">
+                <label for="quizType" class="form-label">Filter by Type</label>
+                <select id="quizType" class="form-select" onchange="Livewire.dispatch('updatedSortBy', { type: this.value })">
+                    <option value="">All Types</option>
+                    <option value="assessment">Assessment</option>
+                    <option value="interview">Interview</option>
+                    <option value="course">Course</option>
+                    <option value="challenge">Challenge</option>
+                </select>
             </div>
-            @endif
-
+            @endif --}}
         </div>
          <style>
                     .course-image {
@@ -100,39 +82,28 @@ dd($items);
                         wire:click="setModel('quizzes')">Quizzes</button>
                 </div>
             </div>
-            @if ($model === 'courses' || $model === 'projects')
-            <div class="row">
+           <div class="row">
                 @forelse ($items as $item)
-                    @livewire('courses.course-card', ['item' => $item],  key($model . '-' . $item->id))
+                    @switch($model)
+                        @case('courses')
+                        @case('projects')
+                            @livewire('courses.course-card', ['item' => $item], key($model . '-' . $item->id))
+                            @break
+
+                        @case('series')
+                            @include('components.courses.series-card', ['item' => $item])
+                            @break
+
+                        @case('quizzes')
+                            @include('components.courses.quiz-card', ['item' => $item])
+                            @break
+                    @endswitch
                 @empty
                     <div class="col-12">
                         <p>No {{ ucfirst($model) }} found.</p>
                     </div>
                 @endforelse
             </div>
-            @endif
-            @if ($model === 'series')
-            <div class="row">
-                @forelse ($items as $item)
-                   @include('components.courses.series-card', ['item' => $item])
-                @empty
-                    <div class="col-12">
-                        <p>No {{ ucfirst($model) }} found.</p>
-                    </div>
-                @endforelse
-            </div>
-            @endif
-            @if ($model === 'quizzes')
-            <div class="row">
-                @forelse ($items as $item)
-                    @include('components.courses.quiz-card', ['item' => $item])
-                @empty
-                    <div class="col-12">
-                        <p>No {{ ucfirst($model) }} found.</p>
-                    </div>
-                @endforelse
-            </div>
-            @endif
         </div>
     </div>
 </div>
