@@ -38,7 +38,7 @@ class QuestionResource extends Resource
                 Split::make([
                     Section::make('Add Question')
                         ->schema([
-                            TextInput::make('title')
+                            RichEditor::make('title')
                                 ->label('Title')
                                 ->required()
                                 ->placeholder('Quiz Title'),
@@ -66,11 +66,11 @@ class QuestionResource extends Resource
                                 ->placeholder('Quiz Explanation')
                                 ->columnSpanFull(),
                             Toggle::make('has_image')
-                                    ->live()
-                                    ->default(false),
+                                ->live()
+                                ->default(false),
                             FileUpload::make('question_image')
-                                    ->image()
-                                    ->visible(fn(Get $get): bool => $get('has_image') === true),
+                                ->image()
+                                ->visible(fn(Get $get): bool => $get('has_image') === true),
                             Toggle::make('has_video')
                                 ->required()
                                 ->live()
@@ -108,7 +108,7 @@ class QuestionResource extends Resource
                                 ->default(null)
                                 ->label('File Path')
                                 ->visible(fn(Get $get): bool => $get('video_source') === 'file'),
-                                    ])->columns(2),
+                        ])->columns(2),
                     Section::make('Options')
                         ->schema([
                             Toggle::make('is_active')

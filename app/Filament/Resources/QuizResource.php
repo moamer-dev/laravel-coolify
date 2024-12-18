@@ -70,7 +70,7 @@ class QuizResource extends Resource
                                 ->label('Passing Score')
                                 ->placeholder('Passing Score')
                                 ->numeric(),
-                                 Toggle::make('is_timed')
+                            Toggle::make('is_timed')
                                 ->live()
                                 ->label('Has Timer?')
                                 ->default(false)
