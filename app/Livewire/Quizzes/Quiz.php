@@ -2,18 +2,13 @@
 
 namespace App\Livewire\Quizzes;
 
-use App\Models\User;
-use App\Models\Section;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Models\Answer;
 use Illuminate\Support\Facades\Auth;
 use App\Models\QuizAttempt;
 use App\Models\QuestionOption;
 use App\Models\Quiz as QuizModel;
-use Livewire\Attributes\Layout;
 
-//#[Layout('layouts.app')]
 class Quiz extends Component
 {
     public $quizId;

@@ -43,4 +43,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Project::class, 'course_project');
     }
+
+    public function technologyStacks()
+    {
+        return $this->belongsToMany(TechnologyStack::class, 'course_technology_stack');
+    }
 }

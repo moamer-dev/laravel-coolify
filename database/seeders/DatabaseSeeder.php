@@ -11,6 +11,11 @@ use Database\Seeders\CurrenciesSeeder;
 use Database\Seeders\CoursesSeeder;
 use Database\Seeders\LevelsSeeder;
 use Database\Seeders\ProjectsSeeder;
+use Database\Seeders\LearningPathSeeder;
+use Database\Seeders\LearningStackSeeder;
+use Database\Seeders\LearningPathStackSeeder;
+use Database\Seeders\TechnologyStackSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,12 +31,16 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            CategoriesSeeder::class,
-            CountriesSeeder::class,
-            CurrenciesSeeder::class,
-            LevelsSeeder::class,
-            CoursesSeeder::class,
-            ProjectsSeeder::class,
+            // CategoriesSeeder::class,
+            // CountriesSeeder::class,
+            // CurrenciesSeeder::class,
+            // LevelsSeeder::class,
+            // CoursesSeeder::class,
+            // ProjectsSeeder::class,
+            //LearningPathSeeder::class,
+            //LearningStackSeeder::class,
+            //LearningPathStackSeeder::class,
+            TechnologyStackSeeder::class,
         ]);
     }
 }

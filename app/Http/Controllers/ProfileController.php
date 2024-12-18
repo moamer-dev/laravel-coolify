@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\PathUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\LearningPath;
 
 class ProfileController extends Controller
 {
-
     public function overview(Request $request): View
     {
         $user = $request->user()->load('profile');
@@ -56,6 +57,19 @@ class ProfileController extends Controller
         return Redirect::route('profile.settings')->with('status', 'profile-updated');
     }
 
+    public function update_path(PathUpdateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        $user = $request->user();
+        if (empty($validated['learning_paths'])) {
+            $user->learningPaths()->detach();
+        } else {
+            $user->learningPaths()->sync($validated['learning_paths']);
+        }
+
+        return Redirect::route('profile.learningCenter')->with('status', 'profile-updated');
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -72,5 +86,23 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function learningCenter(Request $request): View
+    {
+        $user = $request->user()->load('profile', 'learningPaths');
+        $pathCourses = $user->pathCourses();
+        $pathQuizzes = $user->pathQuizzes();
+        $pathProjects = $user->pathProjects()->load('courses');
+        $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count();
+        //dd($pathProjects);
+        return view('dashboard.learning-center.index', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'tasksCount'));
+    }
+
+    public function learning_path(Request $request): View
+    {
+        $learningPaths = LearningPath::all();
+        $user = $request->user()->load('learningPaths.learningStacks.technologyStacks');
+        return view('dashboard.profile.learning-path', compact('user', 'learningPaths'));
     }
 }

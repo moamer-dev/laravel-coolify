@@ -39,4 +39,9 @@ class Quiz extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function technologyStacks()
+    {
+        return $this->belongsToMany(TechnologyStack::class, 'quiz_technology_stack');
+    }
 }

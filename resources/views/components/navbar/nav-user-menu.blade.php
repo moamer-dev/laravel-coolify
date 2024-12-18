@@ -12,7 +12,7 @@
           <!--end:Info-->
           <!--begin::User-->
           <div class="cursor-pointer symbol symbol symbol-circle symbol-35px symbol-md-40px">
-              <img class="" src="{{photo_or_default($user->profile->avatar)}}" alt="user" />
+              <img class="" src="{{ photo_or_default($user->profile->avatar) }}" alt="user" />
               <div
                   class="position-absolute translate-middle bottom-0 mb-1 start-100 ms-n1 bg-success rounded-circle h-8px w-8px">
               </div>
@@ -27,7 +27,7 @@
               <div class="menu-content d-flex align-items-center px-3">
                   <!--begin::Avatar-->
                   <div class="symbol symbol-50px me-5">
-                      <img alt="Logo" src="{{photo_or_default($user->profile->avatar)}}" />
+                      <img alt="Logo" src="{{ photo_or_default($user->profile->avatar) }}" />
                   </div>
                   <!--end::Avatar-->
                   <!--begin::Username-->
@@ -46,7 +46,19 @@
           <!--end::Menu separator-->
           <!--begin::Menu item-->
           <div class="menu-item px-5">
+              <a href="{{ route('dashboard') }}" class="menu-link px-5">Dashboard</a>
+          </div>
+          <div class="menu-item px-5">
               <a href="{{ route('profile.overview') }}" class="menu-link px-5">My Profile</a>
+          </div>
+          <div class="menu-item px-5">
+              <a href="{{ route('profile.learningCenter') }}" class="menu-link px-5">Learning Center</a>
+          </div>
+          <div class="menu-item px-5">
+              <a href="{{ route('profile.learning-path') }}" class="menu-link px-5">Learning Paths</a>
+          </div>
+          <div class="menu-item px-5">
+              <a href="{{ route('user.quiz-attempts') }}" class="menu-link px-5">Quiz Attempts</a>
           </div>
           <div class="separator my-2"></div>
           <!--end::Menu separator-->

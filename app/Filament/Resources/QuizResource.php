@@ -99,6 +99,13 @@ class QuizResource extends Resource
                                 ->default(false),
                             Toggle::make('is_reviewable')
                                 ->default(false),
+                            Forms\Components\Select::make('technologyStacks')
+                                ->label('Connected Technologies')
+                                ->searchable()
+                                ->preload()
+                                ->multiple()
+                                ->columnSpanFull()
+                                ->relationship('technologyStacks', 'name'),
                             Select::make('type')
                                 ->live()
                                 ->label('Quiz Type')

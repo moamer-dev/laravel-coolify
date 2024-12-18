@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Course;
+use App\Models\Quiz;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -67,5 +69,46 @@ class User extends Authenticatable implements MustVerifyEmail
     public function quizAttempts()
     {
         return $this->hasMany(QuizAttempt::class);
+    }
+
+    public function learningPaths()
+    {
+        return $this->belongsToMany(LearningPath::class, 'user_learning_path')
+            ->withTimestamps();
+    }
+
+    public function pathCourses()
+    {
+        return Course::whereHas('technologyStacks', function ($query) {
+            $query->whereHas('learningStacks', function ($subQuery) {
+                $subQuery->whereHas('learningPaths', function ($pathQuery) {
+                    $pathQuery->whereIn('learning_paths.id', $this->learningPaths->pluck('id'));
+                });
+            });
+        })->get();
+    }
+
+    public function pathQuizzes()
+    {
+        return Quiz::whereHas('technologyStacks', function ($query) {
+            $query->whereHas('learningStacks', function ($subQuery) {
+                $subQuery->whereHas('learningPaths', function ($pathQuery) {
+                    $pathQuery->whereIn('learning_paths.id', $this->learningPaths->pluck('id'));
+                });
+            });
+        })->get();
+    }
+
+    public function pathProjects()
+    {
+        return Project::whereHas('courses', function ($query) {
+            $query->whereHas('technologyStacks', function ($techQuery) {
+                $techQuery->whereHas('learningStacks', function ($stackQuery) {
+                    $stackQuery->whereHas('learningPaths', function ($pathQuery) {
+                        $pathQuery->whereIn('learning_paths.id', $this->learningPaths->pluck('id'));
+                    });
+                });
+            });
+        })->get();
     }
 }

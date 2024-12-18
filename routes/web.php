@@ -22,10 +22,13 @@ Route::get('/learn', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'overview'])->name('profile.overview');
+    Route::get('/learning-center', [ProfileController::class, 'learningCenter'])->name('profile.learningCenter');
     //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     //Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::get('/profile/billing', [ProfileController::class, 'billing'])->name('profile.billing');
+    Route::get('/profile/learning-path', [ProfileController::class, 'learning_path'])->name('profile.learning-path');
+    Route::patch('/profile/learning-path', [ProfileController::class, 'update_path'])->name('profile.update-path');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/course/{slug}', [CourseController::class, 'view'])->name('course.view');

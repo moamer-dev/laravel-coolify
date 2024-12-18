@@ -84,6 +84,10 @@
                      href="{{ route('profile.billing') }}">Billing</a>
              </li>
              <li class="nav-item mt-2">
+                 <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/learning-path*') ? 'active' : '' }} "
+                     href="{{ route('profile.learning-path') }}">Learning Path</a>
+             </li>
+             <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/quiz-attempts*') ? 'active' : '' }} "
                      href="{{ route('user.quiz-attempts') }}">Quiz Attempts</a>
              </li>

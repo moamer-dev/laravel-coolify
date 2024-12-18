@@ -75,8 +75,15 @@ class CourseResource extends Resource
 
                             Section::make('Metadata')
                                 ->schema([
+                                    Forms\Components\Select::make('technologyStacks')
+                                        ->label('Connected Technologies')
+                                        ->searchable()
+                                        ->preload()
+                                        ->multiple()
+                                        ->columnSpanFull()
+                                        ->relationship('technologyStacks', 'name'),
                                     Forms\Components\Select::make('projects')
-                                        ->label('Connected Projects')
+                                        ->label('Related Projects')
                                         ->searchable()
                                         ->preload()
                                         ->multiple()

@@ -37,6 +37,12 @@ class UserResource extends Resource
                             ->required()
                             ->maxLength(255),
                         Forms\Components\DateTimePicker::make('email_verified_at'),
+                        Forms\Components\Select::make('learningPaths')
+                            ->label('Learning Paths')
+                            ->searchable()
+                            ->preload()
+                            ->multiple()
+                            ->relationship('learningPaths', 'title'),
                         // Forms\Components\TextInput::make('password')
                         //     ->password()
                         //     ->maxLength(255),

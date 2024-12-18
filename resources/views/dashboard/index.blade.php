@@ -94,14 +94,14 @@
                                     <!--begin::Body-->
                                     <div class="card-body p-0">
                                         <!--begin::Items-->
-                                        <a href="apps/file-manager/folders.html"
+                                        <a href="{{ route('profile.learningCenter') }}"
                                             class="btn btn-active-color-primary px-7 py-6 text-start w-100">
                                             <!--begin::Icon-->
                                             <i class="ki-outline ki-rocket fs-2x fs-lg-2hx text-gray-500 ms-n1"></i>
                                             <!--end::Icon-->
                                             <!--begin::Desc-->
                                             <div class="fw-bold fs-5 pt-4">
-                                                Projects
+                                                Learning Path
                                             </div>
                                             <!--end::Desc-->
                                         </a>
