@@ -24,7 +24,7 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <a href="#"
-                                    class="text-gray-900 text-hover-primary fs-4 fw-bold">{{ $attempt->quiz->title }}</a>
+                                    class="text-gray-900 text-hover-primary fs-2 fw-bold">{{ $attempt->quiz->title }}</a>
                                 <span class="text-gray-500 fw-bold">{{ $attempt->quiz->type }},
                                     {{ $attempt->quiz->category?->name }}</span>
                             </div>
