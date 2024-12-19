@@ -111,4 +111,15 @@ class User extends Authenticatable implements MustVerifyEmail
             });
         })->get();
     }
+
+    public function pathSeries()
+    {
+        return Series::whereHas('technologyStack', function ($query) {
+            $query->whereHas('learningStacks', function ($subQuery) {
+                $subQuery->whereHas('learningPaths', function ($pathQuery) {
+                    $pathQuery->whereIn('learning_paths.id', $this->learningPaths->pluck('id'));
+                });
+            });
+        })->get();
+    }
 }

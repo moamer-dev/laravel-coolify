@@ -172,10 +172,10 @@
                                             <div class="m-0">
                                                 <!--begin::Number-->
                                                 <span
-                                                    class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">822</span>
+                                                    class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $pathSeries->count() }}</span>
                                                 <!--end::Number-->
                                                 <!--begin::Desc-->
-                                                <span class="text-gray-500 fw-semibold fs-6">Hours Learned</span>
+                                                <span class="text-gray-500 fw-semibold fs-6">Series</span>
                                                 <!--end::Desc-->
                                             </div>
                                             <!--end::Stats-->

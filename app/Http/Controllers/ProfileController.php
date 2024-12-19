@@ -94,9 +94,10 @@ class ProfileController extends Controller
         $pathCourses = $user->pathCourses();
         $pathQuizzes = $user->pathQuizzes();
         $pathProjects = $user->pathProjects()->load('courses');
-        $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count();
+        $pathSeries = $user->pathSeries();
+        $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count() + $pathSeries->count();
         //dd($pathProjects);
-        return view('dashboard.learning-center.index', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'tasksCount'));
+        return view('dashboard.learning-center.index', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'pathSeries', 'tasksCount'));
     }
 
     public function learning_path(Request $request): View

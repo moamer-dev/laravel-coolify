@@ -103,7 +103,9 @@ dd($items);
             @if ($model === 'courses' || $model === 'projects')
                 <div class="row">
                     @forelse ($items as $item)
-                        @livewire('courses.course-card', ['item' => $item], key($model . '-' . $item->id))
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            @livewire('courses.course-card', ['item' => $item], key($model . '-' . $item->id))
+                        </div>
                     @empty
                         <div class="col-12">
                             <p>No {{ ucfirst($model) }} found.</p>
@@ -125,7 +127,9 @@ dd($items);
             @if ($model === 'quizzes')
                 <div class="row">
                     @forelse ($items as $item)
-                        @include('components.courses.quiz-card', ['item' => $item])
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            @include('components.courses.quiz-card', ['item' => $item])
+                        </div>
                     @empty
                         <div class="col-12">
                             <p>No {{ ucfirst($model) }} found.</p>

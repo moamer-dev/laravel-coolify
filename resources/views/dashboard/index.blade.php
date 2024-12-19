@@ -101,7 +101,7 @@
                                             <!--end::Icon-->
                                             <!--begin::Desc-->
                                             <div class="fw-bold fs-5 pt-4">
-                                                Learning Path
+                                                Learning Center
                                             </div>
                                             <!--end::Desc-->
                                         </a>
@@ -119,14 +119,14 @@
                                     <!--begin::Body-->
                                     <div class="card-body p-0">
                                         <!--begin::Items-->
-                                        <a href="apps/subscriptions/list.html"
+                                        <a href="{{ route('user.path-view') }}"
                                             class="btn btn-active-color-primary px-7 py-6 text-start w-100">
                                             <!--begin::Icon-->
                                             <i class="ki-outline ki-chart-pie-3 fs-2x fs-lg-2hx text-gray-500 ms-n1"></i>
                                             <!--end::Icon-->
                                             <!--begin::Desc-->
                                             <div class="fw-bold fs-5 pt-4">
-                                                Subscriptions
+                                                Your Tasks
                                             </div>
                                             <!--end::Desc-->
                                         </a>

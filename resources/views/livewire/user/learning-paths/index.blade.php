@@ -1,160 +1,146 @@
-<div class="container py-4">
-    <div class="row g-3">
-        @foreach ($userPaths as $path)
+<div class="container">
+    <button class="btn btn-primary mt-3 mb-4 {{ !$activeTechnology ? 'd-none' : '' }}" wire:click="resetSelectTechnology">
+        {{ $activeTechnology ? 'Reset' : '' }}
+    </button>
+    <div class="row">
+        <!-- Learning Paths -->
+        @if (!$activeTechnology || $showLearningCards)
             <div class="col-md-4">
-                <div class="card learning-path-box shadow-lg" data-path-id="{{ $path->id }}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ $path->name }}</h5>
-                        <p class="card-text">{{ $path->description }}</p>
+                <div class="card" style="max-height: 550px; overflow-y: auto;">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-900">Learning Paths</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">Avg. 72% completed lessons</span>
+                        </h3>
+                    </div>
+                    <div class="card-body pt-5">
+                        @foreach ($userPaths as $path)
+                            <div class="d-flex flex-stack p-4 rounded {{ $activePath === $path->id ? 'bg-light-primary' : '' }}"
+                                wire:click="selectPath({{ $path->id }})" style="cursor: pointer;">
+                                <div class="d-flex align-items-center me-3">
+                                    <img src="http://127.0.0.1:8000/assets/media/svg/brand-logos/laravel-2.svg"
+                                        class="me-4 w-30px" alt="">
+                                    <div class="flex-grow-1">
+                                        <a href="javascript:void(0)"
+                                            class="text-gray-800 text-hover-primary fs-5 fw-bold lh-0">{{ $path->title }}</a>
+                                        <span class="text-gray-500 fw-semibold d-block fs-6">Path Description</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="separator separator-dashed my-3"></div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="learning-stacks-container d-none" id="path-{{ $path->id }}">
-                    @foreach ($path->learningStacks as $stack)
-                        <div class="card learning-stack-box my-2" data-stack-id="{{ $stack->id }}">
-                            <div class="card-body text-center">
-                                <h6 class="card-title">{{ $stack->name }}</h6>
-                                <p class="card-text">{{ $stack->description }}</p>
+            </div>
+        @endif
+
+        <!-- Learning Stacks -->
+        @if ($activePath && (!$activeTechnology || $showLearningCards))
+            <div class="col-md-4">
+                <div class="card" style="max-height: 550px; overflow-y: auto;">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-900">Learning Stacks</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">Avg. 72% completed lessons</span>
+                        </h3>
+                    </div>
+                    <div class="card-body pt-5">
+                        @foreach ($selectedPath->learningStacks as $stack)
+                            <div class="d-flex flex-stack p-4 rounded {{ $activeStack === $stack->id ? 'bg-light-info' : '' }}"
+                                wire:click="selectStack({{ $stack->id }})" style="cursor: pointer;">
+                                <div class="d-flex align-items-center me-3">
+                                    <img src="http://127.0.0.1:8000/assets/media/svg/brand-logos/laravel-2.svg"
+                                        class="me-4 w-30px" alt="">
+                                    <div class="flex-grow-1">
+                                        <a href="javascript:void(0)"
+                                            class="text-gray-800 text-hover-primary fs-5 fw-bold lh-0">{{ $stack->title }}</a>
+                                        <span class="text-gray-500 fw-semibold d-block fs-6">Stack Description</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="technology-stacks-container d-none" id="stack-{{ $stack->id }}">
-                            @foreach ($stack->technologyStacks as $tech)
-                                <div class="card technology-stack-box my-2" data-tech-id="{{ $tech->id }}">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">{{ $tech->name }}</h6>
-                                        <p class="card-text">{{ $tech->description }}</p>
-                                    </div>
-                                </div>
-                                <div class="data-container d-none" id="tech-{{ $tech->id }}">
-                                    <div class="data-buttons d-flex justify-content-around my-2">
-                                        <button class="btn btn-primary show-courses"
-                                            data-tech-id="{{ $tech->id }}">Courses</button>
-                                        <button class="btn btn-secondary show-quizzes"
-                                            data-tech-id="{{ $tech->id }}">Quizzes</button>
-                                        <button class="btn btn-success show-series"
-                                            data-tech-id="{{ $tech->id }}">Series</button>
-                                    </div>
-                                    <div class="data-content mt-3" id="data-{{ $tech->id }}">
-                                        <!-- Content dynamically rendered via Livewire -->
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
+                            <div class="separator separator-dashed my-3"></div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        @endforeach
+        @endif
+
+        <!-- Technology Stacks -->
+        @if ($activeStack)
+            <div class="col-md-4">
+                <div class="card" style="max-height: 550px; overflow-y: auto;">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-900">Technologies</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">Avg. 72% completed lessons</span>
+                        </h3>
+                    </div>
+                    <div class="card-body pt-5">
+                        @foreach ($selectedStack->technologyStacks as $tech)
+                            <div class="d-flex flex-stack p-4 rounded {{ $activeTechnology === $tech->id ? 'bg-light-success' : '' }}"
+                                wire:click="selectTechnology({{ $tech->id }})" style="cursor: pointer;">
+                                <div class="d-flex align-items-center me-3">
+                                    <img src="http://127.0.0.1:8000/assets/media/svg/brand-logos/laravel-2.svg"
+                                        class="me-4 w-30px" alt="">
+                                    <div class="flex-grow-1">
+                                        <a href="javascript:void(0)"
+                                            class="text-gray-800 text-hover-primary fs-5 fw-bold lh-0">{{ $tech->name }}</a>
+                                        <span class="text-gray-500 fw-semibold d-block fs-6">Technology
+                                            Description</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="separator separator-dashed my-3"></div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if ($activeTechnology)
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header border-0 pt-5">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-900">{{ $selectedTechnology->name }} -
+                                Content</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">Avg. 72% completed lessons</span>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group mb-3" role="group" aria-label="Content Buttons">
+                            <button class="btn btn-outline-primary {{ $contentType === 'courses' ? 'active' : '' }}"
+                                wire:click="showContent('courses')">Courses</button>
+                            <button class="btn btn-outline-primary {{ $contentType === 'quizzes' ? 'active' : '' }}"
+                                wire:click="showContent('quizzes')">Quizzes</button>
+                            <button class="btn btn-outline-primary {{ $contentType === 'series' ? 'active' : '' }}"
+                                wire:click="showContent('series')">Series</button>
+                        </div>
+
+                        <div class="row g-3">
+                            @if ($contentType === 'courses')
+                                @foreach ($selectedTechnology->courses as $course)
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        @livewire('courses.course-card', ['item' => $course], key($course->slug . '-' . $course->id))
+                                    </div>
+                                @endforeach
+                            @elseif ($contentType === 'quizzes')
+                                @foreach ($selectedTechnology->quizzes as $quiz)
+                                    <div class="col-md-4">
+                                        @include('components.courses.quiz-card', ['item' => $quiz])
+                                    </div>
+                                @endforeach
+                            @elseif ($contentType === 'series')
+                                @foreach ($selectedTechnology->series as $seriesItem)
+                                    <div class="col-12">
+                                        @include('components.courses.series-card', ['item' => $seriesItem])
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const learningPathBoxes = document.querySelectorAll('.learning-path-box');
-            const stackBoxes = document.querySelectorAll('.learning-stack-box');
-            const technologyBoxes = document.querySelectorAll('.technology-stack-box');
-
-            // Initialize GSAP animations
-            const gsap = window.gsap;
-
-            // Handle learning path click
-            learningPathBoxes.forEach(box => {
-                box.addEventListener('click', () => {
-                    const pathId = box.dataset.pathId;
-                    const stacksContainer = document.getElementById(`path-${pathId}`);
-                    if (stacksContainer.classList.contains('d-none')) {
-                        gsap.to(stacksContainer, {
-                            duration: 0.5,
-                            opacity: 1,
-                            height: 'auto',
-                            display: 'block'
-                        });
-                        stacksContainer.classList.remove('d-none');
-                    } else {
-                        gsap.to(stacksContainer, {
-                            duration: 0.5,
-                            opacity: 0,
-                            height: 0,
-                            display: 'none'
-                        });
-                        stacksContainer.classList.add('d-none');
-                    }
-                });
-            });
-
-            // Handle stack click
-            stackBoxes.forEach(box => {
-                box.addEventListener('click', () => {
-                    const stackId = box.dataset.stackId;
-                    const techContainer = document.getElementById(`stack-${stackId}`);
-                    if (techContainer.classList.contains('d-none')) {
-                        gsap.to(techContainer, {
-                            duration: 0.5,
-                            opacity: 1,
-                            height: 'auto',
-                            display: 'block'
-                        });
-                        techContainer.classList.remove('d-none');
-                    } else {
-                        gsap.to(techContainer, {
-                            duration: 0.5,
-                            opacity: 0,
-                            height: 0,
-                            display: 'none'
-                        });
-                        techContainer.classList.add('d-none');
-                    }
-                });
-            });
-
-            // Handle technology stack click
-            technologyBoxes.forEach(box => {
-                box.addEventListener('click', () => {
-                    const techId = box.dataset.techId;
-                    const dataContainer = document.getElementById(`tech-${techId}`);
-                    if (dataContainer.classList.contains('d-none')) {
-                        gsap.to(dataContainer, {
-                            duration: 0.5,
-                            opacity: 1,
-                            height: 'auto',
-                            display: 'block'
-                        });
-                        dataContainer.classList.remove('d-none');
-                    } else {
-                        gsap.to(dataContainer, {
-                            duration: 0.5,
-                            opacity: 0,
-                            height: 0,
-                            display: 'none'
-                        });
-                        dataContainer.classList.add('d-none');
-                    }
-                });
-            });
-
-            // Handle data buttons click (courses, quizzes, series)
-            document.querySelectorAll('.data-buttons button').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const techId = event.target.dataset.techId;
-                    const type = event.target.classList.contains('show-courses') ? 'courses' :
-                        event.target.classList.contains('show-quizzes') ? 'quizzes' : 'series';
-
-                    // Dynamically load the content via Livewire
-                    Livewire.emit('loadData', {
-                        techId,
-                        type
-                    });
-                });
-            });
-        });
-
-        document.addEventListener('data-loaded', event => {
-            const {
-                techId,
-                type,
-                data
-            } = event.detail;
-            const container = document.getElementById(`data-${techId}`);
-            container.innerHTML = data.map(item => `<div>${item.name}</div>`).join('');
-        });
-    </script>
-@endpush

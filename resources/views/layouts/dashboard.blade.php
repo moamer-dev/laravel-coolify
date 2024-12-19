@@ -20,6 +20,8 @@
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> --}}
     @yield('styles')
     @yield('headerScripts')
     @livewireStyles

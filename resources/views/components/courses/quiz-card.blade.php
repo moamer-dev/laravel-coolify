@@ -1,4 +1,3 @@
-<div class="col-lg-4 col-md-6 mb-4">
     <div class="card">
         <a href="{{ route('course.view', [$item->slug]) }}">
             <img src="{{ feature_image_or_default($item->feature_image) }}" class="card-img-top course-image"
@@ -29,4 +28,3 @@
             </div>
         </div>
     </div>
-</div>
