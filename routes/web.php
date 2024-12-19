@@ -3,8 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuizAttemptController;
+use App\Http\Controllers\LearningPathController;
 use App\Livewire\Quizzes\Quiz;
 use App\Livewire\Courses\Learn;
 
@@ -35,7 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/quiz/{slug}', Quiz::class)->name('quiz.index');
     Route::get('/profile/quiz-attempts', [UserController::class, 'quizAttempts'])->name('user.quiz-attempts');
     Route::get('/quiz-attempts/{attemptId}', [QuizAttemptController::class, 'show'])->name('quiz.attempt.show');
-
+    Route::get('/course/{course}/{lesson}', [CourseController::class, 'lesson_view'])->name('lesson.view');
+    Route::get('/series/{series}/{zaytonah}', [SeriesController::class, 'zaytonah_view'])->name('zaytonah.view');
+    Route::get('/user/paths/', [LearningPathController::class, 'view'])->name('user.path-view');
     //Route::get('/quiz/{slug}', Quiz::class)->name('quiz.index');
 });
 

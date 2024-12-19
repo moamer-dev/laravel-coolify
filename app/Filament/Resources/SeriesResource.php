@@ -34,6 +34,8 @@ class SeriesResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
+                            ->live()
+                            ->debounce(300)
                             ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
                                 $slug = Str::slug($state);
                                 $suffix = '';
@@ -54,6 +56,10 @@ class SeriesResource extends Resource
                             ->searchable()
                             ->preload()
                             ->relationship('category', 'name'),
+                        Forms\Components\Select::make('technology_stack_id')
+                            ->searchable()
+                            ->preload()
+                            ->relationship('technologyStack', 'name'),
                         Forms\Components\Select::make('zaytonahs')
                             ->label('Zaytonahs')
                             ->searchable()

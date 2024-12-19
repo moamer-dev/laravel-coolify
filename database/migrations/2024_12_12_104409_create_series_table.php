@@ -18,11 +18,13 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('technology_stack_id')->nullable();
             $table->boolean('is_active')->default(false);
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('technology_stack_id')->references('id')->on('technology_stacks')->onDelete('set null');
         });
     }
 

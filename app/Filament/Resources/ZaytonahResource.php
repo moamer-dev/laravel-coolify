@@ -53,7 +53,6 @@ class ZaytonahResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\Select::make('series')
                             ->label('Series')
-                            ->required()
                             ->searchable()
                             ->preload()
                             ->multiple()

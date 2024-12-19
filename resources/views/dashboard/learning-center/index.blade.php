@@ -865,8 +865,8 @@
                                 <!--end::Title-->
                                 <!--begin::Action-->
                                 <div class="mb-3">
-                                    <a href="#" class="btn btn-danger fw-semibold me-2" data-bs-toggle="modal"
-                                        data-bs-target="#kt_modal_upgrade_plan">Get Reward</a>
+                                    <a href="{{ route('user.path-view') }}"
+                                        class="btn btn-primary fw-semibold me-2">Explore Path</a>
                                     <a href="apps/support-center/overview.html"
                                         class="btn btn-color-white bg-white bg-opacity-15 bg-hover-opacity-25 fw-semibold">How
                                         to</a>

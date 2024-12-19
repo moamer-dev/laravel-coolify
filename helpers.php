@@ -22,9 +22,9 @@ function getFormattedPriceBack($course)
 {
     if ($course->price_type === 'free') {
         return 'Free';
-    } 
+    }
     if ($course->price_type === 'paid') {
-        if ($course->discount_type ==='fixed_amount') {
+        if ($course->discount_type === 'fixed_amount') {
             return $course->currency->symbol . number_format($course->price - $course->discount_price, 2);
         } else if ($course->discount_type === 'percentage') {
             return $course->currency->symbol . number_format($course->price - ($course->price * $course->discount_percentage / 100), 2);
@@ -38,7 +38,7 @@ function getFormattedPriceFront($course)
 {
     if ($course->price_type === 'free') {
         return '<span class="fw-semibold text-success">Free</span>';
-    } 
+    }
 
     if ($course->price_type === 'paid') {
         $symbol = $course->currency->symbol;
@@ -93,6 +93,15 @@ function photo_or_default($photo = null)
         return asset('/storage/' . $photo);
     } else {
         return asset('assets/media/svg/avatars/blank.svg');
+    }
+}
+
+function feature_image_or_default($photo = null)
+{
+    if ($photo) {
+        return asset('/storage/' . $photo);
+    } else {
+        return asset('assets/media/demo/1600x1200/2.jpg');
     }
 }
 

@@ -90,15 +90,12 @@ class TechnologyStackResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('learningStacks.title')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable()
+                    ->extraAttributes(['style' => 'white-space: normal; word-wrap: break-word;']),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('deleted_at')

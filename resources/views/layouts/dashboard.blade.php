@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+
     @yield('styles')
+    @yield('headerScripts')
     @livewireStyles
 </head>
 
@@ -63,7 +65,7 @@
     <script src="{{ asset('assets') }}/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets') }}/js/scripts.bundle.js"></script>
     @livewireScripts
-    @yield('scripts')
+    @yield('footerScripts')
 </body>
 
 </html>

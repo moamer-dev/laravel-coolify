@@ -1,5 +1,5 @@
 <div class="card mb-4 card-flush">
-    <img src="{{ photo_or_default($course->feature_image) }}" alt="course" class="card-img-top">
+    <img src="{{ feature_image_or_default($course->feature_image) }}" alt="course" class="card-img-top">
     <!-- Card body -->
     <div class="card-body">
         <div class="d-flex flex-column h-100">

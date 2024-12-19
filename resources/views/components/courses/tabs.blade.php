@@ -52,7 +52,7 @@
                     @endif
                     <!--begin::Accordion-->
                     <div class="accordion accordion-icon-toggle" id="kt_accordion_2">
-                        @foreach ($course->sections as $key => $section)
+                        @foreach ($course->sections->sortBy('order') as $key => $section)
                             <!--begin::Item-->
                             <div class="mb-5">
                                 <!--begin::Header-->
@@ -96,18 +96,27 @@
                                 @endif
                                 <div id="kt_accordion_2_item_{{ $key + 1 }}" class="fs-6 collapse ps-5"
                                     data-bs-parent="#kt_accordion_2">
-                                    @foreach ($section->lessons as $key => $lesson)
+                                    @foreach ($section->lessons->sortBy('order') as $key => $lesson)
                                         <div
                                             class="my-5 d-flex justify-content-between align-items-center text-inherit">
                                             <div class="text-truncate">
                                                 <span class="me-2">
-                                                    <i class="bi bi-lock fs-3 me-2" style="color: #844aff"
-                                                        data-section-id="19"></i>
+                                                    @if ($lesson->is_preview)
+                                                        <i class="bi bi-unlock fs-3 me-2" style="color: #844aff"
+                                                            data-section-id="19"></i>
+                                                    @else
+                                                        <i class="bi bi-lock fs-3 me-2" style="color: #844aff"
+                                                            data-section-id="19"></i>
+                                                    @endif
                                                 </span>
                                                 <span class="fs-3">
-                                                    {{ $lesson->name }}
-                                                    {{-- <a
-                                                        href="{{ route('lesson.show', ['course' => $course->slug, 'lesson' => $lesson->slug]) }}">{{ $lesson->name }}</a> --}}
+                                                    @if ($lesson->is_preview)
+                                                        <a
+                                                            href="{{ route('lesson.view', ['course' => $course->slug, 'lesson' => $lesson->id]) }}">{{ $lesson->name }}
+                                                        </a>
+                                                    @else
+                                                        {{ $lesson->name }}
+                                                    @endif
                                                 </span>
                                             </div>
                                             <div class="text-truncate d-flex align-items-center">

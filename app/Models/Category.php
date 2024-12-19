@@ -45,4 +45,9 @@ class Category extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function series()
+    {
+        return $this->hasMany(Series::class);
+    }
 }

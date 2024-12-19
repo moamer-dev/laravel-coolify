@@ -21,4 +21,9 @@ class Series extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function technologyStack()
+    {
+        return $this->belongsTo(TechnologyStack::class);
+    }
 }

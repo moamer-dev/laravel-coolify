@@ -4,7 +4,7 @@ dd($model);
 <div class="col-lg-4 col-md-6 mb-4">
     <div class="card">
         <a href="{{ route('course.view', [$item->slug]) }}">
-            <img src="{{ asset('storage/' . $item->feature_image) }}" class="card-img-top course-image"
+            <img src="{{ feature_image_or_default($item->feature_image) }}" class="card-img-top course-image"
                 alt="{{ $item->name }}">
         </a>
         <div class="card-body">

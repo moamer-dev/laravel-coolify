@@ -26,4 +26,9 @@ class TechnologyStack extends Model
     {
         return $this->belongsToMany(Quiz::class, 'quiz_technology_stack');
     }
+
+    public function series()
+    {
+        return $this->hasMany(Series::class, 'technology_stack_id');
+    }
 }

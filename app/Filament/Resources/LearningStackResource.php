@@ -72,9 +72,14 @@ class LearningStackResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('learningPaths.title')
+                    ->numeric()
+                    ->searchable()
+                    ->extraAttributes(['style' => 'white-space: normal; word-wrap: break-word;']),
+                Tables\Columns\TextColumn::make('technologyStacks.name')
+                    ->numeric()
+                    ->searchable()
+                    ->extraAttributes(['style' => 'white-space: normal; word-wrap: break-word;']),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('deleted_at')

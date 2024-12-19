@@ -26,6 +26,8 @@
 
 <body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
     data-kt-app-header-secondary-enabled="true" class="app-default">
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script>
         var defaultThemeMode = "light";
         var themeMode;
