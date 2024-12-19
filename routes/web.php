@@ -41,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/series/{series}/{zaytonah}', [SeriesController::class, 'zaytonah_view'])->name('zaytonah.view');
     Route::get('/user/paths/', [LearningPathController::class, 'view'])->name('user.path-view');
     Route::get('/user/paths/visualize', [LearningPathController::class, 'visualize'])->name('user.path-visualize');
-
     //Route::get('/quiz/{slug}', Quiz::class)->name('quiz.index');
 });
 

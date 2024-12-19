@@ -30,4 +30,22 @@ class LearningPathController extends Controller
         $pathSeries = $user->pathSeries();
         return view('dashboard.learning-path.path-visualize', compact('pathCourses', 'pathQuizzes', 'pathProjects', 'pathSeries'));
     }
+
+    public function vapi($id)
+    {
+        //$userId = Auth::user()->id;
+        $user = User::find($id);
+        //$firstUser = User::first();
+        $pathCourses = $user->pathCourses();
+        $pathQuizzes = $user->pathQuizzes();
+        $pathProjects = $user->pathProjects();
+        $pathSeries = $user->pathSeries();
+        return response()->json([
+            'courses' => $pathCourses,
+            'quizzes' => $pathQuizzes,
+            'projects' => $pathProjects,
+            'series' => $pathSeries
+            //['message' => 'API route is working']
+        ]);
+    }
 }
