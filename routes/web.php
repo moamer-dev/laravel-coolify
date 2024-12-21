@@ -7,14 +7,17 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuizAttemptController;
 use App\Http\Controllers\LearningPathController;
+use App\Http\Controllers\TechnologyStackController;
 use App\Livewire\Quizzes\Quiz;
 use App\Livewire\Courses\Learn;
 use App\Models\LearningPath;
 
 Route::get('/', function () {
     $paths = LearningPath::all();
-    return view('welcome', compact('paths'));
+    return view('/front/landing', compact('paths'));
 });
+Route::get('/path/{slug}', [LearningPathController::class, 'front_view'])->name('path-front-view');
+Route::get('/path/technology/{slug}', [TechnologyStackController::class, 'technology_view'])->name('technology-view');
 
 Route::get('/dashboard', function () {
     return view('dashboard.index-dashboard');

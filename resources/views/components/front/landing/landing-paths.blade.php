@@ -1,4 +1,4 @@
-<section class="py-10">
+<section class="py-10" id="paths">
     <div class="container">
         <div class="text-center pb-10">
             <h2 class="fw-bold display-6">مسارات التعليم المتاحة</h2>
@@ -7,7 +7,8 @@
             @foreach ($paths as $path)
                 <div class="col-xxl-3 col-md-4 col-6 ">
                     <!--card-->
-                    <a href="#!" class="card card-border-primary hover-elevate-up parent-hover">
+                    <a href="{{ route('path-front-view', $path->slug) }}"
+                        class="card card-border-primary hover-elevate-up parent-hover">
                         <!--card body-->
                         <div class="card-body d-flex flex-column gap-4 text-center">
                             <div>

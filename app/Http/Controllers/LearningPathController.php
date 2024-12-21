@@ -48,4 +48,11 @@ class LearningPathController extends Controller
             //['message' => 'API route is working']
         ]);
     }
+
+    public function front_view($slug)
+    {
+        $path = LearningPath::where('slug', $slug)->first()->load('learningStacks.technologyStacks');
+        //dd($path);
+        return view('front.front-path-view', compact('path'));
+    }
 }

@@ -70,24 +70,59 @@
                             data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true"
                             data-tns-nav="false" data-tns-items="3" data-tns-center="false" data-tns-dots="false"
                             data-tns-prev-button="#kt_team_slider_prev1" data-tns-next-button="#kt_team_slider_next1">
-
                             @php
                                 $i = 0;
                             @endphp
 
                             @for ($i = 0; $i < 12; $i++)
-                                <div class="card m-3">
+                                <div class="card m-3" style="direction:rtl;">
                                     <div class="card-body text-center p-6">
                                         <img src="{{ asset('assets/media/geek/avatar/avatar-1.jpg') }}" alt="avatar"
                                             class="avatar avatar-lg rounded-circle">
-                                        <p class="mb-0 mt-3 lh-lg">
-                                            “The generated lorem Ipsum is therefore always free from repetition,
-                                            injected
-                                            humour, or words etc generate lorem Ipsum which looks characteristic
-                                            reasonable.”
+                                        <p class="mt-3 lh-lg fs-5">
+                                            “منصة زيتونة قدمت لي تجربة تعليمية فريدة، حيث استطعت تعلم أحدث التقنيات
+                                            البرمجية من خلال مسارات واضحة
+                                            ومشاريع عملية جعلتني جاهزًا للعمل في بيئة فريق محترف.”
                                         </p>
-                                        <h3 class="mb-0 h4 py-4">Gladys Colbert</h3>
-                                        <span>Software Engineer at Palantir</span>
+                                        <span class="align-text-top ms-2 py-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+                                                fill="currentColor" class="bi bi-star-fill text-warning"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                                </path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+                                                fill="currentColor" class="bi bi-star-fill text-warning"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                                </path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+                                                fill="currentColor" class="bi bi-star-fill text-warning"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                                </path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+                                                fill="currentColor" class="bi bi-star-fill text-warning"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                                </path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
+                                                fill="currentColor" class="bi bi-star-fill text-warning"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <h3 class="mb-0 h4 py-4">غادة كولبرت</h3>
+                                        <span>مهندسة برمجيات في Palantir</span>
                                     </div>
                                 </div>
                             @endfor
