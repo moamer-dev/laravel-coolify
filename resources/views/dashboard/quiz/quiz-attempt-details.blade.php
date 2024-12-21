@@ -8,7 +8,7 @@
             <!--begin::Toolbar wrapper-->
             <div class="d-flex flex-grow-1 flex-stack flex-wrap gap-2 mb-n10" id="kt_toolbar">
                 @include('components.profile.breadcrumb', [
-                    'title' => 'Quiz Attempt Details',
+                    'title' => 'بيات محاولة الإختبار',
                     'active' => $attempt->quiz->title,
                 ])
             </div>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="separator mb-4"></div>
                     <div>
-                        <h3 class="my-7">Quiz Summary</h3>
+                        <h3 class="my-7">إحصائيات المحاولة</h3>
                     </div>
                     <div class="row row-cols-lg-3 row-cols-1">
                         <div class="col">
@@ -40,7 +40,7 @@
                             <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                 <!-- card body -->
                                 <div class="card-body">
-                                    <h4 class="mb-0">Total Questions</h4>
+                                    <h4 class="mb-0">إجمالي الأسئلة</h4>
                                     <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                         <div>
                                             <span
@@ -59,7 +59,7 @@
                             <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                 <!-- card body -->
                                 <div class="card-body">
-                                    <h4 class="mb-0">Correct Answers</h4>
+                                    <h4 class="mb-0">الإجابات الصحيحة</h4>
                                     <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                         <div>
                                             <span class="fs-3 text-success fw-semibold">{{ $correctAnswers }}</span>
@@ -76,7 +76,7 @@
                             <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                 <!-- card body -->
                                 <div class="card-body">
-                                    <h4 class="mb-0">Wrong Answers</h4>
+                                    <h4 class="mb-0">الإجابات الخاطئة</h4>
                                     <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                         <div>
                                             <span class="fs-3 text-danger fw-semibold">{{ $wrongAnswers }}</span>
@@ -95,14 +95,14 @@
                                 <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                     <thead>
                                         <tr class="border-0">
-                                            <th class="p-0 text-gray-900 fw-bolder fs-5">Question</th>
-                                            <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Your Answer
+                                            <th class="p-0 text-gray-900 fw-bolder fs-5">السؤال</th>
+                                            <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">إجابتك
                                             </th>
-                                            <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Correct Answer
+                                            <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">الإجابة الصحيحة
                                             </th>
-                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">Status</th>
-                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">Score</th>
-                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">Video</th>
+                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">الحالة</th>
+                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">الدرجة</th>
+                                            <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">الفيديو التوضيحي</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -153,8 +153,8 @@
                         @endif
                     </div>
                     <div class="separator mb-4"></div>
-                    <a href="{{ route('quiz.index', ['slug' => $attempt->quiz->slug]) }}" class="btn btn-primary">Retry
-                        Quiz</a>
+                    <a href="{{ route('quiz.index', ['slug' => $attempt->quiz->slug]) }}" class="btn btn-primary">إعادة
+                        الإختبار</a>
                 </div>
             </div>
         </div>

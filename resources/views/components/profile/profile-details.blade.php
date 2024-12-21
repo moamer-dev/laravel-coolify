@@ -4,11 +4,11 @@
      <div class="card-header cursor-pointer">
          <!--begin::Card title-->
          <div class="card-title m-0">
-             <h3 class="fw-bold m-0">Profile Details</h3>
+             <h3 class="fw-bold m-0">بياناتك الشخصية</h3>
          </div>
          <!--end::Card title-->
          <!--begin::Action-->
-         <a href="{{ route('profile.settings') }}" class="btn btn-sm btn-primary align-self-center">Edit Profile</a>
+         <a href="{{ route('profile.settings') }}" class="btn btn-sm btn-primary align-self-center">تحديث البيانات</a>
          <!--end::Action-->
      </div>
      <!--begin::Card header-->
@@ -17,7 +17,7 @@
          <!--begin::Row-->
          <div class="row mb-7">
              <!--begin::Label-->
-             <label class="col-lg-4 fw-semibold text-muted">Full Name</label>
+             <label class="col-lg-4 fw-semibold text-muted">الإسم كاملاً</label>
              <!--end::Label-->
              <!--begin::Col-->
              <div class="col-lg-8">
@@ -29,7 +29,7 @@
          <!--begin::Input group-->
          <div class="row mb-7">
              <!--begin::Label-->
-             <label class="col-lg-4 fw-semibold text-muted">Email</label>
+             <label class="col-lg-4 fw-semibold text-muted">البريد الإلكتروني</label>
              <!--end::Label-->
              <!--begin::Col-->
              <div class="col-lg-8">
@@ -41,7 +41,7 @@
          @if ($user->profile->phone != null)
              <div class="row mb-7">
                  <!--begin::Label-->
-                 <label class="col-lg-4 fw-semibold text-muted">Contact Phone
+                 <label class="col-lg-4 fw-semibold text-muted">رقم التواصل
                      <span class="ms-1" data-bs-toggle="tooltip" aria-label="Phone number must be active"
                          data-bs-original-title="Phone number must be active" data-kt-initialized="1">
                          <i class="ki-outline ki-information fs-7"></i>
@@ -50,30 +50,30 @@
                  <!--begin::Col-->
                  <div class="col-lg-8 d-flex align-items-center">
                      <span class="fw-bold fs-6 text-gray-800 me-2">{{ $user->profile->phone }}</span>
-                     <span class="badge badge-success">Verified</span>
+                     <span class="badge badge-success">تم التحقق</span>
                  </div>
                  <!--end::Col-->
              </div>
          @endif
          @if ($user->profile->country?->name)
-            <div class="row mb-7">
-                <!-- Label -->
-                <label class="col-lg-4 fw-semibold text-muted">
-                    Country
-                    <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
-                        <i class="ki-outline ki-information fs-7"></i>
-                    </span>
-                </label>
-                <!-- Value -->
-                <div class="col-lg-8">
-                    <span class="fw-bold fs-6 text-gray-800">{{ $user->profile->country->name }}</span>
-                </div>
-            </div>
-        @endif 
+             <div class="row mb-7">
+                 <!-- Label -->
+                 <label class="col-lg-4 fw-semibold text-muted">
+                     الدولة
+                     <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                         <i class="ki-outline ki-information fs-7"></i>
+                     </span>
+                 </label>
+                 <!-- Value -->
+                 <div class="col-lg-8">
+                     <span class="fw-bold fs-6 text-gray-800">{{ $user->profile->country->name }}</span>
+                 </div>
+             </div>
+         @endif
          @if ($user->profile->bio != null)
              <div class="row mb-7">
                  <!--begin::Label-->
-                 <label class="col-lg-4 fw-semibold text-muted">Bio</label>
+                 <label class="col-lg-4 fw-semibold text-muted">نبذة عنك</label>
                  <!--end::Label-->
                  <!--begin::Col-->
                  <div class="col-lg-8">

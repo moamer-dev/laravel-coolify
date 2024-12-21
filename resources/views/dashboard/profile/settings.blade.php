@@ -6,7 +6,7 @@
             <!--begin::Toolbar wrapper-->
             <div class="d-flex flex-grow-1 flex-stack flex-wrap gap-2 mb-n10" id="kt_toolbar">
                 @include('components.profile.breadcrumb', [
-                    'title' => 'Profile',
+                    'title' => 'الحساب الشخصي',
                     'active' => Auth::user()->name,
                 ])
             </div>

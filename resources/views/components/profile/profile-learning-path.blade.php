@@ -9,8 +9,8 @@
         <div class="current" data-kt-stepper-element="content">
             <div class="w-100">
                 <div class="pb-10 pb-lg-15">
-                    <h2 class="fw-bold d-flex align-items-center text-gray-900">Choose Learning Paths</h2>
-                    <div class="text-muted fw-semibold fs-6">Select one or more learning paths.</div>
+                    <h2 class="fw-bold d-flex align-items-center text-gray-900">إختيار مسارات التعلم الخاصة بك</h2>
+                    <div class="text-muted fw-semibold fs-6">يمكنك إختيار اكثر من مسار تعلم للبدء</div>
                 </div>
                 <div class="fv-row fv-plugins-icon-container">
                     <div class="row">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
         </div>
     </form>
 </div>

@@ -18,7 +18,7 @@
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         @include('components.paths.path-header')
-        <h2>Learning Path Visualization</h2>
+        <h2>المخطط التعليمي للمسارات التي قمت بإخيارها</h2>
         <div id="visualization" style="width: 100%; height: 100vh; overflow: hidden; position: relative;"></div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -345,9 +345,9 @@
                             .append("div")
                             .style("text-align", "center")
                             .style("margin-bottom", "10px")
-                            .style("font-family", "Arial, sans-serif")
+                            .style("font-family", "IBM Plex Sans Arabic, sans-serif")
                             .style("font-size", "14px")
-                            .text("Click on the circles to toggle related data. Drag nodes to reposition them.");
+                            .text("قم بإظهار وإخفاء العناصر بالضغط على الدوائر. يمكنك سحب العناصر لإعادة ترتيبها.");
 
                         const svg = d3.select("#visualization")
                             .append("svg")

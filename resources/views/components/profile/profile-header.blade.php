@@ -54,7 +54,7 @@
                      <!--begin::Progress-->
                      <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                          <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                             <span class="fw-semibold fs-6 text-gray-500">Profile Compleation</span>
+                             <span class="fw-semibold fs-6 text-gray-500">نسبة إكتمال معلومات حسابك</span>
                              <span class="fw-bold fs-6">50%</span>
                          </div>
                          <div class="h-5px mx-3 w-100 bg-light mb-3">
@@ -73,23 +73,23 @@
          <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
              <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile') ? 'active' : '' }}"
-                     href="{{ route('profile.overview') }}">Overview</a>
+                     href="{{ route('profile.overview') }}">بياناتي</a>
              </li>
              <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/settings*') ? 'active' : '' }}"
-                     href="{{ route('profile.settings') }}">Settings</a>
+                     href="{{ route('profile.settings') }}">الإعدادات</a>
              </li>
              <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/billing*') ? 'active' : '' }} "
-                     href="{{ route('profile.billing') }}">Billing</a>
+                     href="{{ route('profile.billing') }}">إعدادات الدفع</a>
              </li>
              <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/learning-path*') ? 'active' : '' }} "
-                     href="{{ route('profile.learning-path') }}">Learning Path</a>
+                     href="{{ route('profile.learning-path') }}">إختيار مسارات التعلم</a>
              </li>
              <li class="nav-item mt-2">
                  <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/quiz-attempts*') ? 'active' : '' }} "
-                     href="{{ route('user.quiz-attempts') }}">Quiz Attempts</a>
+                     href="{{ route('user.quiz-attempts') }}">محاولات الإختبارات</a>
              </li>
          </ul>
      </div>

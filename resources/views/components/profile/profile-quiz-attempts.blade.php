@@ -5,8 +5,8 @@
     <!--begin::Header-->
     <div class="card-header border-0 pt-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold fs-3 mb-1">Quiz Attempts</span>
-            <span class="text-muted mt-1 fw-semibold fs-7">Over 500 new products</span>
+            <span class="card-label fw-bold fs-3 mb-1">محاولات الإختبارات</span>
+            <span class="text-muted mt-1 fw-semibold fs-7">هذه هي قائمة المحاولات الخاصة بالإختبارات التي قمت بها</span>
         </h3>
     </div>
     <!--end::Header-->
@@ -20,12 +20,12 @@
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bold text-muted bg-light">
-                        <th class="p-0 text-gray-900 fw-bolder fs-5">Quiz</th>
-                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Category</th>
-                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Score</th>
-                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Date</th>
-                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Status</th>
-                        <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">Actions</th>
+                        <th class="p-0 text-gray-900 fw-bolder fs-5">الإختبار</th>
+                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">التصنيف</th>
+                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">الدرجة</th>
+                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">التاريخ</th>
+                        <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">الحالة</th>
+                        <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">المزيد</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
@@ -66,9 +66,9 @@
                             <td class="">
                                 <span>
                                     @if ($quizAttempt->score >= $quizAttempt->quiz->passing_score)
-                                        <span class="badge badge-light-success">Passed</span>
+                                        <span class="badge badge-light-success">تم الاجتياز</span>
                                     @else
-                                        <span class="badge badge-light-danger">Failed</span>
+                                        <span class="badge badge-light-danger">لم يتم الإجتياز</span>
                                     @endif
                                 </span>
                             </td>

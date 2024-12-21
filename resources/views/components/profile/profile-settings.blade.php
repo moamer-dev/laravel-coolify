@@ -2,7 +2,7 @@
     <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
         <div class="card-title m-0">
-            <h3 class="fw-bold m-0">Profile Details</h3>
+            <h3 class="fw-bold m-0">بياناتك الشخصية</h3>
         </div>
     </div>
     <div id="kt_account_settings_profile_details" class="collapse show">
@@ -11,7 +11,7 @@
             @method('patch')
             <div class="card-body border-top p-9">
                 <div class="row mb-6">
-                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Avatar</label>
+                    <label class="col-lg-4 col-form-label fw-semibold fs-6">صورتك</label>
                     <div class="col-lg-8">
                         <div class="image-input image-input-outline" data-kt-image-input="true"
                             style="background-image: url('{{ asset('assets') }}/media/svg/avatars/blank.svg')">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="row mb-6">
-                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
+                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">الإسم كاملاً</label>
 
                     <div class="col-lg-8">
                         <div class="row">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="row mb-6">
-                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">البريد الإلكتروني</label>
                     <div class="col-lg-8 fv-row">
                         <input type="text" name="email" class="form-control form-control-lg form-control-solid"
                             placeholder="Company name" value="{{ $user->email }}" />
@@ -58,7 +58,7 @@
                 </div>
                 <div class="row mb-6">
                     <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                        <span class="required">Contact Phone</span>
+                        <span class="required">رقم التواصل</span>
                         <span class="ms-1" data-bs-toggle="tooltip" title="Phone number must be active">
                             <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                         </span>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="row mb-6">
-                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Bio</label>
+                    <label class="col-lg-4 col-form-label fw-semibold fs-6">نبذة عنك</label>
                     <div class="col-lg-8 fv-row">
                         <textarea name="bio" class="form-control form-control-lg form-control-solid">
                             {{ $user->profile->bio }}
@@ -79,7 +79,7 @@
                 </div>
                 <div class="row mb-6">
                     <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                        <span class="required">Country</span>
+                        <span class="required">الدولة</span>
                         <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
                             <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                         </span>
@@ -88,7 +88,7 @@
                         <select name="country_id" aria-label="Select a Country" data-control="select2"
                             data-placeholder="Select a country..."
                             class="form-select form-select-solid form-select-lg fw-semibold">
-                            <option value="">Select a Country...</option>
+                            <option value="">قم بإختيار دولتك...</option>
                             <option data-kt-flag="flags/afghanistan.svg" value="1"
                                 {{ optional($user->profile)->country_id == 1 ? 'selected' : '' }}>Afghanistan</option>
                             <option data-kt-flag="flags/aland-islands.svg" value="2"
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="row mb-0">
-                    <label class="col-lg-4 col-form-label fw-semibold fs-6">Public Profile?</label>
+                    <label class="col-lg-4 col-form-label fw-semibold fs-6">هل تود ظهور حسابك؟</label>
                     <div class="col-lg-8 d-flex align-items-center">
                         <div class="form-check form-check-solid form-switch form-check-custom fv-row">
                             <input type="hidden" name="is_public" value="0">
@@ -114,9 +114,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                <button type="submit" class="btn btn-primary">Save
-                    Changes</button>
+                <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
             </div>
         </form>
     </div>

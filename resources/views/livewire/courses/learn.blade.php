@@ -6,7 +6,7 @@ dd($items);
         <div class="col-xl-3 col-lg-3 col-md-4 col-12 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="mb-3">Categories</h5>
+                    <h5 class="mb-3">التصنيفات</h5>
                     <ul class="list-unstyled">
                         @foreach ($categories as $category)
                             <li wire:key={{ $category->id }}>
@@ -21,7 +21,7 @@ dd($items);
             @if ($model === 'projects' || $model === 'courses')
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h5 class="mb-3">Levels</h5>
+                        <h5 class="mb-3">المستوى</h5>
                         <ul class="list-unstyled">
                             @foreach ($levels as $level)
                                 <li wire:key={{ $level->id }}>
@@ -37,27 +37,27 @@ dd($items);
             @if ($model === 'quizzes')
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h5 class="mb-3">Quiz Type</h5>
+                        <h5 class="mb-3">فئة الإختبار</h5>
                         <ul class="list-unstyled">
                             <li>
                                 <input type="checkbox" wire:model.live="selectedTypes" value="assessment"
                                     id="levelCheck-Assessment">
-                                <label for="levelCheck-assessment">Assessment</label>
+                                <label for="levelCheck-assessment">إختبار تقييمي</label>
                             </li>
                             <li>
                                 <input type="checkbox" wire:model.live="selectedTypes" value="interview"
                                     id="levelCheck-interview">
-                                <label for="levelCheck-interview">interview</label>
+                                <label for="levelCheck-interview">التحضير لمقابلة وظيفة</label>
                             </li>
                             <li>
                                 <input type="checkbox" wire:model.live="selectedTypes" value="course"
                                     id="levelCheck-course">
-                                <label for="levelCheck-course">course</label>
+                                <label for="levelCheck-course">إختبار خاص بدورة</label>
                             </li>
                             <li>
                                 <input type="checkbox" wire:model.live="selectedTypes" value="challenge"
                                     id="levelCheck-challenge">
-                                <label for="levelCheck-challenge">Challenge</label>
+                                <label for="levelCheck-challenge">إختبار تحدي</label>
                             </li>
                         </ul>
                     </div>
@@ -81,23 +81,23 @@ dd($items);
                 <div class="d-inline-flex col-md-6 col-lg-4 col-xl-3">
                     <!-- List  -->
                     <select class="form-select" wire:model.live="sortBy">
-                        <option value="All">All</option>
-                        <option value="Newest">Newest</option>
-                        <option value="Oldest">Oldest</option>
-                        <option value="A-Z">A-Z</option>
-                        <option value="Z-A">Z-A</option>
+                        <option value="All">الكل</option>
+                        <option value="Newest">الأحدث</option>
+                        <option value="Oldest">الأقدم</option>
+                        <option value="A-Z">أبجدياً - تصاعدياً</option>
+                        <option value="Z-A">أبجدياً - تنازلياً</option>
                     </select>
                 </div>
                 <div class="d-flex gap-2">
                     <!-- Model Selection Buttons -->
                     <button class="btn btn-outline-primary {{ $model === 'courses' ? 'active' : '' }}"
-                        wire:click="setModel('courses')">Courses</button>
+                        wire:click="setModel('courses')">الدورات</button>
                     <button class="btn btn-outline-primary {{ $model === 'projects' ? 'active' : '' }}"
-                        wire:click="setModel('projects')">Projects</button>
+                        wire:click="setModel('projects')">المشاريع</button>
                     <button class="btn btn-outline-primary {{ $model === 'series' ? 'active' : '' }}"
-                        wire:click="setModel('series')">Series</button>
+                        wire:click="setModel('series')">السلاسل</button>
                     <button class="btn btn-outline-primary {{ $model === 'quizzes' ? 'active' : '' }}"
-                        wire:click="setModel('quizzes')">Quizzes</button>
+                        wire:click="setModel('quizzes')">الإختبارات</button>
                 </div>
             </div>
             @if ($model === 'courses' || $model === 'projects')

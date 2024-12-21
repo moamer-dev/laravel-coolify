@@ -42,9 +42,8 @@
 
 
                         <!-- Title -->
-                        <h1 class="fw-semibold text-gray-800 text-center lh-lg mt-4">Have you tried
-                            <br>new
-                            <span class="fw-bolder">Invoice Manager?</span>
+                        <h1 class="fw-semibold text-gray-800 text-center lh-lg mt-4">بيانات الإختبار
+                            <br>التفاصيل
                         </h1>
 
                         <!-- Illustration -->
@@ -59,9 +58,9 @@
 
                     <!-- Links -->
                     <div class="text-center mb-1">
-                        <a href="{{ route('user.quiz-attempts') }}" class="btn btn-sm btn-primary me-2">Quiz
-                            Attempts</a>
-                        <a class="btn btn-sm btn-light" href="account/settings.html">Learn More</a>
+                        <a href="{{ route('user.quiz-attempts') }}" class="btn btn-sm btn-primary me-2">محاولات
+                            إختباراتي</a>
+                        <a class="btn btn-sm btn-light" href="account/settings.html">مركز المساعدة</a>
                     </div>
                     <!--end::Links-->
                 </div>
@@ -94,12 +93,12 @@
                         <div class="mb-5">
                             <div class="bgi-no-repeat bgi-size-cover rounded min-h-250px mb-5"
                                 style="background-image:url('assets/media/stock/900x600/20.jpg');"></div>
-                            <h5 class="card-title">Read the instructions before starting</h5>
+                            <h5 class="card-title">قم بقراءة هذة التعليمات قبل البدء في الاأختبار</h5>
                             <div class="text-gray-800 mb-5">{{ $quiz->description }}</div>
                             <div class="separator mb-4"></div>
                             <div class="d-flex align-items-center mb-5">
-                                <a href="#" wire:click.prevent="startQuiz" class="btn btn-primary mt-4">Start
-                                    Quiz</a>
+                                <a href="#" wire:click.prevent="startQuiz" class="btn btn-primary mt-4">بدء
+                                    الإختبار</a>
                             </div>
                         </div>
                     </div>
@@ -123,7 +122,7 @@
                             <div>
                                 @if ($quiz->is_timed)
                                     <div class="fw-bolder">
-                                        Time remaining: <span>{{ gmdate('H:i:s', $timeRemaining) }}</span>
+                                        الوقت المتبقي: <span>{{ gmdate('H:i:s', $timeRemaining) }}</span>
                                     </div>
                                     <div wire:poll.1s="decrementTimer"></div>
                                 @endif
@@ -163,12 +162,12 @@
 
                                 <div class="mt-4">
                                     @if ($currentStep > 0)
-                                        <button wire:click="previous" class="btn btn-light-primary">Previous</button>
+                                        <button wire:click="previous" class="btn btn-light-primary">السابق</button>
                                     @endif
                                     @if ($currentStep == count($quiz->questions) - 1)
-                                        <button wire:click="submitQuiz" class="btn btn-primary ms-2">Submit</button>
+                                        <button wire:click="submitQuiz" class="btn btn-primary ms-2">إنهاء</button>
                                     @else
-                                        <button wire:click="next" class="btn btn-light-primary">Next</button>
+                                        <button wire:click="next" class="btn btn-light-primary">التالي</button>
                                     @endif
                                 </div>
                             @endif
@@ -194,7 +193,7 @@
                         </div>
                         <div class="separator mb-4"></div>
                         <div>
-                            <h3 class="my-7">Quiz Summary</h3>
+                            <h3 class="my-7">نتيجة الإختبار</h3>
                         </div>
                         <div class="row row-cols-lg-3 row-cols-1">
                             <div class="col">
@@ -202,7 +201,7 @@
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                     <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">Total Questions</h4>
+                                        <h4 class="mb-0">إجمالي الأسئلة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span
@@ -221,7 +220,7 @@
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                     <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">Correct Answers</h4>
+                                        <h4 class="mb-0">الإجابات الصحيحة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span
@@ -239,7 +238,7 @@
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                     <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">Wrong Answers</h4>
+                                        <h4 class="mb-0">الإجابات الخاطئة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span class="fs-3 text-danger fw-semibold">{{ $worngAnswers }}</span>
@@ -256,17 +255,17 @@
                             <div class="col-12">
                                 @if ($score >= $quiz->passing_score)
                                     <div class="alert bg-light-success fade show" role="alert">
-                                        <p>Your score: <strong>{{ $score }} </strong> out of
-                                            <strong>{{ $totalQuestionsPoints }}</strong>
+                                        <p>لقد حصلت على: <strong>{{ $score }} </strong> من إجمالي
+                                            <strong>{{ $totalQuestionsPoints }} نقاط</strong>
                                         </p>
-                                        <p> <strong> Congratulations! </strong> You passed the quiz.</p>
+                                        <p> <strong> تهانينا! </strong> لقد إجتزت الإختبار بنجاح.</p>
                                     </div>
                                 @else
                                     <div class="alert bg-light-warning text-dark-warning fade show" role="alert">
-                                        <p>Your score: <strong>{{ $score }} </strong> out of
-                                            <strong>{{ $totalQuestionsPoints }}</strong>
+                                        <p>لقد حصلت على: <strong>{{ $score }} </strong> من إجمالي
+                                            <strong>{{ $totalQuestionsPoints }} نقاط</strong>
                                         </p>
-                                        <p><strong> Sorry, </strong> you did not pass the quiz.</p>
+                                        <p><strong> عفواً, </strong> لم يتم إجتياز الاأختبار!.</p>
                                     </div>
                                 @endif
                             </div>
@@ -278,14 +277,12 @@
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="border-0">
-                                                <th class="p-0 text-gray-900 fw-bolder fs-5">Question</th>
-                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Your
-                                                    Answer
+                                                <th class="p-0 text-gray-900 fw-bolder fs-5">السؤال</th>
+                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">إجابتك
                                                 </th>
-                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">Correct
-                                                    Answer
-                                                </th>
-                                                <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">Status
+                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">الإجابة
+                                                    الصحيحة</th>
+                                                <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">الحالة
                                                 </th>
                                             </tr>
                                         </thead>
@@ -322,7 +319,7 @@
                                                                 {{ $userAnswer->option_text }}
                                                             </span>
                                                         @else
-                                                            Not attempted
+                                                            لم يتم الإجابة
                                                         @endif
                                                     </td>
                                                     <td class="">
@@ -331,13 +328,12 @@
                                                     <td class="">
                                                         @if ($userAnswer)
                                                             @if ($userAnswer->id == $correctOption->id)
-                                                                <span class="badge badge-light-success">Correct</span>
+                                                                <span class="badge badge-light-success">صحيحة</span>
                                                             @else
-                                                                <span class="badge badge-light-danger">Wrong</span>
+                                                                <span class="badge badge-light-danger">خاطئة</span>
                                                             @endif
                                                         @else
-                                                            <span class="badge bg-light-warning">Not
-                                                                attempted</span>
+                                                            <span class="badge bg-light-warning">لم يتم الإجابة</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -349,7 +345,7 @@
                             @endif
                         </div>
                         <div class="separator mb-4"></div>
-                        <button wire:click="resetQuiz" class="btn btn-primary">Retry Quiz</button>
+                        <button wire:click="resetQuiz" class="btn btn-primary">إعادة الإختبار</button>
                     </div>
                 </div>
 
