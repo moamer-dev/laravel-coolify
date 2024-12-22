@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="rtl">
 
 <head>
     <base href="../../../" />
@@ -25,14 +25,12 @@
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
     @yield('styles')
-    @yield('headerScripts')
     @livewireStyles
 </head>
 
-<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true"
-    data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
-    data-kt-app-header-secondary-enabled="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
-    data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+
+<body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
+    data-kt-app-header-secondary-enabled="true" class="app-default">
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -52,33 +50,39 @@
             document.documentElement.setAttribute("data-bs-theme", themeMode);
         }
     </script>
+
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             @include('components.layout.navbar')
-            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-                @include('components.layout.sidebar')
-                <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
-                    <div class="d-flex flex-column flex-column-fluid">
-                        @include('components.layout.toolbar')
-                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
-                            <div id="kt_app_content_container" class="app-container  container-fluid ">
-                                {{ $slot }}
-                            </div>
+            @if (isset($title) || isset($subtitle))
+                @include('components.shared.page-header', [
+                    'title' => $title,
+                    'subtitle' => $subtitle,
+                ])
+            @endif
+            <div class="app-wrapper flex-column flex-row-fluid bg-gray-100" id="kt_app_wrapper">
+                <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div style="min-height: 78vh;">
+                            {{ $slot }}
                         </div>
+                        @include('components.layout.footer')
                     </div>
-                    @include('components.layout.footer')
                 </div>
             </div>
         </div>
     </div>
-    @include('components.layout.scroll-top')
-    <script>
-        var hostUrl = "{{ asset('assets') }}/";
-    </script>
     <script src="{{ asset('assets') }}/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets') }}/js/scripts.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
     @livewireScripts
-    @yield('footerScripts')
+    @yield('scripts')
 </body>
 
 </html>

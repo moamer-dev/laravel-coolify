@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="rtl">
 
 <head>
     <base href="../../../" />
@@ -24,15 +24,25 @@
         rel="stylesheet">
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+
+    <script src=" https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/drawflow/dist/drawflow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gojs@3.0/release/go.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> --}}
     @yield('styles')
     @yield('headerScripts')
     @livewireStyles
 </head>
 
-<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true"
-    data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
-    data-kt-app-header-secondary-enabled="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true"
-    data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+
+<body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
+    data-kt-app-header-secondary-enabled="true" class="app-default">
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -55,26 +65,24 @@
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             @include('components.layout.navbar')
-            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-                @include('components.layout.sidebar')
-                <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
-                    <div class="d-flex flex-column flex-column-fluid">
-                        @include('components.layout.toolbar')
-                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
-                            <div id="kt_app_content_container" class="app-container  container-fluid ">
-                                {{ $slot }}
-                            </div>
+            @if (isset($title) || isset($subtitle))
+                @include('components.shared.page-header', [
+                    'title' => $title,
+                    'subtitle' => $subtitle,
+                ])
+            @endif
+            <div class="app-wrapper flex-column flex-row-fluid bg-gray-100" id="kt_app_wrapper">
+                <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div style="min-height: 78vh;">
+                            @yield('content')
                         </div>
+                        @include('components.layout.footer')
                     </div>
-                    @include('components.layout.footer')
                 </div>
             </div>
         </div>
     </div>
-    @include('components.layout.scroll-top')
-    <script>
-        var hostUrl = "{{ asset('assets') }}/";
-    </script>
     <script src="{{ asset('assets') }}/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets') }}/js/scripts.bundle.js"></script>
     @livewireScripts

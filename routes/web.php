@@ -13,6 +13,11 @@ use App\Livewire\Quizzes\Quiz;
 use App\Livewire\Courses\Learn;
 use App\Models\LearningPath;
 
+Route::get('/new', function () {
+    return view('/new');
+});
+
+
 Route::get('/', function () {
     $paths = LearningPath::where("is_active", 1)->get();
     return view('/front/landing', compact('paths'));

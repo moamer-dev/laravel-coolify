@@ -58,14 +58,17 @@
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
                 @include('components.layout.sidebar')
                 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
+                    <!--begin::Content wrapper-->
                     <div class="d-flex flex-column flex-column-fluid">
+
                         @include('components.layout.toolbar')
                         <div id="kt_app_content" class="app-content  flex-column-fluid ">
                             <div id="kt_app_content_container" class="app-container  container-fluid ">
-                                {{ $slot }}
+                                @yield('content')
                             </div>
                         </div>
                     </div>
+
                     @include('components.layout.footer')
                 </div>
             </div>

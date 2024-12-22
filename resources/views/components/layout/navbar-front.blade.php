@@ -16,7 +16,7 @@
                             <i class="ki-outline ki-abstract-14 fs-2"></i>
                         </button>
                         <a href="index.html">
-                            <img alt="Logo" src="{{ asset('assets') }}/media/logos/icon_light.svg"
+                            <img alt="Logo" src="{{ asset('assets') }}/media/logos/icon_dark_green.svg"
                                 class="w-35px d-sm-none d-inline" />
                             <img alt="Logo" src="{{ asset('assets') }}/media/logos/logo_dark.svg"
                                 class="w-150px theme-light-show d-none d-sm-inline" />
@@ -339,7 +339,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="app-navbar-item d-lg-none" title="Show header menu">
+                    {{-- <div class="app-navbar-item d-lg-none" title="Show header menu">
                         <button class="btn btn-sm btn-icon btn-custom h-35px w-35px"
                             id="kt_header_secondary_mobile_toggle">
                             <i class="ki-outline ki-element-4 fs-2"></i>
@@ -350,10 +350,9 @@
                             id="kt_app_sidebar_mobile_toggle">
                             <i class="ki-outline ki-setting-3 fs-2"></i>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
     </div>
-    @include('components.navbar.nav-secondary')
 </div>

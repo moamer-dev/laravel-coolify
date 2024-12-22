@@ -34,7 +34,8 @@
 
 
 <body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
-    data-kt-app-header-secondary-enabled="true" class="app-default">
+    data-kt-app-header-secondary-enabled="false" class="app-default" data-kt-app-header-fixed="true"
+    data-kt-app-header-fixed-mobile="false">
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -61,7 +62,7 @@
     </style>
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-            @include('components.layout.navbar')
+            @include('components.layout.navbar-front')
             <div class="app-wrapper flex-column flex-row-fluid bg-gray-100" id="kt_app_wrapper">
                 <div class="app-container d-flex flex-row flex-column-fluid" style="padding: 0 !important;">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
