@@ -38,7 +38,6 @@
                 </div>
                 <div class="row mb-6">
                     <label class="col-lg-4 col-form-label required fw-semibold fs-6">الإسم كاملاً</label>
-
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col-lg-6 fv-row">
@@ -74,7 +73,6 @@
                         <textarea name="bio" class="form-control form-control-lg form-control-solid">
                             {{ $user->profile->bio }}
                             </textarea>
-
                     </div>
                 </div>
                 <div class="row mb-6">
@@ -97,6 +95,27 @@
                                 {{ optional($user->profile)->country_id == 3 ? 'selected' : '' }}>Albania</option>
                             <option data-kt-flag="flags/algeria.svg" value="4"
                                 {{ optional($user->profile)->country_id == 4 ? 'selected' : '' }}>Algeria</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-6">
+                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                        <span class="required">المستوى</span>
+                        <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                        </span>
+                    </label>
+                    <div class="col-lg-8 fv-row">
+                        <select name="level_id" aria-label="Select a Country" data-control="select2"
+                            class="form-select form-select-solid form-select-lg fw-semibold" data-hide-search="true"
+                            data-placeholder="إختر المستوى" required>
+                            <option value="">قم بإختيار مستواك...</option>
+                            <option data-kt-flag="flags/afghanistan.svg" value="1"
+                                {{ optional($user->profile)->level_id == 1 ? 'selected' : '' }}>مبتدئ</option>
+                            <option data-kt-flag="flags/aland-islands.svg" value="2"
+                                {{ optional($user->profile)->level_id == 2 ? 'selected' : '' }}>متوسط</option>
+                            <option data-kt-flag="flags/albania.svg" value="3"
+                                {{ optional($user->profile)->level_id == 3 ? 'selected' : '' }}>متقدم</option>
                         </select>
                     </div>
                 </div>
@@ -232,8 +251,6 @@
                     <button class="btn btn-light btn-active-light-primary">Reset Password</button>
                 </div>
             </div>
-            <!--end::Notice-->
         </div>
-        <!--end::Card body-->
     </div>
 </div>

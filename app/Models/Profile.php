@@ -20,4 +20,9 @@ class Profile extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
 }

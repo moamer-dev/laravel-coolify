@@ -21,6 +21,7 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
             'country_id' => ['nullable', 'exists:countries,id'],
+            'level_id' => ['nullable', 'exists:levels,id'],
             'is_public' => ['boolean'],
         ];
     }

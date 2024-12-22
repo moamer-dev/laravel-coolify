@@ -106,6 +106,10 @@
                   <a class="nav-link text-active-primary py-5 me-6 {{ request()->is('user/paths/visualize') ? 'active' : '' }}"
                       href="{{ route('user.path-visualize') }}">مخطط مسارك التعليمي</a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link text-active-primary py-5 me-6 {{ request()->is('user/paths/visualize') ? 'active' : '' }}"
+                      href="{{ route('user.path-todo') }}">خطة مسارك التعليمي</a>
+              </li>
           </ul>
 
       </div>

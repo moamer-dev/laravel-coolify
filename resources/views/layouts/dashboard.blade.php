@@ -25,7 +25,15 @@
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
+    <script src=" https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/drawflow/dist/drawflow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/drawflow/dist/drawflow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gojs@3.0/release/go.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> --}}
     @yield('styles')
     @yield('headerScripts')
@@ -57,6 +65,12 @@
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             @include('components.layout.navbar')
+            @if (isset($title) || isset($subtitle))
+                @include('components.shared.page-header', [
+                    'title' => $title,
+                    'subtitle' => $subtitle,
+                ])
+            @endif
             <div class="app-wrapper flex-column flex-row-fluid bg-gray-100" id="kt_app_wrapper">
                 <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">

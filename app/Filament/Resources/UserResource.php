@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section as SectionComponent;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 
 class UserResource extends Resource
 {
@@ -29,15 +32,15 @@ class UserResource extends Resource
             ->schema([
                 SectionComponent::make('User Information')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\DateTimePicker::make('email_verified_at'),
-                        Forms\Components\Select::make('learningPaths')
+                        DateTimePicker::make('email_verified_at'),
+                        Select::make('learningPaths')
                             ->label('Learning Paths')
                             ->searchable()
                             ->preload()
@@ -46,7 +49,7 @@ class UserResource extends Resource
                         // Forms\Components\TextInput::make('password')
                         //     ->password()
                         //     ->maxLength(255),
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->required(),
                     ])->columns(2),
                 SectionComponent::make('Profile Information')
@@ -56,11 +59,11 @@ class UserResource extends Resource
                             ->tel(),
                         TextInput::make('whatsapp')
                             ->tel(),
-                        Forms\Components\Select::make('country_id')
+                        Select::make('country_id')
                             ->searchable()
                             ->preload()
                             ->relationship('country', 'name'),
-                        Forms\Components\FileUpload::make('avatar')
+                        FileUpload::make('avatar')
                             ->image(),
                         TextInput::make('bio'),
                         TextInput::make('facebook')
@@ -75,6 +78,10 @@ class UserResource extends Resource
                         TextInput::make('instagram')
                             ->url()
                             ->suffixIcon('heroicon-m-globe-alt'),
+                        Select::make('level_id')
+                            ->searchable()
+                            ->preload()
+                            ->relationship('level', 'name'),
                         Toggle::make('is_public')
                             ->required(),
                     ])->columns(2)

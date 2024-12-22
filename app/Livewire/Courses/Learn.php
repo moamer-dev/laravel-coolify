@@ -31,7 +31,7 @@ class Learn extends Component
         $this->loadItems();
     }
 
-  public function loadItems()
+    public function loadItems()
     {
         $query = match ($this->model) {
             'courses' => Course::query(),
@@ -73,7 +73,7 @@ class Learn extends Component
     private function applyCategoryFilter($query)
     {
         if ($this->model === 'quizzes') {
-        return $query->whereIn('category_id', $this->selectedCategories);
+            return $query->whereIn('category_id', $this->selectedCategories);
         }
 
         if ($this->model === 'series') {

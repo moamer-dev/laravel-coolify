@@ -5,14 +5,11 @@
         </div>
         <div class="row gy-4 justify-content-center">
             @foreach ($paths as $path)
-                <div class="col-xxl-3 col-md-4 col-6 ">
-                    <!--card-->
+                <div class="col-xxl-4 col-md-4 col-6 ">
                     <a href="{{ route('path-front-view', $path->slug) }}"
                         class="card card-border-primary hover-elevate-up parent-hover">
-                        <!--card body-->
                         <div class="card-body d-flex flex-column gap-4 text-center">
                             <div>
-                                <!--icon-->
                                 <div class="icon-shape icon-xxl bg-light-primary rounded-circle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         fill="currentColor" class="bi bi-gear text-primary" viewBox="0 0 16 16">
@@ -25,7 +22,6 @@
                                     </svg>
                                 </div>
                             </div>
-                            <!--content-->
                             <div>
                                 <h3 class="">{{ $path->title }}</h3>
                                 <span class="fs-6 pt-3">21 مصدر تعليمي</span>

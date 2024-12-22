@@ -14,6 +14,6 @@ class SeriesController extends Controller
             ->first();
         $zaytonah_to_view = $series->zaytonahs->where('id', $zaytonah)->first();
         //dd($series);
-        return view('series.zaytonah-view', compact('series', 'zaytonah_to_view'));
+        return view('series.zaytonah-view', compact('series', 'zaytonah_to_view'), ['title' => $series->name, 'subtitle' =>  $series->description]);
     }
 }

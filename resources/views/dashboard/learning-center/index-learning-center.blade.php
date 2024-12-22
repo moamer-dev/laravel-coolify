@@ -6,6 +6,8 @@
     <div id="kt_app_content" class="app-content ">
         @if ($user->learningPaths->count() == 0)
             @include('components.paths.no-paths-selected')
+        @elseif ($user->profile->level_id == null)
+            @include('components.paths.no-levels-selected')
         @else
             <div class="row gx-5 gx-xl-10 align-items-center">
                 <div class="col-xl-4 mb-10">

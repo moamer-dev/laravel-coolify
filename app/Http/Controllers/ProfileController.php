@@ -16,19 +16,19 @@ class ProfileController extends Controller
     public function overview(Request $request): View
     {
         $user = $request->user()->load('profile');
-        return view('dashboard.profile.overview', compact('user'));
+        return view('dashboard.profile.profile-index', compact('user'), ['title' => 'بياناتي', 'subtitle' =>  'المعلومات الشخصية']);
     }
 
     public function settings(Request $request): View
     {
         $user = $request->user()->load('profile');
-        return view('dashboard.profile.settings', compact('user'));
+        return view('dashboard.profile.settings', compact('user'), ['title' => 'إعدادات الحساب', 'subtitle' =>  'يمكنك تحديث معلوماتك الشخصية من هنا']);
     }
 
     public function billing(Request $request): View
     {
         $user = $request->user()->load('profile');
-        return view('dashboard.profile.billing', compact('user'));
+        return view('dashboard.profile.billing', compact('user'), ['title' => 'إعدادات الدفع', 'subtitle' =>  'يمكنك تحديث بيانات الدفع من هنا']);
     }
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
@@ -51,7 +51,8 @@ class ProfileController extends Controller
             'phone' => $validated['phone'] ?? null,
             'bio' => $validated['bio'] ?? null,
             'country_id' => $validated['country_id'] ?? null,
-            'is_public' => $validated['is_public'] ?? false, // Ensure boolean
+            'level_id' => $validated['level_id'] ?? null,
+            'is_public' => $validated['is_public'] ?? false,
         ]);
 
         return Redirect::route('profile.settings')->with('status', 'profile-updated');
@@ -66,6 +67,17 @@ class ProfileController extends Controller
         } else {
             $user->learningPaths()->sync($validated['learning_paths']);
         }
+
+        return Redirect::route('profile.learningCenter')->with('status', 'profile-updated');
+    }
+
+    public function update_level_id(Request $request): RedirectResponse
+    {
+        //dd($request->all());
+        $user = $request->user();
+        $user->profile->update([
+            'level_id' => $request->level_id,
+        ]);
 
         return Redirect::route('profile.learningCenter')->with('status', 'profile-updated');
     }
@@ -96,14 +108,15 @@ class ProfileController extends Controller
         $pathProjects = $user->pathProjects()->load('courses');
         $pathSeries = $user->pathSeries();
         $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count() + $pathSeries->count();
-        //dd($pathProjects);
-        return view('dashboard.learning-center.index-learning-center', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'pathSeries', 'tasksCount'));
+        $assement_quiz = $pathQuizzes->where('type', 'assessment')->first();
+        //dd($assement_quiz);
+        return view('dashboard.learning-center.index-learning-center', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'pathSeries', 'tasksCount', 'assement_quiz'), ['title' => 'مركز التعلم', 'subtitle' =>  'تجد هنا جميع المواد التعليمية التي تم تسجيلك بها']);
     }
 
     public function learning_path(Request $request): View
     {
         $learningPaths = LearningPath::all();
         $user = $request->user()->load('learningPaths.learningStacks.technologyStacks');
-        return view('dashboard.profile.learning-path', compact('user', 'learningPaths'));
+        return view('dashboard.profile.learning-path', compact('user', 'learningPaths'), ['title' => 'مسارات التعلم', 'subtitle' =>  'يمكنك إختيار مسار تعليمي لتبدأ فيه']);
     }
 }

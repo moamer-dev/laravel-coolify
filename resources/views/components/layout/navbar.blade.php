@@ -4,7 +4,7 @@
         Debugbar::info($user);
     }
 @endphp
-<div id="kt_app_header" class="app-header">
+<div id="kt_app_header" class="app-header" style="height:6rem !important">
     <div class="app-header-primary" data-kt-sticky="true" data-kt-sticky-name="app-header-primary-sticky"
         data-kt-sticky-offset="{default: 'false', lg: '300px'}">
         <div class="app-container container-xxl d-flex align-items-stretch justify-content-between"
@@ -53,5 +53,5 @@
             </div>
         </div>
     </div>
-    @include('components.navbar.nav-submenu')
+    {{-- @include('components.navbar.nav-submenu') --}}
 </div>

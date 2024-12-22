@@ -1,6 +1,3 @@
-{{-- @php 
-dd($items);
-@endphp --}}
 <div class="container mt-12">
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-4 col-12 mb-4">

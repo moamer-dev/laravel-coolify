@@ -1,4 +1,19 @@
 <div class="container">
+    <style>
+        .offcanvas-header {
+            background-color: #f8f9fa;
+        }
+
+        .offcanvas-body {
+            font-size: 14px;
+        }
+
+        #myDiagramDiv {
+            width: 100%;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+    </style>
     <button class="btn btn-primary mt-3 mb-4 {{ !$activeTechnology ? 'd-none' : '' }}" wire:click="resetSelectTechnology">
         {{ $activeTechnology ? 'تعديل الخيارات' : '' }}
     </button>
@@ -153,4 +168,171 @@
             </div>
         @endif
     </div>
+
+    <div style="text-align: center; margin-bottom: 10px;">
+        <button id="zoomIn" class="btn btn-primary">Zoom In</button>
+        <button id="zoomOut" class="btn btn-primary">Zoom Out</button>
+        <button id="resetZoom" class="btn btn-secondary">Reset Zoom</button>
+    </div>
+    <div id="myDiagramDiv" style="width: 100%; height: 600px; border: 1px solid black;"></div>
+
+    <!-- Bootstrap Drawer -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="infoDrawer" aria-labelledby="infoDrawerLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="infoDrawerLabel">Node Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="drawerContent">
+            <!-- Node details will be shown here -->
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="infoDrawer" aria-labelledby="infoDrawerLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="infoDrawerLabel">Node Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p id="drawerContent">No content available.</p>
+        </div>
+    </div>
 </div>
+
+<script>
+    // Assuming userPaths is already defined from the server-side
+    const userPaths = @json($userPaths);
+    console.log("userPaths", userPaths);
+
+    // Function to process userPaths into roadmap TreeModel data
+    function processUserPaths(userPaths) {
+        const nodes = [];
+        let keyCounter = 1;
+
+        userPaths.forEach((path) => {
+            nodes.push({
+                key: `path_${path.id}`,
+                name: path.title,
+                isMain: true,
+                step: 1
+            });
+
+            let stepCounter = 1;
+
+            path.learning_stacks.forEach((stack) => {
+                nodes.push({
+                    key: `stack_${stack.id}`,
+                    parent: `path_${path.id}`,
+                    name: stack.title,
+                    isMain: true,
+                    step: stepCounter++
+                });
+
+                let techCounter = 1;
+
+                stack.technology_stacks
+                    .sort((a, b) => a.id - b.id) // Ensure technologies are in logical order
+                    .forEach((tech) => {
+                        nodes.push({
+                            key: `tech_${tech.id}`,
+                            parent: `stack_${stack.id}`,
+                            name: `${techCounter++}. ${tech.name}`,
+                            isMain: false,
+                            step: techCounter
+                        });
+                    });
+            });
+        });
+
+        return nodes;
+    }
+
+    // Process the userPaths data
+    const diagramData = processUserPaths(userPaths);
+
+    function init() {
+        const $ = go.GraphObject.make;
+
+        // Initialize Diagram
+        const myDiagram = $(go.Diagram, "myDiagramDiv", {
+            layout: $(go.LayeredDigraphLayout, {
+                direction: 90, // Top-to-bottom flow
+                layerSpacing: 50, // Spacing between layers
+                columnSpacing: 20 // Spacing between nodes in the same layer
+            }),
+            "undoManager.isEnabled": true,
+            "clickCreatingTool.archetypeNodeData": {
+                name: "New Note",
+                isNote: true
+            }
+        });
+
+        // Node Template
+        myDiagram.nodeTemplate = $(
+            go.Node,
+            "Auto", {
+                click: (e, obj) => showDrawer(obj.part.data) // Show drawer on node click
+            },
+            $(go.Shape, "RoundedRectangle", {
+                    strokeWidth: 1
+                },
+                new go.Binding("fill", "", (data) => {
+                    if (data.isMain === true) return "#FFD700"; // Gold for main nodes
+                    if (data.isMain === false) return "lightblue"; // Light blue for steps
+                    if (data.isNote) return "#FFEB3B"; // Yellow for notes
+                    return "gray"; // Fallback color
+                })
+            ),
+            $(
+                go.TextBlock, {
+                    margin: 8,
+                    font: "bold 12pt sans-serif",
+                    wrap: go.TextBlock.WrapFit
+                },
+                new go.Binding("text", "name")
+            )
+        );
+
+        // Link Template
+        myDiagram.linkTemplate = $(
+            go.Link, {
+                routing: go.Link.AvoidsNodes,
+                curve: go.Link.JumpOver,
+                corner: 5
+            },
+            $(go.Shape, {
+                strokeWidth: 2,
+                stroke: "#555"
+            }),
+            $(go.Shape, {
+                toArrow: "Standard",
+                stroke: null,
+                fill: "#555"
+            })
+        );
+
+        // Assign the diagram model
+        myDiagram.model = new go.TreeModel(diagramData);
+
+
+        // Zoom controls
+        document.getElementById("zoomIn").addEventListener("click", () => {
+            myDiagram.commandHandler.increaseZoom();
+        });
+        document.getElementById("zoomOut").addEventListener("click", () => {
+            myDiagram.commandHandler.decreaseZoom();
+        });
+        document.getElementById("resetZoom").addEventListener("click", () => {
+            myDiagram.scale = 1; // Reset zoom to default
+            myDiagram.centerDiagram(); // Center the diagram
+        });
+    }
+
+    function showDrawer(data) {
+        document.getElementById("infoDrawerLabel").textContent = data.name;
+        document.getElementById("drawerContent").textContent = `Details about ${data.name}`;
+        const drawer = new bootstrap.Offcanvas(document.getElementById("infoDrawer"));
+        drawer.show();
+    }
+
+    // Initialize Diagram
+    document.addEventListener("DOMContentLoaded", init);
+</script>
