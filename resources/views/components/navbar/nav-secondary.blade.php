@@ -155,6 +155,22 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
+                    <div class="menu-item">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <div class="menu-separator"></div>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('user.path-todo') }}">
+                            <span class="menu-title">Todo</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item flex-grow-1"></div>

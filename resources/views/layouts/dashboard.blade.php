@@ -3,7 +3,7 @@
 
 <head>
     <base href="../../../" />
-    <title>Zaytonaah</title>
+    <title>{{ $title ?? 'Zaytonaah' }}</title>
     <meta charset="utf-8" />
     <meta name="description" content="Top Web Development and Training Agency" />
     <meta name="keywords"
@@ -25,7 +25,7 @@
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
     @yield('styles')
-    @yield('headerScripts')
+    @stack('headerScripts')
     @livewireStyles
 </head>
 
@@ -78,7 +78,7 @@
     <script src="{{ asset('assets') }}/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets') }}/js/scripts.bundle.js"></script>
     @livewireScripts
-    @yield('footerScripts')
+    @stack('footerScripts')
 </body>
 
 </html>

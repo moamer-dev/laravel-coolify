@@ -326,9 +326,10 @@
                             <!--end::Card-->
                         </div>
                     </div>
-                    @if (Auth::user())
+                    @auth
                         @include('components.navbar.nav-user-menu')
-                    @else
+                    @endauth
+                    @guest
                         <div class="app-navbar-item ms-1">
                             <div class="btn btn-sm btn-icon btn-custom h-35px w-35px">
                                 <a href="{{ route('login') }}"
@@ -338,7 +339,7 @@
                                 </a>
                             </div>
                         </div>
-                    @endif
+                    @endguest
                     <div class="app-navbar-item d-lg-none" title="Show header menu">
                         <button class="btn btn-sm btn-icon btn-custom h-35px w-35px"
                             id="kt_header_secondary_mobile_toggle">

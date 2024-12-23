@@ -49,7 +49,6 @@ class SectionResource extends Resource
                             ])
                             ->reactive()
                             ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
-
                         Forms\Components\Select::make('sectionable_id')
                             ->label('Specific Course or Project')
                             ->required()

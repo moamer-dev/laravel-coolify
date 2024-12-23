@@ -50,6 +50,9 @@ class AdminPanelProvider extends PanelProvider
             //->topbar(false) //disable header
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Learning Plan')
+                    ->icon('heroicon-o-user-group'),
+                NavigationGroup::make()
                     ->label('Paths')
                     ->icon('heroicon-o-book-open'),
                 NavigationGroup::make()
@@ -69,6 +72,9 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-pencil'),
                 NavigationGroup::make()
                     ->label('Users')
+                    ->icon('heroicon-o-user-group'),
+                NavigationGroup::make()
+                    ->label('Subscriptions')
                     ->icon('heroicon-o-user-group'),
                 // NavigationGroup::make()
                 //     ->label(fn(): string => __('navigation.settings'))

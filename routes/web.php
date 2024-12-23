@@ -32,6 +32,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+// Route::get('/todo', function () {
+//     return view('todo', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
+// })->name('todo');
+
+
 
 Route::middleware('auth')->group(function () {
 
@@ -73,6 +78,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/paths', 'view')->name('user.path-view');
         Route::get('/user/paths/visualize', 'visualize')->name('user.path-visualize');
         Route::get('/user/paths/todo/', 'todo_path')->name('user.path-todo');
+        //Route::get('/user/paths/todo/', 'todo_path')->name('user.path-todo');
+        // Route::get('/todo', function () {
+        //     return view('todo', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
+        // })->name('todo');
     });
 });
 

@@ -12,6 +12,9 @@ class LearningPathController extends Controller
     public function view()
     {
         $userId = Auth::user()->id;
+        if (!$userId) {
+            return redirect()->route('login')->with('error', 'You must be logged in.');
+        }
         $user = User::find($userId)->load('profile');
         $pathCourses = $user->pathCourses();
         $pathQuizzes = $user->pathQuizzes();
@@ -59,11 +62,11 @@ class LearningPathController extends Controller
     public function todo_path()
     {
         $userId = Auth::user()->id;
-        $user = User::find($userId)->load('profile');
-        $pathCourses = $user->pathCourses();
-        $pathQuizzes = $user->pathQuizzes();
-        $pathProjects = $user->pathProjects();
-        $pathSeries = $user->pathSeries();
-        return view('dashboard.learning-path.todo');
+        $user = User::with('learningPaths.learningStacks.modules.tasks.subtasks')->find($userId);
+        //$pathCourses = $user->pathCourses();
+        //$pathQuizzes = $user->pathQuizzes();
+        //$pathProjects = $user->pathProjects();
+        //$pathSeries = $user->pathSeries();
+        return view('dashboard.learning-path.todo', compact('user'), ['title' => 'مسارات التعلم', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
     }
 }

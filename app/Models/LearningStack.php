@@ -21,4 +21,9 @@ class LearningStack extends Model
     {
         return $this->belongsToMany(TechnologyStack::class, 'learning_stack_technology_stack');
     }
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
 }

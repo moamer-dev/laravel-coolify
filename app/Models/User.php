@@ -77,6 +77,22 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
+
     public function pathCourses()
     {
         return Course::whereHas('technologyStacks', function ($query) {

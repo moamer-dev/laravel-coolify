@@ -1,11 +1,17 @@
 <div class="menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-700 menu-state-gray-900 menu-icon-gray-500 menu-arrow-gray-500 menu-state-icon-primary menu-state-bullet-primary fw-semibold fs-6 align-items-stretch my-5 my-lg-0 px-2 px-lg-0"
     id="#kt_app_header_menu" data-kt-menu="true">
-    <!--begin:Menu item-->
+    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
+        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+        <span class="menu-link">
+            <span class="menu-title">من نحن</span>
+            <span class="menu-arrow d-lg-none"></span>
+        </span>
+    </div>
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
         <!--begin:Menu link-->
         <span class="menu-link">
-            <span class="menu-title">Dashboards</span>
+            <span class="menu-title">التدريب</span>
             <span class="menu-arrow d-lg-none"></span>
         </span>
         <!--end:Menu link-->
@@ -289,13 +295,11 @@
         </div>
         <!--end:Menu sub-->
     </div>
-    <!--end:Menu item-->
-    <!--begin:Menu item-->
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion me-0 me-lg-2">
         <!--begin:Menu link-->
         <span class="menu-link">
-            <span class="menu-title">Pages</span>
+            <span class="menu-title">الخدمات</span>
             <span class="menu-arrow d-lg-none"></span>
         </span>
         <!--end:Menu link-->
@@ -1551,9 +1555,7 @@
         </div>
         <!--end:Menu sub-->
     </div>
-    <!--end:Menu item-->
-    <!--begin:Menu item-->
-    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
+    {{-- <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
         <!--begin:Menu link-->
         <span class="menu-link">
@@ -2722,14 +2724,12 @@
             <!--end:Menu item-->
         </div>
         <!--end:Menu sub-->
-    </div>
-    <!--end:Menu item-->
-    <!--begin:Menu item-->
+    </div> --}}
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
         <!--begin:Menu link-->
         <span class="menu-link">
-            <span class="menu-title">Help</span>
+            <span class="menu-title">مركز المساعدة</span>
             <span class="menu-arrow d-lg-none"></span>
         </span>
         <!--end:Menu link-->
@@ -2796,5 +2796,12 @@
         </div>
         <!--end:Menu sub-->
     </div>
-    <!--end:Menu item-->
+    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
+        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+        <span class="menu-link">
+            <span class="menu-title">تواصل معنا</span>
+            <span class="menu-arrow d-lg-none"></span>
+        </span>
+    </div>
+
 </div>

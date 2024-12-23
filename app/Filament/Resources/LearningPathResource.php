@@ -31,7 +31,7 @@ class LearningPathResource extends Resource
         return $form
             ->schema([
                 Split::make([
-                    Section_Model::make('Add Quiz')
+                    Section_Model::make('Add Learning Path')
                         ->schema([
                             Forms\Components\TextInput::make('title')
                                 ->required()

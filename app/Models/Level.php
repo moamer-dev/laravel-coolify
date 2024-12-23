@@ -25,4 +25,9 @@ class Level extends Model
     {
         return $this->hasMany(Profile::class);
     }
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
 }
