@@ -15,7 +15,7 @@
                             id="kt_app_header_menu_toggle">
                             <i class="ki-outline ki-abstract-14 fs-2"></i>
                         </button>
-                        <a href="index.html">
+                        <a href="{{ route('home') }}">
                             <img alt="Logo" src="{{ asset('assets') }}/media/logos/icon_dark_green.svg"
                                 class="w-35px d-sm-none d-inline" />
                             <img alt="Logo" src="{{ asset('assets') }}/media/logos/logo_dark.svg"

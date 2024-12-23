@@ -21,7 +21,7 @@ Route::get('/new', function () {
 Route::get('/', function () {
     $paths = LearningPath::where("is_active", 1)->get();
     return view('/front/landing', compact('paths'));
-});
+})->name('home');
 Route::get('/path/{slug}', [LearningPathController::class, 'front_view'])->name('path-front-view');
 Route::get('/path/technology/{slug}', [TechnologyStackController::class, 'technology_view'])->name('technology-view');
 Route::get('/learn', function () {
