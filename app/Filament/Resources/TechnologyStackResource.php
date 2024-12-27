@@ -16,6 +16,10 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Filament\Tables\Actions\EditAction;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+
 
 class TechnologyStackResource extends Resource
 {
@@ -46,7 +50,16 @@ class TechnologyStackResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->directory('technologies/icons')
+                    ->getUploadedFileNameForStorageUsing(
+                        function (TemporaryUploadedFile $file,  Get $get): string {
+                            $slug = $get('slug');
+                            $slug = $slug ?: 'default-slug';
+                            return 'technology-' . $slug . '.' . $file->getClientOriginalExtension();
+                        }
+                    )
+                    ->fetchFileInformation(false),
                 Forms\Components\TextInput::make('url')
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
@@ -89,15 +102,30 @@ class TechnologyStackResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(function ($state, $record) {
+                        $iconUrl = $record->image
+                            ? asset('storage/' . $record->image)
+                            : 'https://via.placeholder.com/40';
+
+                        return view('components.shared.icon-with-name', [
+                            'iconUrl' => $iconUrl,
+                            'name' => $state,
+                        ])->render();
+                    })
+                    ->html(),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('learningStacks.title')
                     ->numeric()
                     ->sortable()
                     ->searchable()
                     ->extraAttributes(['style' => 'white-space: normal; word-wrap: break-word;']),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Active')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->onIcon('heroicon-s-check')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -115,11 +143,21 @@ class TechnologyStackResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->mutateFormDataUsing(function ($data, $record) {
+                        if (isset($data['image']) && $data['image'] !== $record->image) {
+                            if ($record->image && Storage::disk('public')->exists($record->image)) {
+                                Storage::disk('public')->delete($record->image);
+                            }
+                        }
+                        return $data;
+                    }),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
             ])
+
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

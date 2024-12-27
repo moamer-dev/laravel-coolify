@@ -6,6 +6,8 @@ use App\Models\LearningPath;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
+use App\Models\Subtask;
 
 class LearningPathController extends Controller
 {
@@ -63,10 +65,21 @@ class LearningPathController extends Controller
     {
         $userId = Auth::user()->id;
         $user = User::with('learningPaths.learningStacks.modules.tasks.subtasks')->find($userId);
-        //$pathCourses = $user->pathCourses();
-        //$pathQuizzes = $user->pathQuizzes();
-        //$pathProjects = $user->pathProjects();
-        //$pathSeries = $user->pathSeries();
-        return view('dashboard.learning-path.todo', compact('user'), ['title' => 'مسارات التعلم', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+        //dd($user);
+        return view('dashboard.learning-path.todo', compact('user'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+    }
+
+    public function task_view($id)
+    {
+        $task = Task::find($id);
+        return view('dashboard.learning-path.task-view', compact('task'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+    }
+
+    public function subtask_view($id, $subtask = null)
+    {
+        $task = Task::find($id);
+        //$subtask_progress_status = Auth::user()->progress()->where('subtask_id', $subtask)->first()->status;
+        $subtask_to_view = Subtask::with('comments')->find($subtask);
+        return view('dashboard.learning-path.task-view', compact('task', 'subtask_to_view'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
     }
 }

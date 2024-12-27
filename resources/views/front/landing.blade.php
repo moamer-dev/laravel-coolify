@@ -105,6 +105,7 @@
     <div style="min-height: 78vh;">
         @include('components.front.landing.landing-hero')
         @include('components.front.landing.landing-features-1')
+        @include('components.front.landing.landing-tabs')
         @include('components.front.landing.landing-paths')
         @include('components.front.landing.landing-video')
         @include('components.front.landing.landing-features-2')

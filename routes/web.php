@@ -19,7 +19,7 @@ Route::get('/new', function () {
 
 
 Route::get('/', function () {
-    $paths = LearningPath::where("is_active", 1)->get();
+    $paths = LearningPath::with(['learningStacks.technologyStacks'])->where('is_active', 1)->get();
     return view('/front/landing', compact('paths'));
 })->name('home');
 Route::get('/path/{slug}', [LearningPathController::class, 'front_view'])->name('path-front-view');
@@ -27,23 +27,16 @@ Route::get('/path/technology/{slug}', [TechnologyStackController::class, 'techno
 Route::get('/learn', function () {
     return view('dashboard.learn.index', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
 })->name('learn');
-Route::get('/dashboard', function () {
+Route::get('user/dashboard', function () {
     return view('dashboard.index-dashboard', ['title' => 'لوحة التحكم', 'subtitle' => 'يمكنك إدارة كل شئ خاص بحسابك ومسارات تعلمك من هنا']);
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-
-// Route::get('/todo', function () {
-//     return view('todo', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
-// })->name('todo');
-
-
 
 Route::middleware('auth')->group(function () {
 
     // Profile-related routes
     Route::controller(ProfileController::class)->group(function () {
-        Route::get('/profile', 'overview')->name('profile.overview');
-        Route::get('/learning-center', 'learningCenter')->name('profile.learningCenter');
+        Route::get('/profile/overview', 'overview')->name('profile.overview');
+        Route::get('/user/learning-center/overview', 'learningCenter')->name('profile.learningCenter');
         Route::get('/profile/settings', 'settings')->name('profile.settings');
         Route::get('/profile/billing', 'billing')->name('profile.billing');
         Route::get('/profile/learning-path', 'learning_path')->name('profile.learning-path');
@@ -77,11 +70,9 @@ Route::middleware('auth')->group(function () {
     Route::controller(LearningPathController::class)->group(function () {
         Route::get('/user/paths', 'view')->name('user.path-view');
         Route::get('/user/paths/visualize', 'visualize')->name('user.path-visualize');
-        Route::get('/user/paths/todo/', 'todo_path')->name('user.path-todo');
-        //Route::get('/user/paths/todo/', 'todo_path')->name('user.path-todo');
-        // Route::get('/todo', function () {
-        //     return view('todo', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
-        // })->name('todo');
+        Route::get('/user/learning-center/plan', 'todo_path')->name('user.path-todo');
+        //Route::get('/user/paths/todo/task/{id}', 'task_view')->name('user.task-view');
+        Route::get('/user/learning-center/plan/task/{id}/{subtask?}', 'subtask_view')->name('user.subtask-view');
     });
 });
 

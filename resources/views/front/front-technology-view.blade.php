@@ -1,5 +1,11 @@
 @extends('layouts.front')
 @section('content')
+    <style>
+        .avatar-xxl {
+            height: 7.5rem;
+            width: 7.5rem;
+        }
+    </style>
     <div style="min-height: 78vh;">
         <section class="py-8" style="background: linear-gradient(270deg, #9d4eff 0%, #782af4 100%)"></section>
         <section class="bg-white shadow-sm">
@@ -9,7 +15,7 @@
                         <div class="d-md-flex align-items-center justify-content-between bg-white pt-3 pb-3 pb-lg-5">
                             <div class="d-md-flex align-items-center text-lg-start text-center">
                                 <div class="me-3 mt-n8">
-                                    <img src="/assets/media/geek/path/path-bootstrap.svg"
+                                    <img src="{{ asset('storage') }}/{{ $technology->image }}"
                                         class="avatar-xxl rounded border p-4 bg-white" alt="bootstarp ">
                                 </div>
                                 <div class="mt-3 mt-md-0">

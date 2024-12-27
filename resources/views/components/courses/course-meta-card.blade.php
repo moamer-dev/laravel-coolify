@@ -1,61 +1,23 @@
-<div class="card mb-4 card-flush">
-    <img src="{{ feature_image_or_default($course->feature_image) }}" alt="course" class="card-img-top">
+<div class="card mb-3 mb-4">
+    <div class="p-1">
+        <div class="d-flex justify-content-center align-items-center rounded border-white border rounded-3 bg-cover"
+            style="background-image: url({{ feature_image_or_default($course->feature_image) }}); height: 210px;  background-repeat: no-repeat; background-size: cover; ">
+            <a class="glightbox icon-shape rounded-circle btn-play icon-xl"
+                href="https://www.youtube.com/watch?v=Nfzi7034Kbg">
+                <i class="fe fe-play"></i>
+            </a>
+        </div>
+    </div>
     <!-- Card body -->
     <div class="card-body">
-        <div class="d-flex flex-column h-100">
-            <div class="d-flex flex-stack mt-auto bd-highlight mb-7">
-                <div class="d-flex align-items-center justify-content-center flex-wrap d-grid gap-2">
-                    <div class="d-flex align-items-center me-5 ">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-30px symbol-circle me-3">
-                            <img src="{{ photo_or_default($course->creator->profile->avatar) }}" class=""
-                                alt="">
-                        </div>
-                        <div class="m-0">
-                            <span class="fw-semibold text-gray-500 d-block fs-8">المدرب</span>
-                            <a href="pages/user-profile/overview.html"
-                                class="fw-bold text-gray-800 text-hover-primary fs-7">{{ $course->creator->name }}</a>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center me-5">
-                        <!--begin::Symbol-->
-                        <div class="symbol symbol-30px symbol-circle me-3">
-                            <span class="symbol-label bg-success">
-                                <i class="ki-outline ki-abstract-41 fs-5 text-white"></i>
-                            </span>
-                        </div>
-                        <!--end::Symbol-->
-                        <!--begin::Info-->
-                        <div class="m-0">
-                            <span class="fw-semibold text-gray-500 d-block fs-8">التكنولوجيات</span>
-                            <span class="fw-bold text-gray-800 fs-7">
-                                {{ $course->technologyStacks->pluck('name')->join(', ') }}
-                            </span>
-                        </div>
-                        <!--end::Info-->
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex flex-stack mt-auto bd-highlight">
-                <div class="symbol-group symbol-hover flex-nowrap">
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Melody Macy"
-                        data-bs-original-title="Melody Macy" data-kt-initialized="1">
-                        <img alt="Pic" src="{{ asset('assets') }}/media/avatars/300-2.jpg">
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Michael Eberon"
-                        data-bs-original-title="Michael Eberon" data-kt-initialized="1">
-                        <img alt="Pic" src="{{ asset('assets') }}/media/avatars/300-3.jpg">
-                    </div>
-                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                        data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                    </div>
-                </div>
-                <a href="#"
-                    class="d-flex align-items-center text-primary opacity-75-hover fs-6 fw-semibold">Manage the
-                    Curriculum
-                    <i class="ki-outline ki-exit-right-corner fs-4 ms-1"></i></a>
-            </div>
+        <!-- Price single page -->
+        {{-- <div class="mb-3">
+            <span class="text-dark fw-bold h2">{{ $course->price }}</span>
+            <del class="fs-4">$750</del>
+        </div> --}}
+        <div class="d-grid">
+            <a href="#" class="btn btn-primary mb-2">Start Free Month</a>
+            <a href="pricing.html" class="btn btn-outline-primary">Get Full Access</a>
         </div>
     </div>
 </div>

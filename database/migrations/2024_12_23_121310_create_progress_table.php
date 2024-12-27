@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('module_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('task_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('subtask_id')->nullable()->constrained('subtasks')->onDelete('cascade');
-            $table->enum('status', ['not_started', 'in_progress', 'completed'])->default('not_started');
+            $table->enum('status', ['not_started', 'in_progress', 'completed', 'in_completed'])->default('not_started');
             $table->integer('completion_time')->nullable();
             $table->float('completion_percentage')->default(0);
             $table->timestamps();

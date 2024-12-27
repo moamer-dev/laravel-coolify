@@ -3,200 +3,100 @@
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_secondary_mobile_toggle" data-kt-swapper="true"
     data-kt-swapper-mode="{default: 'append', lg: 'append'}"
     data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header'}">
-    <!--begin::Header secondary wrapper-->
     <div class="d-flex flex-column flex-grow-1 overflow-hidden">
         <div
             class="app-header-secondary-menu-main d-flex flex-grow-lg-1 align-items-end pt-3 pt-lg-2 px-3 px-lg-0 w-auto overflow-auto flex-nowrap">
             <div class="app-container container-fluid">
-                <!--begin::Main menu-->
                 <div class="menu menu-rounded menu-nowrap flex-shrink-0 menu-row menu-active-bg menu-title-gray-700 menu-state-gray-900 menu-icon-gray-500 menu-arrow-gray-500 menu-state-icon-primary menu-state-bullet-primary fw-semibold fs-base align-items-stretch"
                     id="#kt_app_header_secondary_menu" data-kt-menu="true">
-                    <!--begin:Menu item-->
+                    <div class="menu-item {{ request()->is('user/dashboard*') ? 'here' : '' }}">
+                        <a class="menu-link" href="{{ route('dashboard') }}">
+                            <span class="menu-title">لوحة التحكم</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-content">
+                            <div class="menu-separator"></div>
+                        </div>
+                    </div>
+                    <div class="menu-item {{ request()->is('user/learning-center*') ? 'here' : '' }}">
+                        <a class="menu-link" href="{{ route('profile.learningCenter') }}">
+                            <span class="menu-title">مركز التعلم</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-content">
+                            <div class="menu-separator"></div>
+                        </div>
+                    </div>
                     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
-                        class="menu-item here show">
-                        <!--begin:Menu link-->
+                        class="menu-item {{ request()->is('profile*') ? 'here' : '' }} show">
                         <span class="menu-link">
-                            <span class="menu-title">Account</span>
+                            <span class="menu-title">حسابي</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-dropdown px-lg-2 py-lg-4 w-150px w-lg-175px">
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link active" href="index.html">
+                                <a class="menu-link {{ request()->is('profile/overview*') ? 'active' : '' }}"
+                                    href="{{ route('profile.overview') }}">
                                     <span class="menu-icon">
                                         <i class="ki-outline ki-chart-simple fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Dashboard</span>
+                                    <span class="menu-title">بياناتي</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="account/settings.html">
+                                <a class="menu-link {{ request()->is('profile/settings*') ? 'active' : '' }}"
+                                    href="{{ route('profile.settings') }}">
                                     <span class="menu-icon">
                                         <i class="ki-outline ki-share fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Settings</span>
+                                    <span class="menu-title">الإعدادات</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="account/security.html">
+                                <a class="menu-link {{ request()->is('profile/billing*') ? 'active' : '' }}"
+                                    href="{{ route('profile.billing') }}">
                                     <span class="menu-icon">
                                         <i class="ki-outline ki-shield fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Security</span>
+                                    <span class="menu-title">إعدادات الدفع</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="account/activity.html">
+                                <a class="menu-link {{ request()->is('profile/learning-path*') ? 'active' : '' }}"
+                                    href="{{ route('profile.learning-path') }}">
                                     <span class="menu-icon">
                                         <i class="ki-outline ki-scan-barcode fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Activity</span>
+                                    <span class="menu-title">إختيار مسارات التعلم</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
                             <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="account/billing.html">
+                                <a class="menu-link {{ request()->is('profile/quiz-attempts*') ? 'active' : '' }}"
+                                    href="{{ route('user.quiz-attempts') }}">
                                     <span class="menu-icon">
                                         <i class="ki-outline ki-dollar fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Billing</span>
+                                    <span class="menu-title">محاولات الإختبارات</span>
                                 </a>
-                                <!--end:Menu link-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/statements.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-two-credit-cart fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Statements</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
                         </div>
-                        <!--end:Menu sub-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <div class="menu-separator"></div>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="apps/projects/list.html">
-                            <span class="menu-title">Projects</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <div class="menu-separator"></div>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="apps/customers/list.html">
-                            <span class="menu-title">Customers</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <div class="menu-separator"></div>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="#" data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_create_campaign">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-plus fs-3"></i>
-                            </span>
-                            <span class="menu-title">Add New</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <div class="menu-item">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <div class="menu-separator"></div>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('user.path-todo') }}">
-                            <span class="menu-title">Todo</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
                     <div class="menu-item flex-grow-1"></div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu content-->
                         <div class="menu-content">
                             <div class="menu-separator d-block d-lg-none"></div>
                         </div>
-                        <!--end:Menu content-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link-->
                         <a class="menu-link" href="utilities/modals/wizards/create-app.html">
                             <span class="menu-icon">
                                 <i class="ki-outline ki-plus fs-3"></i>
                             </span>
                             <span class="menu-title">Extensions</span>
                         </a>
-                        <!--end:Menu link-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu content-->
                         <div class="menu-content">
@@ -204,8 +104,6 @@
                         </div>
                         <!--end:Menu content-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
                     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
                         class="menu-item">
                         <!--begin:Menu link-->
@@ -257,383 +155,90 @@
                         </div>
                         <!--end:Menu sub-->
                     </div>
-                    <!--end:Menu item-->
                 </div>
-                <!--end::Menu-->
             </div>
         </div>
         <div class="app-header-secondary-menu-sub d-flex align-items-stretch flex-grow-1">
             <div
                 class="app-container d-flex flex-column flex-lg-row align-items-stretch justify-content-lg-between container-fluid">
                 <!--begin::Main menu-->
-                <div class="menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-700 menu-state-gray-900 menu-icon-gray-500 menu-arrow-gray-500 menu-state-icon-primary menu-state-bullet-primary fw-semibold fs-base align-items-stretch my-2 my-lg-0 px-2 px-lg-0"
+                <div class="{{ request()->is('profile*') ? '' : 'd-none' }} menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-700 menu-state-gray-900 menu-icon-gray-500 menu-arrow-gray-500 menu-state-icon-primary menu-state-bullet-primary fw-semibold fs-base align-items-stretch my-2 my-lg-0 px-2 px-lg-0"
                     id="#kt_app_header_tertiary_menu" data-kt-menu="true">
-                    <!--begin:Menu item-->
                     <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link active" href="#">
+                        <a class="menu-link {{ request()->is('profile/overview*') ? 'active' : '' }}"
+                            href="{{ route('profile.overview') }}">
                             <span class="menu-icon">
                                 <i class="ki-outline ki-element-9 fs-4"></i>
                             </span>
-                            <span class="menu-title">Views</span>
+                            <span class="menu-title">بياناتي</span>
                         </a>
-                        <!--end:Menu link-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('profile/settings*') ? 'active' : '' }}"
+                            href="{{ route('profile.settings') }}">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-grid fs-4"></i>
+                                <i class="ki-outline ki-element-9 fs-4"></i>
                             </span>
-                            <span class="menu-title">My Widgets</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/projects/targets.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-menu fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Task Manager</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/customers/details.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-basket-ok fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Sales Tracker</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/invoices/create.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-scan-barcode fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Expense Calculator</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/file-manager/files.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-picture fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Media Dashboard</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/projects/targets.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-rocket fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Project Planner</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/calendar.html">
-                                    <span class="menu-icon">
-                                        <i class="ki-outline ki-calendar-8 fs-3"></i>
-                                    </span>
-                                    <span class="menu-title">Event Calendar</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
+                            <span class="menu-title">الإعدادات</span>
+                        </a>
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('profile/billing*') ? 'active' : '' }}"
+                            href="{{ route('profile.billing') }}">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-eye-slash fs-4"></i>
+                                <i class="ki-outline ki-element-9 fs-4"></i>
                             </span>
-                            <span class="menu-title">Hide Fields</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-150px">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Product</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">SKU</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Quantity</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Price</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Rating</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Status</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
+                            <span class="menu-title">إعدادات الدفع</span>
+                        </a>
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('profile/learning-path*') ? 'active' : '' }}"
+                            href="{{ route('profile.learning-path') }}">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-filter fs-4"></i>
+                                <i class="ki-outline ki-element-9 fs-4"></i>
                             </span>
-                            <span class="menu-title">Filter</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-lg-300px">
-                            <div data-kt-menu-dismiss="true">
-                                <!--begin::Header-->
-                                <div class="px-7 py-5">
-                                    <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Menu separator-->
-                                <div class="separator border-gray-200"></div>
-                                <!--end::Menu separator-->
-                                <!--begin::Form-->
-                                <div class="px-7 py-5">
-                                    <!--begin::Input group-->
-                                    <div class="mb-6">
-                                        <!--begin::Label-->
-                                        <label class="form-label fw-semibold">Status:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <div>
-                                            <select class="form-select form-select-solid" multiple="multiple"
-                                                data-kt-select2="true" data-close-on-select="false"
-                                                data-placeholder="Select option"
-                                                data-dropdown-parent="#kt_app_header_tertiary_menu"
-                                                data-allow-clear="true">
-                                                <option></option>
-                                                <option value="1">Approved</option>
-                                                <option value="2">Pending</option>
-                                                <option value="2">In Process</option>
-                                                <option value="2">Rejected</option>
-                                            </select>
-                                        </div>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="mb-6">
-                                        <!--begin::Label-->
-                                        <label class="form-label fw-semibold">Member Type:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Options-->
-                                        <div class="d-flex">
-                                            <!--begin::Options-->
-                                            <label
-                                                class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                                <input class="form-check-input" type="checkbox" value="1" />
-                                                <span class="form-check-label">Author</span>
-                                            </label>
-                                            <!--end::Options-->
-                                            <!--begin::Options-->
-                                            <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="2"
-                                                    checked="checked" />
-                                                <span class="form-check-label">Customer</span>
-                                            </label>
-                                            <!--end::Options-->
-                                        </div>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="mb-0">
-                                        <!--begin::Label-->
-                                        <label class="form-label fw-semibold">Notifications:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Switch-->
-                                        <div
-                                            class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                name="notifications" checked="checked" />
-                                            <label class="form-check-label">Enabled</label>
-                                        </div>
-                                        <!--end::Switch-->
-                                    </div>
-                                    <!--end::Input group-->
-                                </div>
-                                <!--end::Form-->
-                                <!--begin::Menu separator-->
-                                <div class="separator border-gray-200"></div>
-                                <!--end::Menu separator-->
-                                <!--begin::Actions-->
-                                <div class="px-7 py-5 d-flex justify-content-end gap-2">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary"
-                                        data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary"
-                                        data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                        </div>
-                        <!--end:Menu sub-->
+                            <span class="menu-title">إختيار مسارات التعلم</span>
+                        </a>
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('profile/quiz-attempts*') ? 'active' : '' }}"
+                            href="{{ route('user.quiz-attempts') }}">
                             <span class="menu-icon">
-                                <i class="ki-outline ki-sort fs-4"></i>
+                                <i class="ki-outline ki-element-9 fs-4"></i>
                             </span>
-                            <span class="menu-title">Sort</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Default (No Sorting)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Name (A to Z)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Name (Z to A)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Date (Oldest to Newest)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Date (Newest to Oldest)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Price (Lowest to Highest)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="#">
-                                    <span class="menu-title">Price (Highest to Lowest)</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
+                            <span class="menu-title">محاولات الإختبارات</span>
+                        </a>
                     </div>
-                    <!--end:Menu item-->
                 </div>
-                <!--end::Menu-->
-                <!--begin::Search-->
+                <div class="{{ request()->is('user/learning-center/*') ? '' : 'd-none' }} menu menu-rounded menu-column menu-lg-row menu-active-bg menu-title-gray-700 menu-state-gray-900 menu-icon-gray-500 menu-arrow-gray-500 menu-state-icon-primary menu-state-bullet-primary fw-semibold fs-base align-items-stretch my-2 my-lg-0 px-2 px-lg-0"
+                    id="#kt_app_header_tertiary_menu" data-kt-menu="true">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('user/learning-center/overview*') ? 'active' : '' }}"
+                            href="{{ route('profile.learningCenter') }}">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-element-9 fs-4"></i>
+                            </span>
+                            <span class="menu-title">مركز التعلم</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->is('user/learning-center/plan*') ? 'active' : '' }}"
+                            href="{{ route('user.path-todo') }}">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-element-9 fs-4"></i>
+                            </span>
+                            <span class="menu-title">خطة التعلم</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="#">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-element-9 fs-4"></i>
+                            </span>
+                            <span class="menu-title">إحصائياتي</span>
+                        </a>
+                    </div>
+                </div>
                 <div id="kt_header_search" class="header-search d-flex align-items-stretch"
                     data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter"
                     data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-overflow="false"
@@ -714,7 +319,8 @@
                                         class="d-flex text-gray-900 text-hover-primary align-items-center mb-5">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40px me-4">
-                                            <img src="{{ asset('assets') }}/media/avatars/300-6.jpg" alt="" />
+                                            <img src="{{ asset('assets') }}/media/avatars/300-6.jpg"
+                                                alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -730,7 +336,8 @@
                                         class="d-flex text-gray-900 text-hover-primary align-items-center mb-5">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40px me-4">
-                                            <img src="{{ asset('assets') }}/media/avatars/300-2.jpg" alt="" />
+                                            <img src="{{ asset('assets') }}/media/avatars/300-2.jpg"
+                                                alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -746,7 +353,8 @@
                                         class="d-flex text-gray-900 text-hover-primary align-items-center mb-5">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-40px me-4">
-                                            <img src="{{ asset('assets') }}/media/avatars/300-9.jpg" alt="" />
+                                            <img src="{{ asset('assets') }}/media/avatars/300-9.jpg"
+                                                alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->

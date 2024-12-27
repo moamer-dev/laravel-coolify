@@ -3,7 +3,7 @@
     <div class="cursor-pointer symbol position-relative symbol-35px"
         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
         data-kt-menu-placement="bottom-end">
-        <img src="{{ asset('assets') }}/media/avatars/300-2.jpg" alt="user" />
+        <img src="{{ get_avatar_by_id(Auth::id()) }}" alt="user" />
         <span
             class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle mb-1 bottom-0 start-100 animation-blink"></span>
     </div>
@@ -15,7 +15,7 @@
             <div class="menu-content d-flex align-items-center px-3">
                 <!--begin::Avatar-->
                 <div class="symbol symbol-50px me-5">
-                    <img alt="Logo" src="{{ asset('assets') }}/media/avatars/300-2.jpg" />
+                    <img alt="Logo" src="{{ get_avatar_by_id(Auth::id()) }}" />
                 </div>
                 <!--end::Avatar-->
                 <!--begin::Username-->

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileResource extends Resource
 {
@@ -67,15 +68,16 @@ class ProfileResource extends Resource
                                     Forms\Components\TextInput::make('linkedin')
                                         ->maxLength(255)
                                         ->default(null),
-                                ])->columns(2)->collapsible()->compact(), // Optional: Adjust columns for layout
+                                ])->columns(2)->collapsible()->compact(),
                         ]),
-
                     Section::make('Additional Information')
                         ->schema([
                             Forms\Components\Toggle::make('is_public')
                                 ->required(),
                             Forms\Components\FileUpload::make('avatar')
-                                ->image(),
+                                ->image()
+                                ->directory('profiles/avatars')
+                                ->fetchFileInformation(false),
                         ])->grow(false),
                 ])->from('md')
             ])->columns(1);

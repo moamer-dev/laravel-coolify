@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Course;
 use App\Models\Quiz;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -135,6 +136,15 @@ class User extends Authenticatable implements MustVerifyEmail
                 $subQuery->whereHas('learningPaths', function ($pathQuery) {
                     $pathQuery->whereIn('learning_paths.id', $this->learningPaths->pluck('id'));
                 });
+            });
+        })->get();
+    }
+
+    public function getLearningStacks()
+    {
+        return LearningStack::whereHas('learningPaths', function ($query) {
+            $query->whereHas('users', function ($subQuery) {
+                $subQuery->where('users.id', $this->id);
             });
         })->get();
     }

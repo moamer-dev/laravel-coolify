@@ -51,6 +51,7 @@ class ProgressResource extends Resource
                         'not_started' => 'Not Started',
                         'in_progress' => 'In Progress',
                         'completed' => 'Completed',
+                        'in_completed' => 'In Completed',
                     ]),
                 Forms\Components\TextInput::make('completion_time')
                     ->required()

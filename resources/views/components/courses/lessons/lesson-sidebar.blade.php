@@ -1,53 +1,112 @@
 <style>
-    .menu .menu-item.hover:not(.here)>.menu-link:not(.disabled):not(.active):not(.here) .menu-title,
-    .app-sidebar .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-title {
-        color: var(--bs-component-active-bg);
+    .accordion-button,
+    .menu-link {
+        color: #151617;
+        /* Black color */
+        font-weight: normal;
+        /* Default weight */
     }
 
-    .menu-title-gray-600 .menu-item .menu-link .menu-title {
-        color: #151617;
+    /* Highlight Active Section */
+    .accordion-button.text-primary {
+        color: var(--bs-primary);
+        /* Primary color */
+        font-weight: bold;
+        /* Bold for active section */
+    }
+
+    /* Highlight Active Lesson */
+    .menu-link.text-primary {
+        color: var(--bs-primary);
+        /* Primary color */
+        font-weight: bold;
+        /* Bold for active lesson */
+    }
+
+    /* Circle Number Styling */
+    .circle-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--bs-primary-light);
+        color: var(--bs-primary);
+        font-weight: bold;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    [data-bs-theme="dark"] .circle-number {
+        background-color: #0F1014;
+        color: #f0f0f0;
+    }
+
+    [data-bs-theme="dark"] .accordion-button {
+        color: #f0f0f0;
+    }
+
+    [data-bs-theme="dark"] .lesson-button {
+        color: #f0f0f0;
     }
 </style>
+</style>
 <div class="card flex-grow-1 py-4" data-kt-sticky="true" data-kt-sticky-name="app-sidebar-menu-sticky"
-    data-kt-sticky-offset="{default: false, xl: '500px'}" data-kt-sticky-width="225px" data-kt-sticky-left="auto"
+    data-kt-sticky-offset="{default: false, xl: '500px'}" data-kt-sticky-width="100%" data-kt-sticky-left="auto"
     data-kt-sticky-top="125px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
     <div class="hover-scroll-y mx-3 px-1 px-lg-2" data-kt-scroll="true"
         data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
         data-kt-scroll-dependencies="#kt_app_header, #kt_app_toolbar, #kt_app_footer"
         data-kt-scroll-wrappers="#kt_app_main" data-kt-scroll-offset="5px" style="height: 650px;">
-        <div id="kt_app_sidebar_menu" data-kt-menu="true"
-            class=" menu menu-sub-indention menu-rounded menu-column menu-title-gray-600 menu-icon-gray-500 menu-arrow-gray-500 fw-semibold fs-6">
-            <div class="menu-item">
-                <div class="menu-content">
-                    <span class="menu-section fs-5 fw-bolder ps-1 py-1">قائمة الدروس</span>
-                </div>
+
+        <!-- Sidebar Title -->
+        <div class="menu-item">
+            <div class="menu-content">
+                <h3 class="fs-5 fw-bold text-center">قائمة الدروس</h3>
             </div>
+        </div>
+
+        <div class="accordion" id="kt_sidebar_accordion">
+            @php
+                $lessonCounter = 1;
+            @endphp
             @foreach ($course->sections->sortBy('order') as $section)
-                <div data-kt-menu-trigger="click"
-                    class="menu-item menu-accordion menu-sub-indention @if ($section->lessons->contains('id', $lesson->id)) show @endif">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i
-                                class="ki-outline ki-rocket fs-2 @if ($section->lessons->contains('id', $lesson->id)) text-primary @endif "></i>
-                        </span>
-                        <span
-                            class=" fw-bold text-hover-primary  @if ($section->lessons->contains('id', $lesson->id)) text-primary @endif">{{ $section->name }}</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    @foreach ($section->lessons->sortBy('order') as $globallesson)
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link active"
-                                    href="{{ route('lesson.view', ['course' => $course->slug, 'lesson' => $globallesson->id]) }}">
-                                    <span class="menu-bullet  @if ($section->lessons->contains('id', $lesson->id)) text-primary @endif">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span
-                                        class=" @if ($lesson->id == $globallesson->id) text-primary @endif">{{ $globallesson->name }}</span>
-                                </a>
-                            </div>
+                <div class="accordion-item">
+                    <!-- Section Header -->
+                    <h2 class="accordion-header" id="kt_sidebar_accordion_header_{{ $section->id }}">
+                        <button
+                            class="accordion-button fs-6  bg-transparent 
+                                @if ($section->lessons->contains('id', $lesson->id)) text-primary fw-bold @endif"
+                            type="button" data-bs-toggle="collapse"
+                            data-bs-target="#kt_sidebar_accordion_body_{{ $section->id }}" aria-expanded="false"
+                            aria-controls="kt_sidebar_accordion_body_{{ $section->id }}">
+                            {{ $section->name }}
+                        </button>
+                    </h2>
+
+                    <!-- Section Content -->
+                    <div id="kt_sidebar_accordion_body_{{ $section->id }}"
+                        class="accordion-collapse collapse @if ($section->lessons->contains('id', $lesson->id)) show @endif"
+                        aria-labelledby="kt_sidebar_accordion_header_{{ $section->id }}"
+                        data-bs-parent="#kt_sidebar_accordion">
+                        <div class="accordion-body">
+                            @foreach ($section->lessons->sortBy('order') as $index => $globallesson)
+                                <div class="menu-item d-flex align-items-center py-2">
+                                    <!-- Lesson Number Circle -->
+                                    <div class="circle-number me-3 d-flex align-items-center justify-content-center">
+                                        {{ $lessonCounter }}
+                                    </div>
+                                    <!-- Lesson Name -->
+                                    <a class=" flex-grow-1 fs-6 fw-normal text-truncate lesson-button
+                                        @if ($lesson->id == $globallesson->id) text-primary fw-bold @endif"
+                                        href="{{ route('lesson.view', ['course' => $course->slug, 'lesson' => $globallesson->id]) }}">
+                                        {{ $globallesson->name }}
+                                    </a>
+                                </div>
+                                @php
+                                    $lessonCounter++;
+                                @endphp
+                            @endforeach
                         </div>
-                    @endforeach
+                    </div>
                 </div>
             @endforeach
         </div>

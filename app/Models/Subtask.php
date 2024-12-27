@@ -21,4 +21,9 @@ class Subtask extends Model
     {
         return $this->hasMany(Progress::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

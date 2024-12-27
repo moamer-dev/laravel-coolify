@@ -16,6 +16,11 @@ class ProfileController extends Controller
     public function overview(Request $request): View
     {
         $user = $request->user()->load('profile');
+        $user->learningStacks = $user->getLearningStacks();
+        $notifications = $user->notifications;
+        $unreadNotifications = $user->unreadNotifications;
+        //dd($unreadNotifications, $notifications);
+        //dd($user);
         return view('dashboard.profile.profile-index', compact('user'), ['title' => 'بياناتي', 'subtitle' =>  'المعلومات الشخصية']);
     }
 

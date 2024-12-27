@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\LearningPath;
 use Illuminate\Support\Facades\Auth;
 
 //use App\Models\User;
@@ -64,6 +65,15 @@ function getYouTubeVideoId($url)
 
     return $matches[1] ?? null;
 }
+
+function getPathTechnologies($path_slug)
+{
+    $path = LearningPath::with(['learningStacks.technologyStacks'])->where('slug', $path_slug)->first();
+    return $path->learningStacks->map(function ($stack) {
+        return $stack->technologyStacks;
+    })->flatten();
+}
+
 function show_($data)
 {
     echo "<pre>";
@@ -91,6 +101,23 @@ function photo_or_default($photo = null)
 {
     if ($photo) {
         return asset('/storage/' . $photo);
+    } else {
+        return asset('assets/media/svg/avatars/blank.svg');
+    }
+}
+
+function get_user_name($id = null)
+{
+    $user = User::find($id);
+    return $user->name;
+}
+
+function get_avatar_by_id($id = null)
+{
+    $user = User::find($id);
+    //dd($user->profile->avatar);
+    if ($user->profile?->avatar) {
+        return asset('/storage/' . $user->profile?->avatar);
     } else {
         return asset('assets/media/svg/avatars/blank.svg');
     }

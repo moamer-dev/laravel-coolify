@@ -33,7 +33,8 @@ class SubtaskResource extends Resource
                     ->searchable()
                     ->preload()
                     ->relationship('task', 'title'),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\RichEditor::make('description')
+                    ->required()
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('icon')
                     ->image(),
@@ -44,17 +45,14 @@ class SubtaskResource extends Resource
                     ->numeric()
                     ->default(0),
                 Forms\Components\Select::make('difficulty')
-                    ->required()
                     ->options([
                         'easy' => 'Easy',
                         'medium' => 'Medium',
                         'hard' => 'Hard',
                     ]),
                 Forms\Components\Select::make('status')
-                    ->required()
                     ->options([
-                        'pending' => 'Pending',
-                        'in_progress' => 'In Progress',
+                        'in_completed' => 'In Completed',
                         'completed' => 'Completed',
                     ]),
                 Forms\Components\Toggle::make('isActive')

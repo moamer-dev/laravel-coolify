@@ -24,7 +24,8 @@
         rel="stylesheet">
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
-    @yield('styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    @stack('headerStyles')
     @stack('headerScripts')
     @livewireStyles
 </head>
@@ -59,7 +60,9 @@
                 @include('components.layout.sidebar')
                 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
                     <div class="d-flex flex-column flex-column-fluid">
-                        @include('components.layout.toolbar')
+                        @if (isset($title))
+                            @include('components.layout.toolbar')
+                        @endif
                         <div id="kt_app_content" class="app-content  flex-column-fluid ">
                             <div id="kt_app_content_container" class="app-container  container-fluid ">
                                 @yield('content')
@@ -77,6 +80,52 @@
     </script>
     <script src="{{ asset('assets') }}/plugins/global/plugins.bundle.js"></script>
     <script src="{{ asset('assets') }}/js/scripts.bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('toastify', event => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: event.detail[0].type,
+                    title: event.detail[0].message
+                });
+            });
+
+            // window.addEventListener('delete', event => {
+            //     confirmDelete(event.detail[0]);
+            // });
+
+            // function confirmDelete(id, dispatchName) {
+            //     Swal.fire({
+            //         title: 'Are you sure?',
+            //         text: "You won't be able to revert this!",
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonColor: '#3085d6',
+            //         cancelButtonColor: '#d33',
+            //         confirmButtonText: 'Yes, delete it!'
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             Livewire.emit(dispatchName, id);
+            //             Swal.fire(
+            //                 'Deleted!',
+            //                 'Your comment has been deleted.',
+            //                 'success'
+            //             );
+            //         }
+            //     });
+            // }
+        });
+    </script>
     @livewireScripts
     @stack('footerScripts')
 </body>

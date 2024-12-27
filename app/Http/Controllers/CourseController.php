@@ -12,7 +12,7 @@ class CourseController extends Controller
         $course = Course::with('categories', 'creator.profile', 'sections.lessons', 'currency', 'level', 'projects')
             ->where('slug', $slug)
             ->first();
-        return view('courses.view', compact('course'));
+        return view('courses.course-view', compact('course'));
     }
 
     public function lesson_view($course, $lesson)

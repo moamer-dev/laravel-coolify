@@ -35,6 +35,7 @@ class CommentResource extends Resource
                     ->required()
                     ->options([
                         'App\Models\Task' => 'Task',
+                        'App\Models\Subtask' => 'Subtask',
                     ])
                     ->reactive()
                     ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
@@ -45,10 +46,9 @@ class CommentResource extends Resource
                     ->options(function ($get) {
                         if ($get('commentable_type') === 'App\Models\Task') {
                             return \App\Models\Task::pluck('title', 'id');
+                        } elseif ($get('commentable_type') === 'App\Models\Subtask') {
+                            return \App\Models\Subtask::pluck('title', 'id');
                         }
-                        //  elseif ($get('sectionable_type') === 'App\Models\Project') {
-                        //     return \App\Models\Project::pluck('name', 'id');
-                        // }
                         return [];
                     })
                     ->reactive(),
