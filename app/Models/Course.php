@@ -51,4 +51,9 @@ class Course extends Model
     {
         return $this->belongsToMany(TechnologyStack::class, 'course_technology_stack');
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

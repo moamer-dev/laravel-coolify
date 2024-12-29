@@ -26,4 +26,9 @@ class Series extends Model
     {
         return $this->belongsTo(TechnologyStack::class);
     }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

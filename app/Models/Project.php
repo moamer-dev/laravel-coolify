@@ -15,21 +15,6 @@ class Project extends Model
         'tags' => 'array',
     ];
 
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            $slug = Str::slug($model->name);
-            $originalSlug = $slug;
-            $counter = 1;
-
-            while (self::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $counter;
-                $counter++;
-            }
-
-            $model->slug = $slug;
-        });
-    }
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'course_project');
@@ -58,5 +43,10 @@ class Project extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
     }
 }

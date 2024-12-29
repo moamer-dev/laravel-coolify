@@ -21,6 +21,7 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Navigation\MenuItem;
+use CmsMulti\FilamentClearCache\FilamentClearCachePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubtaskResource\Pages;
-use App\Filament\Resources\SubtaskResource\RelationManagers;
-use App\Models\Subtask;
+use App\Filament\Resources\ReviewResource\Pages;
+use App\Filament\Resources\ReviewResource\RelationManagers;
+use App\Models\Review;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,49 +13,33 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubtaskResource extends Resource
+class ReviewResource extends Resource
 {
-    protected static ?string $model = Subtask::class;
+    protected static ?string $model = Review::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Learning Plan';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationGroup = 'Courses';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('reviewable_type')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('task_id')
+                Forms\Components\TextInput::make('reviewable_id')
                     ->required()
-                    ->searchable()
-                    ->preload()
-                    ->relationship('task', 'title'),
-                Forms\Components\RichEditor::make('description')
+                    ->numeric(),
+                Forms\Components\Textarea::make('review')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\FileUpload::make('icon')
-                    ->image(),
-                Forms\Components\Toggle::make('is_mandatory')
-                    ->required(),
-                Forms\Components\TextInput::make('order')
+                Forms\Components\TextInput::make('rating')
                     ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\Select::make('difficulty')
-                    ->options([
-                        'easy' => 'Easy',
-                        'medium' => 'Medium',
-                        'hard' => 'Hard',
-                    ]),
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'in_completed' => 'In Completed',
-                        'completed' => 'Completed',
-                    ]),
-                Forms\Components\Toggle::make('isActive')
+                    ->numeric(),
+                Forms\Components\Toggle::make('is_approved')
                     ->required(),
             ]);
     }
@@ -64,21 +48,18 @@ class SubtaskResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('task_id')
+                Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('reviewable_type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_mandatory')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('order')
+                Tables\Columns\TextColumn::make('reviewable_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('difficulty'),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\IconColumn::make('isActive')
+                Tables\Columns\TextColumn::make('rating')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_approved')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -111,16 +92,16 @@ class SubtaskResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\CommentsRelationManager::class,
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubtasks::route('/'),
-            'create' => Pages\CreateSubtask::route('/create'),
-            'edit' => Pages\EditSubtask::route('/{record}/edit'),
+            'index' => Pages\ListReviews::route('/'),
+            'create' => Pages\CreateReview::route('/create'),
+            'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
 

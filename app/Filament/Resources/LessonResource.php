@@ -13,20 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
-use Filament\Tables\Actions\EditAction;
-
 
 class LessonResource extends Resource
 {
     protected static ?string $model = Lesson::class;
     protected static ?string $navigationGroup = 'Courses';
     protected static ?int $navigationSort = 4;
-    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
     public static function form(Form $form): Form
     {
@@ -126,51 +118,31 @@ class LessonResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                EditAction::make()
-                    ->mutateFormDataUsing(function (array $data): array {
-                        if (isset($data['has_video']) && $data['has_video'] === false) {
-                            $data['video_source'] = null;
-                            $data['youtube_url'] = null;
-                            $data['vimeo_url'] = null;
-                            $data['file_path'] = null;
-                            $data['video_duration'] = null;
-                        }
-                        if (isset($data['video_source'])) {
-                            if ($data['video_source'] === 'youtube') {
-                                $data['vimeo_url'] = null;
-                                $data['file_path'] = null;
-                            } elseif ($data['video_source'] === 'vimeo') {
-                                $data['youtube_url'] = null;
-                                $data['file_path'] = null;
-                            } elseif ($data['video_source'] === 'file') {
-                                $data['youtube_url'] = null;
-                                $data['vimeo_url'] = null;
-                            }
-                        }
-
-                        return $data;
-                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\CommentsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageLessons::route('/'),
+            'index' => Pages\ListLessons::route('/'),
+            'create' => Pages\CreateLesson::route('/create'),
+            'edit' => Pages\EditLesson::route('/{record}/edit'),
         ];
     }
 
