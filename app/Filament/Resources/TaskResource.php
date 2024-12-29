@@ -64,22 +64,13 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('module_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('module.title')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_mandatory')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('order')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('difficulty'),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\IconColumn::make('isActive')
                     ->boolean(),
@@ -101,6 +92,7 @@ class TaskResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -11,20 +11,20 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
+    // public function course()
+    // {
+    //     return $this->belongsTo(Course::class);
+    // }
 
-    public function series()
-    {
-        return $this->belongsTo(Series::class);
-    }
+    // public function series()
+    // {
+    //     return $this->belongsTo(Series::class);
+    // }
 
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
+    // public function project()
+    // {
+    //     return $this->belongsTo(Project::class);
+    // }
 
     public function reviewable()
     {

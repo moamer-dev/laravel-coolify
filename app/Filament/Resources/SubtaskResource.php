@@ -64,20 +64,14 @@ class SubtaskResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('task_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_mandatory')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('order')
+                Tables\Columns\TextColumn::make('task.title')
+                    ->label('Belongs To Task')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('difficulty'),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\IconColumn::make('is_mandatory')
+                    ->boolean(),
                 Tables\Columns\IconColumn::make('isActive')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -98,6 +92,7 @@ class SubtaskResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
