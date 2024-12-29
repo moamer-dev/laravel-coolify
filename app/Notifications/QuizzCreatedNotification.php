@@ -7,19 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ModuleCreatedNotification extends Notification
+class QuizzCreatedNotification extends Notification
 {
     use Queueable;
 
-    protected $module;
-
+    protected $quizz;
     /**
      * Create a new notification instance.
      */
-    public function __construct($module)
+    public function __construct($quizz)
     {
-        $this->module = $module;
-        //dd($this->module);
+        $this->quizz = $quizz;
     }
 
     /**
@@ -38,11 +36,11 @@ class ModuleCreatedNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'module_id' => $this->module->id,
-            'message' => "تمت إضافة موديول '{$this->module->title}' إلى المسار التعليمي '{$this->module->learningStack->title}'",
-            'learning_stack_id' => $this->module->learning_stack_id,
-            'href' => route('user.path-todo'),
-            'created_at' => $this->module->created_at,
+            'quizz_id' => $this->quizz->id,
+            'message' => "تمت إضافة اختبار '{$this->quizz->title}'",
+            //'learning_stack_id' => $this->quizz->learning_stack_id,
+            'href' => route('quiz.index', $this->quizz->slug),
+            'created_at' => $this->quizz->created_at,
         ];
     }
 
@@ -53,7 +51,6 @@ class ModuleCreatedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-
         return $this->toDatabase($notifiable);
     }
 }

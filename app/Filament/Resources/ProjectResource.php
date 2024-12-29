@@ -45,20 +45,24 @@ class ProjectResource extends Resource
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
                                         ->label('Name')
+                                        ->live()
+                                        ->debounce(300)
                                         ->placeholder('Project Name')
                                         ->required()
                                         ->maxLength(255)
                                         ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                                            $slug = Str::slug($state);
-                                            $suffix = '';
+                                            if ($state) {
+                                                $slug = Str::slug($state);
+                                                $originalSlug = $slug;
+                                                $counter = 1;
 
-                                            // Check if the generated slug already exists in the database
-                                            while (DB::table('projects')->where('slug', $slug . $suffix)->exists()) {
-                                                // If it exists, append a numeric suffix
-                                                $suffix = '-' . ((int) $suffix + 1);
+                                                while (DB::table('projects')->where('slug', $slug)->exists()) {
+                                                    $slug = $originalSlug . '-' . $counter;
+                                                    $counter++;
+                                                }
+
+                                                $set('slug', $slug);
                                             }
-
-                                            $set('slug', $slug . $suffix);
                                         }),
                                     Forms\Components\TextInput::make('slug')
                                         ->required()

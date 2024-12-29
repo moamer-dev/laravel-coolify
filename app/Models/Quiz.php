@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\QuizzCreatedNotification;
 
 class Quiz extends Model
 {
@@ -14,6 +16,19 @@ class Quiz extends Model
      * The attributes that are mass assignable.
      */
     protected $guarded = [];
+
+    protected static function booted()
+    {
+        static::created(function ($quiz) {
+            $users = $quiz->technologyStacks()
+                ->with('users')
+                ->get()
+                ->pluck('users')
+                ->flatten()
+                ->unique('id');
+            Notification::send($users, new QuizzCreatedNotification($quiz));
+        });
+    }
 
     public function section()
     {

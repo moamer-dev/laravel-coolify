@@ -93,7 +93,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Progress::class);
     }
 
-
     public function pathCourses()
     {
         return Course::whereHas('technologyStacks', function ($query) {
@@ -145,6 +144,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return LearningStack::whereHas('learningPaths', function ($query) {
             $query->whereHas('users', function ($subQuery) {
                 $subQuery->where('users.id', $this->id);
+            });
+        })->get();
+    }
+
+    public function getTechnologyStacks()
+    {
+        return TechnologyStack::whereHas('learningStacks', function ($query) {
+            $query->whereHas('learningPaths', function ($subQuery) {
+                $subQuery->whereHas('users', function ($pathQuery) {
+                    $pathQuery->where('users.id', $this->id);
+                });
             });
         })->get();
     }

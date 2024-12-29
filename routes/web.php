@@ -32,7 +32,6 @@ Route::get('user/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
     // Profile-related routes
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile/overview', 'overview')->name('profile.overview');
@@ -59,6 +58,7 @@ Route::middleware('auth')->group(function () {
     // User-related routes
     Route::controller(UserController::class)->group(function () {
         Route::get('/profile/quiz-attempts', 'quizAttempts')->name('user.quiz-attempts');
+        Route::get('/user/notifications', 'notificationsList')->name('user.notifications');
     });
 
     // Series-related routes
@@ -71,7 +71,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/paths', 'view')->name('user.path-view');
         Route::get('/user/paths/visualize', 'visualize')->name('user.path-visualize');
         Route::get('/user/learning-center/plan', 'todo_path')->name('user.path-todo');
-        //Route::get('/user/paths/todo/task/{id}', 'task_view')->name('user.task-view');
         Route::get('/user/learning-center/plan/task/{id}/{subtask?}', 'subtask_view')->name('user.subtask-view');
     });
 });

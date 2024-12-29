@@ -1,6 +1,7 @@
 @php
     if (Auth::user()) {
         $user = Auth::user()->load('profile');
+        $user->technologies = $user->getTechnologyStacks();
         Debugbar::info($user);
     }
 @endphp
@@ -43,25 +44,26 @@
                             <span class="d-none d-lg-inline">Share</span>
                         </a>
                     </div>
-                    <div class="app-navbar-item ms-1">
-                        <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"
-                            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                            data-kt-menu-placement="bottom-end">
-                            <i class="ki-outline ki-notification-status fs-3"></i>
-                        </div>
-                        @include('components.layout.navbar-quickaccess')
-                    </div>
-                    <div class="app-navbar-item ms-1">
-                        <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"
-                            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                            data-kt-menu-placement="bottom-end">
-                            <i class="ki-outline ki-notification-on fs-3"></i>
-                        </div>
-                        @include('components.layout.navbar-notifications', [
-                            'notifications' => $user->notifications,
-                        ])
-                    </div>
                     @auth
+                        <div class="app-navbar-item ms-1">
+                            <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"
+                                data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                                data-kt-menu-placement="bottom-end">
+                                <i class="ki-outline ki-notification-on fs-3"></i>
+                            </div>
+                            @include('components.navbar.nav-notifications', [
+                                'notifications' => $user->unreadNotifications,
+                            ])
+                        </div>
+                        <div class="app-navbar-item ms-1">
+                            <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"
+                                data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                                data-kt-menu-placement="bottom-end">
+                                <i class="ki-outline ki-notification-status fs-3"></i>
+                            </div>
+                            @include('components.navbar.nav-quickaccess')
+                        </div>
+
                         @include('components.navbar.nav-user-menu')
                     @endauth
                     @guest

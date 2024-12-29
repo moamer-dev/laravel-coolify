@@ -15,11 +15,12 @@
                             alt="">
                     </div>
                 </div>
-                <div class="text-center mb-1">
-                    <a href="{{ route('quiz.index', $assement_quiz->slug) }}" class="btn btn-md btn-primary me-2">إجراء
-                        إختبار
-                        تقييمي</a>
-                </div>
+                @if ($assement_quiz)
+                    <div class="text-center mb-1">
+                        <a href="{{ route('quiz.index', $assement_quiz->slug) }}"
+                            class="btn btn-md btn-primary me-2">إجراء إختبار تقييمي</a>
+                    </div>
+                @endif
                 <!-- Separate Form Div -->
                 <div class="text-center mt-4">
                     <h3 class="fw-bold text-gray-800 mt-3 mb-5">أو إختيار المستوى بدون إختبار</h3>

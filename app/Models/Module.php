@@ -23,7 +23,6 @@ class Module extends Model
                 ->pluck('users')
                 ->flatten()
                 ->unique('id');
-            //dd($users, $module);
             Notification::send($users, new ModuleCreatedNotification($module));
         });
     }

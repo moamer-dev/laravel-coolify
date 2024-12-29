@@ -7,19 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ModuleCreatedNotification extends Notification
+class TaskCreatedNotification extends Notification
 {
     use Queueable;
 
-    protected $module;
-
+    protected $subtask;
     /**
      * Create a new notification instance.
      */
-    public function __construct($module)
+    public function __construct($subtask)
     {
-        $this->module = $module;
-        //dd($this->module);
+        $this->subtask = $subtask;
     }
 
     /**
@@ -38,11 +36,11 @@ class ModuleCreatedNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'module_id' => $this->module->id,
-            'message' => "تمت إضافة موديول '{$this->module->title}' إلى المسار التعليمي '{$this->module->learningStack->title}'",
-            'learning_stack_id' => $this->module->learning_stack_id,
-            'href' => route('user.path-todo'),
-            'created_at' => $this->module->created_at,
+            'subtask_id' => $this->subtask->id,
+            'message' => "تمت إضافة مهمة '{$this->subtask->title}' إلى المهمة الرئيسية '{$this->subtask->task->title}'",
+            'task_id' => $this->subtask->task_id,
+            'href' => route('user.subtask-view', ['id' => $this->subtask->task_id, 'subtask' => $this->subtask->id]),
+            'created_at' => $this->subtask->created_at,
         ];
     }
 
@@ -53,7 +51,6 @@ class ModuleCreatedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-
         return $this->toDatabase($notifiable);
     }
 }

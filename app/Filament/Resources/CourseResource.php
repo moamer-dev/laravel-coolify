@@ -45,17 +45,26 @@ class CourseResource extends Resource
                             Section::make('Basic Information')
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
+                                        ->live()
+                                        ->debounce(500)
                                         ->label('Name')
                                         ->placeholder('Course Name')
+                                        ->columnSpanFull()
                                         ->required()
                                         ->maxLength(255)
                                         ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                                            $slug = Str::slug($state);
-                                            $suffix = '';
-                                            while (DB::table('courses')->where('slug', $slug . $suffix)->exists()) {
-                                                $suffix = '-' . ((int) $suffix + 1);
+                                            if ($state) {
+                                                $slug = Str::slug($state);
+                                                $originalSlug = $slug;
+                                                $counter = 1;
+
+                                                while (DB::table('courses')->where('slug', $slug)->exists()) {
+                                                    $slug = $originalSlug . '-' . $counter;
+                                                    $counter++;
+                                                }
+
+                                                $set('slug', $slug);
                                             }
-                                            $set('slug', $slug . $suffix);
                                         }),
                                     Forms\Components\TextInput::make('slug')
                                         ->required()
@@ -277,7 +286,6 @@ class CourseResource extends Resource
                                                             if ($state === null) {
                                                                 return 'Heading';
                                                             }
-
                                                             return $state['name'] ?? 'Untitled heading';
                                                         }),
                                                 ])

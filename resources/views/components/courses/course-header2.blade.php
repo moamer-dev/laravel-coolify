@@ -1,6 +1,6 @@
 <div>
     <h1 class="text-white display-4 fw-semibold">{{ $course->name }}</h1>
-    <p class="text-white mb-6 lead">{{ $course->description }}</p>
+    <p class="text-white mb-6">{!! $course->description !!}</p>
     <div class="d-flex align-items-center">
         <a href="#" class="bookmark text-white">
             <i class="fe fe-bookmark fs-4 me-2"></i>

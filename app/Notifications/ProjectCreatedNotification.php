@@ -7,22 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewLearningPathItemNotification extends Notification
+class ProjectCreatedNotification extends Notification
 {
     use Queueable;
 
-    protected $type;
-    protected $title;
-    protected $pathId;
-
+    protected $project;
     /**
      * Create a new notification instance.
      */
-    public function __construct($type, $title, $pathId)
+    public function __construct($project)
     {
-        $this->type = $type; // "Course" or "Quiz"
-        $this->title = $title;
-        $this->pathId = $pathId;
+        $this->project = $project;
     }
 
     /**
@@ -41,10 +36,11 @@ class NewLearningPathItemNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'type' => $this->type,
-            'title' => $this->title,
-            'path_id' => $this->pathId,
-            'message' => "A new {$this->type} titled '{$this->title}' has been added to your learning path.",
+            'project_id' => $this->project->id,
+            'message' => "تمت إضافة مشروع '{$this->project->name}'",
+            //'learning_stack_id' => $this->project->learning_stack_id,
+            'href' => '#',
+            'created_at' => $this->project->created_at,
         ];
     }
 
@@ -55,8 +51,6 @@ class NewLearningPathItemNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
-        ];
+        return $this->toDatabase($notifiable);
     }
 }

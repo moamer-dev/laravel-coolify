@@ -19,8 +19,6 @@ class ProfileController extends Controller
         $user->learningStacks = $user->getLearningStacks();
         $notifications = $user->notifications;
         $unreadNotifications = $user->unreadNotifications;
-        //dd($unreadNotifications, $notifications);
-        //dd($user);
         return view('dashboard.profile.profile-index', compact('user'), ['title' => 'بياناتي', 'subtitle' =>  'المعلومات الشخصية']);
     }
 
