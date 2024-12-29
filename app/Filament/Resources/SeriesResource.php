@@ -80,9 +80,9 @@ class SeriesResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->formatStateUsing(function ($state, $record) {
-                        $avatarUrl = $record->avatar ? asset('storage/' . $record->avatar) : 'https://via.placeholder.com/40';
-                        return view('components.avatar-with-name', [
-                            'avatarUrl' => $avatarUrl,
+                        $iconUrl = $record->avatar ? asset('storage/' . $record->avatar) : 'https://via.placeholder.com/40';
+                        return view('components.shared.icon-with-name', [
+                            'iconUrl' => $iconUrl,
                             'name' => $state,
                         ])->render();
                     })
@@ -126,6 +126,7 @@ class SeriesResource extends Resource
     {
         return [
             RelationManagers\ZaytonahsRelationManager::class,
+            RelationManagers\ReviewsRelationManager::class,
         ];
     }
 

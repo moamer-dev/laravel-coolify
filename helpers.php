@@ -74,6 +74,7 @@ function getPathTechnologies($path_slug)
     })->flatten();
 }
 
+
 function show_($data)
 {
     echo "<pre>";
@@ -159,6 +160,7 @@ function language_name($code)
             return 'German';
     }
 }
+
 function get_all($model = null)
 {
     $data = $model::all();

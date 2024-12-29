@@ -380,7 +380,7 @@ class CourseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ReviewsRelationManager::class,
         ];
     }
 

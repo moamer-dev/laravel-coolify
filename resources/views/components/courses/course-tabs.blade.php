@@ -10,7 +10,12 @@
                     الدورة</a>
             </li>
             <li class="nav-item mx-lg-1">
-                <a class="nav-link py-3 py-lg-6 text-active-primary" data-bs-toggle="tab" href="#kt_tab_pane_6">الإسئلة
+                <a class="nav-link py-3 py-lg-6 text-active-primary" data-bs-toggle="tab"
+                    href="#kt_tab_pane_6">التقييمات
+                </a>
+            </li>
+            <li class="nav-item mx-lg-1">
+                <a class="nav-link py-3 py-lg-6 text-active-primary" data-bs-toggle="tab" href="#kt_tab_pane_7">الإسئلة
                     المتكررة</a>
             </li>
         </ul>
@@ -20,6 +25,9 @@
             <div class="tab-content" id="myTabContent">
                 @include('components.courses.tabs.course-discription-tab')
                 @include('components.courses.tabs.course-curriculum-tab')
+                <div class="tab-pane fade" id="kt_tab_pane_6" role="tabpanel">
+                    @livewire('shared.review', ['course' => $course])
+                </div>
                 @include('components.courses.tabs.course-faq-tab')
             </div>
         </div>

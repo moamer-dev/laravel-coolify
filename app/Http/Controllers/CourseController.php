@@ -9,9 +9,11 @@ class CourseController extends Controller
 {
     public function view($slug)
     {
-        $course = Course::with('categories', 'creator.profile', 'sections.lessons', 'currency', 'level', 'projects')
+        $course = Course::with('categories', 'creator.profile', 'sections.lessons', 'currency', 'level', 'projects', 'reviews')
             ->where('slug', $slug)
             ->first();
+        $review = $course->reviews->avg('rating');
+        //dd($review);
         return view('courses.course-view', compact('course'));
     }
 

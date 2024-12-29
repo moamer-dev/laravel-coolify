@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <!-- Nav tab -->
-                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                        {{-- <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile') ? 'active' : '' }}"
                                     href="{{ route('profile.overview') }}">الدورات</a>
@@ -66,22 +66,19 @@
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ request()->is('profile/learning-path*') ? 'active' : '' }} "
                                     href="{{ route('profile.learning-path') }}">المصادر الخارجية</a>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </div>
                 </div>
             </div>
         </section>
-        {{-- <section style="background: linear-gradient(112.14deg, #9d4eff 0%, #7239ea 100%)">
+        <section>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 py-3">
-                        <div class="py-4 py-lg-6">
-                            <h1 class="mb-0 text-white display-6">المسارات الخاصة بـ {{ $technology->name }}</h1>
-                            <p class="text-white mb-0 fs-3">قم بالضغط على المسار الفرعي لإظهار التكنولوجيات الخاصة به</p>
-                        </div>
+                        @livewire('technologies.resources', ['technology' => $technology])
                     </div>
                 </div>
             </div>
-        </section> --}}
+        </section>
     </div>
 @endsection

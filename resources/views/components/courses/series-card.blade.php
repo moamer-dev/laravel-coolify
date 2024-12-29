@@ -5,15 +5,9 @@
     <div class="card card-flush h-md-100">
         <div class="card-body py-9">
             <div class="row gx-9 h-100">
-                {{-- <!--begin::Col-->
-                <div class="col-md-6 mb-10 mb-sm-0">
-                    <!--begin::Image-->
-                    <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100"
-                        style="background-size: 100% 100%;background-image:url('assets/media/stock/600x600/img-33.jpg')">
-                    </div>
-                    <!--end::Image-->
-                </div>
-                <!--end::Col--> --}}
+                @php
+                    $averageRating = round($item->reviews->where('is_approved')->avg('rating'), 1);
+                @endphp
                 <div class="col-md-12">
                     <div class="d-flex flex-column h-100">
                         <div class="mb-7">
@@ -26,9 +20,27 @@
                                             {{ $item->name }}
                                         </a>
                                     </span>
+                                    <!-- Stars Positioned Below the Title -->
+                                    <div class="mt-2">
+                                        @for ($i = 5; $i >= 1; $i--)
+                                            @if ($i <= floor($averageRating))
+                                                <i class="bi bi-star-fill text-warning fs-5"></i>
+                                            @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) >= 0.5)
+                                                <i class="bi bi-star-half text-warning fs-5"></i>
+                                            @else
+                                                <i class="bi bi-star text-secondary fs-5"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
                                 </div>
-                                <span class="badge badge-light-primary flex-shrink-0 align-self-center py-3 px-4 fs-7">
-                                    {{ $item->technologyStack->name }}</span>
+                                <div class="col-auto text-center">
+                                    <h3 class="fs-1 fw-bold">{{ number_format($averageRating, 1) }}</h3>
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal">
+                                        التقييمات
+                                    </button>
+
+                                </div>
                             </div>
                             <div class="d-flex align-items-center flex-wrap d-grid gap-2">
                                 <div class="d-flex align-items-center me-5 me-xl-13">
@@ -39,6 +51,17 @@
                                         <span class="fw-semibold text-gray-500 d-block fs-8">مقدم السلسلة</span>
                                         <a href="pages/user-profile/overview.html"
                                             class="fw-bold text-gray-800 text-hover-primary fs-7">محمد عامر</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center me-5 me-xl-13">
+                                    <div class="symbol symbol-30px symbol-circle me-3">
+                                        <img src="{{ photo_or_default($item->technologyStack->image) }}" class=""
+                                            alt="">
+                                    </div>
+                                    <div class="m-0">
+                                        <span class="fw-semibold text-gray-500 d-block fs-8">موضوعات السلسلة</span>
+                                        <a href="pages/user-profile/overview.html"
+                                            class="fw-bold text-gray-800 text-hover-primary fs-7">{{ $item->technologyStack->name }}</a>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -81,6 +104,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Scrollable -->
+<div class="modal fade" id="reviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">التقييمات</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @livewire('shared.review', ['series' => $item], key('review-' . $item->id))
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">غلق</button>
             </div>
         </div>
     </div>

@@ -75,16 +75,6 @@
         </style>
         <div class="col-xl-9 col-lg-9 col-md-8 col-12">
             <div class="d-flex justify-content-between align-items-center mb-5">
-                <div class="d-inline-flex col-md-6 col-lg-4 col-xl-3">
-                    <!-- List  -->
-                    <select class="form-select" wire:model.live="sortBy">
-                        <option value="All">الكل</option>
-                        <option value="Newest">الأحدث</option>
-                        <option value="Oldest">الأقدم</option>
-                        <option value="A-Z">أبجدياً - تصاعدياً</option>
-                        <option value="Z-A">أبجدياً - تنازلياً</option>
-                    </select>
-                </div>
                 <div class="d-flex gap-2">
                     <!-- Model Selection Buttons -->
                     <button class="btn btn-outline-primary {{ $model === 'courses' ? 'active' : '' }}"
