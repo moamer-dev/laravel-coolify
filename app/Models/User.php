@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphaMany(Comment::class, 'commentable');
     }
 
     public function progress()

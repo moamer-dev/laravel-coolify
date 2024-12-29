@@ -6,12 +6,14 @@ use App\Filament\Resources\CommentResource\Pages;
 use App\Filament\Resources\CommentResource\RelationManagers;
 use App\Models\Comment;
 use Filament\Forms;
+use Filament\Forms\Components\MorphToSelect;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Task;
 
 class CommentResource extends Resource
 {
@@ -30,28 +32,16 @@ class CommentResource extends Resource
                     ->searchable()
                     ->preload()
                     ->relationship('user', 'name'),
-                Forms\Components\Select::make('commentable_type')
+                Forms\Components\MorphToSelect::make('commentable')
                     ->label('Assign To')
                     ->required()
-                    ->options([
-                        'App\Models\Task' => 'Task',
-                        'App\Models\Subtask' => 'Subtask',
+                    ->types([
+                        MorphToSelect\Type::make(Task::class)->titleAttribute('title')->label('Task'),
+                        MorphToSelect\Type::make('App\Models\Subtask')->titleAttribute('title')->label('Subtask'),
+                        MorphToSelect\Type::make('App\Models\Lesson')->titleAttribute('name')->label('Lesson')
                     ])
-                    ->reactive()
-                    ->afterStateUpdated(fn($set, $state) => $set('sectionable_id', null)),
-                Forms\Components\Select::make('commentable_id')
-                    ->label('Specific Task')
-                    ->required()
-                    ->searchable()
-                    ->options(function ($get) {
-                        if ($get('commentable_type') === 'App\Models\Task') {
-                            return \App\Models\Task::pluck('title', 'id');
-                        } elseif ($get('commentable_type') === 'App\Models\Subtask') {
-                            return \App\Models\Subtask::pluck('title', 'id');
-                        }
-                        return [];
-                    })
-                    ->reactive(),
+                    ->preload()
+                    ->searchable(),
                 Forms\Components\Textarea::make('content')
                     ->required()
                     ->columnSpanFull(),
@@ -64,20 +54,29 @@ class CommentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('commentable_type')
+                    ->label('Connected to')
+                    ->searchable()
+                    ->formatStateUsing(fn($state, $record) => match ($state) {
+                        'App\Models\Task' => 'Task',
+                        'App\Models\Subtask' => 'Subtask',
+                        'App\Models\Lesson' => 'Lesson',
+                        default => 'Unknown',
+                    }),
+                Tables\Columns\TextColumn::make('commentable.title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('commentable_id')
+                Tables\Columns\TextColumn::make('content')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_approved')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                //->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -92,6 +91,7 @@ class CommentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
