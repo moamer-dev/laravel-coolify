@@ -21,6 +21,7 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
 use Filament\Forms\Components\Section;
 use Filament\Support\Enums\Alignment;
+use Filament\Tables\Actions\ReplicateAction;
 
 
 class CourseResource extends Resource
@@ -367,6 +368,11 @@ class CourseResource extends Resource
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
+                ReplicateAction::make()
+                    ->excludeAttributes(['slug'])
+                    ->beforeReplicaSaved(function (Course $replica): void {
+                        $replica->slug = uniqid();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

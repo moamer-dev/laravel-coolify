@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
+use Filament\Tables\Actions\ReplicateAction;
 
 class PostResource extends Resource
 {
@@ -65,7 +66,7 @@ class PostResource extends Resource
                                 ->helperText('Will be the user who created the post if left empty')
                                 ->searchable()
                                 ->preload()
-                                ->relationship('user', 'name'),
+                                ->relationship('author', 'name'),
                             Forms\Components\Select::make('status')
                                 ->required()
                                 ->options([
@@ -87,7 +88,9 @@ class PostResource extends Resource
                                     'max:255',
                                 ]),
                             Forms\Components\FileUpload::make('image')
-                                ->image(),
+                                ->image()
+                                ->directory('posts')
+                                ->fetchFileInformation(false),
                         ])->grow(false),
                 ])->from('md')
             ])->columns(1);
@@ -97,15 +100,26 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->formatStateUsing(function ($state, $record) {
+                        $iconUrl = $record->image
+                            ? asset('storage/' . $record->image)
+                            : 'https://via.placeholder.com/40';
+
+                        return view('components.shared.icon-with-name', [
+                            'iconUrl' => $iconUrl,
+                            'name' => $state,
+                        ])->render();
+                    })
+                    ->html(),
+                Tables\Columns\TextColumn::make('author.name')
+                    ->label('Author')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('category_id')
+                Tables\Columns\TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tags')
@@ -129,6 +143,11 @@ class PostResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                ReplicateAction::make()
+                    ->excludeAttributes(['slug'])
+                    ->beforeReplicaSaved(function (Post $replica): void {
+                        $replica->slug = uniqid();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -74,6 +74,10 @@ function getPathTechnologies($path_slug)
     })->flatten();
 }
 
+function formattedDate($date)
+{
+    return date('d M, Y', strtotime($date));
+}
 
 function show_($data)
 {
