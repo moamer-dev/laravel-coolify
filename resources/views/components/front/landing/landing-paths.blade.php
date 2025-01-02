@@ -5,7 +5,7 @@
         </div>
         <div class="row gy-4 justify-content-center">
             @foreach ($paths as $path)
-                <div class="col-xxl-4 col-md-4 col-6 ">
+                <div class="col-xxl-4 col-md-4 col-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                     <a href="{{ route('path-front-view', $path->slug) }}"
                         class="card card-border-primary hover-elevate-up parent-hover">
                         <div class="card-body d-flex flex-column gap-4 text-center">

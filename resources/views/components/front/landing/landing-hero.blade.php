@@ -1,15 +1,11 @@
-<section class="d-flex align-items-center justify-content-center text-center"
-    style="
-            background-image: url(assets/media/backgrounds/Untitled.png);
-            background-repeat: no-repeat;
-            background-size: cover;
-            padding-top: 8rem; padding-bottom: 5rem;">
+<div class="d-flex align-items-center justify-content-center text-center py-20">
     <div class="container px-4 px-lg-0">
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-8 col-md-12 py-6">
                 <div class="mb-4">
-                    <h1 class="display-4 fw-bold mb-4 ls-sm ">
-                        <span class="text-primary">زيتونة</span>, نحو رحلة أفضل لاحتراف تطوير الويب
+                    <h1 class="display-5 fw-bold mb-4 ls-sm ">
+                        <span class="text-primary">زيتونة</span>,حيث نصنع منك<span class="text-primary"> Developer</span>
+                        وليس مجرد Coder
                     </h1>
                     <p class="mb-6 fs-3 lh-lg">
                         ابدأ رحلتك التعليمية عبر مسارات شاملة تجمع كل ما تحتاجه في مكان واحد - من الفيديوهات
@@ -36,4 +32,4 @@
             </div>
         </div>
     </div>
-</section>
+</div>

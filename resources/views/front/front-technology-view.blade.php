@@ -6,7 +6,7 @@
             width: 7.5rem;
         }
     </style>
-    <div style="min-height: 78vh;">
+    <div style="min-height: 85vh;">
         <section class="py-8" style="background: linear-gradient(270deg, #9d4eff 0%, #782af4 100%)"></section>
         <section class="bg-white shadow-sm">
             <div class="container">
@@ -72,7 +72,7 @@
             </div>
         </section>
         <section>
-            <div class="container">
+            <div class="container mt-5">
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12 py-3">
                         @livewire('technologies.resources', ['technology' => $technology])

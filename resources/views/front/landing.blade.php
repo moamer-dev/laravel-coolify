@@ -103,14 +103,26 @@
 
 @section('content')
     <div style="min-height: 78vh;">
-        @include('components.front.landing.landing-hero')
-        @include('components.front.landing.landing-features-1')
+        <section
+            style="
+        background-image:  url('{{ asset('assets/media/logos/icon_35.png') }}'); 
+        background-size: 350px; 
+        background-repeat: no-repeat; 
+        background-position: left bottom;
+        position: relative;">
+            @include('components.front.landing.landing-hero')
+            @include('components.front.landing.landing-features-1')
+        </section>
+        @include('components.front.landing.landing-levels')
         @include('components.front.landing.landing-tabs')
         @include('components.front.landing.landing-paths')
         @include('components.front.landing.landing-video')
         @include('components.front.landing.landing-features-2')
         @include('components.front.landing.landing-statistics')
         @include('components.front.landing.landing-testimonials')
-        @include('components.front.landing.landing-blogs')
+        @include('components.front.landing.landing-blogs', ['posts' => $posts])
     </div>
+    <script>
+        AOS.init();
+    </script>
 @endsection

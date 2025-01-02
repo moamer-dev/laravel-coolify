@@ -14,9 +14,9 @@
             <div class="d-flex flex-lg-row-fluid">
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                        src="{{ asset('assets') }}/media/auth/agency.png" alt="" />
+                        src="{{ asset('assets') }}/media/logos/icon_light.svg" alt="" />
                     <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                        src="{{ asset('assets') }}/media/auth/agency-dark.png" alt="" />
+                        src="{{ asset('assets') }}/media/logos/icon_dark_green.svg" alt="" />
                     <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">مرحباً بك في زيتونة!</h1>
                     <div class="text-gray-600 fs-3 text-center fw-semibold">
                         <span class="opacity-75-hover me-1">بوابتك الأولى نحو تعلم مسارات علوم الحاسب والبرمجة</span>
@@ -32,7 +32,7 @@
                                 id="kt_sign_in_form">
                                 @csrf
                                 <div class="text-center mb-11">
-                                    <h1 class="text-gray-900 fw-bolder mb-3">تسجيل الددخول</h1>
+                                    <h1 class="text-gray-900 fw-bolder mb-3">تسجيل الدخول</h1>
                                     <div class="text-gray-500 fw-semibold fs-6">عبر الحسابات التالية</div>
                                 </div>
                                 <div class="row g-3 mb-9">

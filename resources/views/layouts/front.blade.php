@@ -25,6 +25,9 @@
     <link href="{{ asset('assets') }}/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets') }}/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script src="https://d3js.org/d3.v7.min.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> --}}
     @yield('styles')

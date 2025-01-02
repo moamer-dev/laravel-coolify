@@ -11,7 +11,7 @@
 <section class="py-10" id="paths" style="direction: ltr">
     <div class="container">
         <div class="text-center pb-10">
-            <h2 class="fw-bold display-6">مسارات التعليم المتاحة</h2>
+            <h2 class="fw-bold display-6">التكنولوجيات المتاحة</h2>
         </div>
         <div class="row gy-4 justify-content-center">
             <div class="col-10">
@@ -20,17 +20,17 @@
                     <ul class="nav nav-tabs d-flex justify-content-center flex-nowrap" id="pathsTabs" role="tablist"
                         style="gap: 10px; color:gray !important">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active fs-3" id="all-technologies-tab" data-bs-toggle="tab"
-                                data-bs-target="#all-technologies" type="button" role="tab"
+                            <button class="nav-link active fs-3 fw-semibold" id="all-technologies-tab"
+                                data-bs-toggle="tab" data-bs-target="#all-technologies" type="button" role="tab"
                                 aria-controls="all-technologies" aria-selected="true">
                                 All Technologies
                             </button>
                         </li>
                         @foreach ($paths as $index => $path)
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link fs-3" id="path-tab-{{ $path->id }}" data-bs-toggle="tab"
-                                    data-bs-target="#path-{{ $path->id }}" type="button" role="tab"
-                                    aria-controls="path-{{ $path->id }}" aria-selected="false">
+                                <button class="nav-link fs-3 fw-semibold" id="path-tab-{{ $path->id }}"
+                                    data-bs-toggle="tab" data-bs-target="#path-{{ $path->id }}" type="button"
+                                    role="tab" aria-controls="path-{{ $path->id }}" aria-selected="false">
                                     {{ $path->title }}
                                 </button>
                             </li>
@@ -51,7 +51,8 @@
                                     ->unique('id');
                             @endphp
                             @foreach ($allTechnologies as $technology)
-                                <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center">
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center" data-aos="fade-up"
+                                    data-aos-duration="800">
                                     @include('components.shared.technology-card', ['item' => $technology])
                                 </div>
                             @endforeach
@@ -63,7 +64,8 @@
                             <div class="row mt-3">
                                 @foreach ($path->learningStacks as $stack)
                                     @foreach ($stack->technologyStacks->where('is_active', true) as $technology)
-                                        <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center">
+                                        <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center"
+                                            data-aos="fade-up" data-aos-duration="800">
                                             @include('components.shared.technology-card', [
                                                 'item' => $technology,
                                             ])
@@ -78,3 +80,18 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Initialize AOS
+        AOS.init();
+
+        // Refresh AOS when a tab is activated
+        const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
+        tabElements.forEach(tab => {
+            tab.addEventListener("shown.bs.tab", () => {
+                AOS.refresh();
+            });
+        });
+    });
+</script>

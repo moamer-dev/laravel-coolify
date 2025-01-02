@@ -38,7 +38,9 @@
     @if ($model === 'series')
         <div class="row">
             @forelse ($items as $item)
-                @include('components.courses.series-card', ['item' => $item])
+                <div class="col-6 mb-4">
+                    @include('components.courses.series-card', ['item' => $item])
+                </div>
             @empty
                 <div class="col-12">
                     <p>No {{ ucfirst($model) }} found.</p>
