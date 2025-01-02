@@ -50,6 +50,12 @@ class Resources extends Component
             });
         }
 
+        if ($this->model === 'quizzes') {
+            $query->whereHas('technologyStacks', function ($query) {
+                $query->where('technology_stack_id', $this->technology->id);
+            });
+        }
+
         $this->items = $query->get();
     }
 

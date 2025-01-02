@@ -13,9 +13,9 @@ class Post extends Model
     protected $casts = [
         'tags' => 'array',
     ];
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function category()
