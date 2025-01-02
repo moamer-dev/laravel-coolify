@@ -1,27 +1,28 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\SeriesController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\QuizAttemptController;
-use App\Http\Controllers\LearningPathController;
-use App\Http\Controllers\TechnologyStackController;
-use App\Http\Controllers\QuizController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Learn\CourseController;
+use App\Http\Controllers\Learn\SeriesController;
+use App\Http\Controllers\Plan\LearningPathController;
+use App\Http\Controllers\Plan\TechnologyStackController;
+use App\Http\Controllers\Quiz\QuizAttemptController;
+use App\Http\Controllers\Blog\PostController;
 use App\Livewire\Quizzes\Quiz;
-use App\Livewire\Courses\Learn;
+use App\Models\Post;
 use App\Models\LearningPath;
 
 Route::get('/new', function () {
     return view('/new');
 });
 
-
 Route::get('/', function () {
     $paths = LearningPath::with(['learningStacks.technologyStacks'])->where('is_active', 1)->get();
-    return view('/front/landing', compact('paths'));
+    $posts = Post::where('status', 'published')->orderBy('created_at', 'desc')->limit(4)->get();
+    return view('/front/landing', compact('paths', 'posts'));
 })->name('home');
+Route::get('/blog/{slug}', [PostController::class, 'post_view'])->name('post-view');
 Route::get('/path/{slug}', [LearningPathController::class, 'front_view'])->name('path-front-view');
 Route::get('/path/technology/{slug}', [TechnologyStackController::class, 'technology_view'])->name('technology-view');
 Route::get('/learn', function () {
