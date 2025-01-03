@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800">
                 <div class="card card-lift  hover-elevate-up parent-hover">
                     <div class="card-body">
                         <img src="{{ asset('assets') }}/media/geek//icon-feature-2.svg" alt="Gulp logo" class="mb-4">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                 <div class="card card-lift hover-elevate-up parent-hover">
                     <div class="card-body">
                         <img src="{{ asset('assets') }}/media/geek//icon-feature-1.svg" alt="Components icon"
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+            <div class="col-md-4 col-12" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
                 <div class="card card-lift hover-elevate-up parent-hover">
                     <div class="card-body">
                         <img src="{{ asset('assets') }}/media/geek//icon-feature.svg" alt="Updated Icon" class="mb-4">

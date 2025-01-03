@@ -64,11 +64,11 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('module.title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_mandatory')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('status'),

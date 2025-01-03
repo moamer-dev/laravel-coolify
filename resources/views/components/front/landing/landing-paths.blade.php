@@ -1,3 +1,10 @@
+<style>
+    .card-link-hover:hover .card-header {
+        color: var(--bs-primary) !important;
+        text-decoration: none;
+    }
+</style>
+
 <section class="py-10" id="paths">
     <div class="container">
         <div class="text-center pb-10">
@@ -5,8 +12,8 @@
         </div>
         <div class="row gy-4 justify-content-center">
             @foreach ($paths as $path)
-                <div class="col-xxl-4 col-md-4 col-6" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                    <a href="{{ route('path-front-view', $path->slug) }}"
+                <div class="col-xxl-3 col-md-3 col-6" data-aos="fade-up" data-aos-duration="800">
+                    {{-- <a href="{{ route('path-front-view', $path->slug) }}"
                         class="card card-border-primary hover-elevate-up parent-hover">
                         <div class="card-body d-flex flex-column gap-4 text-center">
                             <div>
@@ -26,6 +33,51 @@
                                 <h3 class="">{{ $path->title }}</h3>
                                 <span class="fs-6 pt-3">21 مصدر تعليمي</span>
                             </div>
+                        </div>
+                    </a> --}}
+                    <a href="{{ route('path-front-view', $path->slug) }}" class="text-decoration-none card-link-hover">
+                        <div class="card shadow-sm fw-semibold border-0 mx-auto card-lift hover-elevate-up parent-hover"
+                            style="max-width: 22rem;">
+                            <div class="card-header text-uppercase d-flex align-items-center justify-content-center"
+                                style="min-height: 60px !important">
+                                {{-- <i class="bi bi-mortarboard-fill fs-2 px-2 text-primary"></i> --}}
+                                <span class="fs-4 fw-bold text-hover-primary">{{ $path->title }}</span>
+                            </div>
+
+                            <div class="card-body"
+                                style="
+                            background-image:  url('{{ feature_image_or_default($path->image) }}'); 
+                            background-size: 100px; 
+                            background-repeat: no-repeat; 
+                            background-position: left bottom;
+                            position: relative;">
+                                <div class="btn btn-link text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-signpost-2 fs-3 text-primary"></i>
+                                    <span class="fs-6">{{ $path->learningStacks->count() }} مسار فرعي</span>
+                                </div>
+                                <div class="btn btn-link text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-boxes fs-3 text-primary"></i>
+                                    <span
+                                        class="fs-6">{{ $path->learningStacks->flatMap(fn($stack) => $stack->modules)->count() }}
+                                        موديول</span>
+                                </div>
+                                <div class="btn btn-link text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-list-task fs-3 text-primary"></i>
+                                    <span
+                                        class="fs-6">{{ $path->learningStacks->flatMap(fn($stack) => $stack->modules)->flatMap(fn($module) => $module->tasks)->count() }}
+                                        مهام</span>
+                                </div>
+                                <div class="btn btn-link text-decoration-none d-flex align-items-center">
+                                    <i class="bi bi-list-nested fs-3 text-primary"></i>
+                                    <span
+                                        class="fs-6">{{ $path->learningStacks->flatMap(fn($stack) => $stack->modules)->flatMap(fn($module) => $module->tasks)->flatMap(fn($task) => $task->subtasks)->count() }}
+                                        مهام فرعية</span>
+                                </div>
+                            </div>
+
+                            {{-- <div class="card-footer px-8 py-5 d-flex justify-content-between flex-wrap">
+                                <button class="btn btn-primary">التسجيل</button>
+                            </div> --}}
                         </div>
                     </a>
                 </div>

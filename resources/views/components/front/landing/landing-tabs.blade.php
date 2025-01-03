@@ -52,7 +52,7 @@
                             @endphp
                             @foreach ($allTechnologies as $technology)
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center" data-aos="fade-up"
-                                    data-aos-duration="800">
+                                    data-aos-duration="800" style="direction: rtl;">
                                     @include('components.shared.technology-card', ['item' => $technology])
                                 </div>
                             @endforeach
@@ -65,7 +65,7 @@
                                 @foreach ($path->learningStacks as $stack)
                                     @foreach ($stack->technologyStacks->where('is_active', true) as $technology)
                                         <div class="col-xl-4 col-lg-6 col-md-6 col-6 align-items-center"
-                                            data-aos="fade-up" data-aos-duration="800">
+                                            data-aos="fade-up" data-aos-duration="800" style="direction: rtl;">
                                             @include('components.shared.technology-card', [
                                                 'item' => $technology,
                                             ])

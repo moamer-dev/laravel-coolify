@@ -172,16 +172,16 @@
                                             class="text-decoration-none">
                                             <div class="d-flex flex-stack accordion-item-inner rounded p-2">
                                                 <div class="d-flex align-items-center me-3 py-3">
-                                                    <img src="http://127.0.0.1:8000/assets/media/svg/brand-logos/laravel-2.svg"
+                                                    <img src="{{ photo_or_default($technology->image) }}"
                                                         class="me-4 w-30px" alt="">
                                                     <div class="flex-grow-1">
                                                         <span
                                                             class="text-gray-800 text-hover-primary fs-5 fw-bold lh-0">{{ $technology->name }}</span>
-                                                        <span class="text-gray-500 fw-semibold d-block fs-6 mt-4">PHP
-                                                            Framework</span>
+                                                        <span
+                                                            class="text-gray-500 d-block fw-semibold fs-7 mt-4">{{ $technology->description }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex align-items-center w-100 mw-125px">
+                                                <div class="d-flex align-items-center w-100 mw-80px">
                                                     <div class="progress h-6px w-100 me-2 bg-light-success">
                                                         <div class="progress-bar bg-success" role="progressbar"
                                                             style="width: 65%" aria-valuenow="65" aria-valuemin="0"

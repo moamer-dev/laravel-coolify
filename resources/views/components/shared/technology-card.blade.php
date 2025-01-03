@@ -9,18 +9,16 @@
             <div class="d-flex">
                 <!-- Img -->
                 <img src="{{ asset('storage') }}/{{ $item->image }}" alt="bootstrap" class="avatar-md invert">
-                <div class="me-3">
+                <div class="ms-3">
                     <h4 class="mb-1">
                         <span class="h4 fw-semibold">{{ $item->name }}</span>
                     </h4>
                     <p class="mb-0 fs-6">
                         <span class="me-2">
-                            <span class="fw-medium">12</span>
-                            Courses
+                            <span class="fw-medium">12 دورة</span>
                         </span>
                         <span>
-                            <span class="fw-medium">34</span>
-                            Hours
+                            <span class="fw-medium">7 مشروع </span>
                         </span>
                     </p>
                 </div>

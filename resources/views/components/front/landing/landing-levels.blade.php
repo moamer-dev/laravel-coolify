@@ -16,21 +16,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
         border-bottom: 1px solid #e9ecef;
     }
 
     .card-img {
-        max-width: 50%;
-        /* Ensures the image is responsive */
-
-        /* Limits the image height */
+        width: 100%;
         object-fit: contain;
-        /* Ensures the image maintains aspect ratio */
     }
 </style>
-<section id="career-path" class="py-5 bg-light text-center">
-    <div class="container">
+<section id="career-path" class="py-5 bg-light">
+    <div class="container text-center">
         <h2 class="mb-7 fw-bold display-6">رحلتك المهنية مع زيتونة</h2>
         <p class="mb-7 fs-5">نساعدك في الانتقال بسلاسة من المستوى المبتدئ إلى المستوى الاحترافي بخطوات واضحة وموجهة.</p>
 
@@ -42,8 +37,8 @@
                                 class="fas fa-user-graduate fa-3x fs-2 text-white px-3"></i>
                         </div>
                     </div>
-                    <div class="card-img-wrapper d-flex justify-content-center align-items-center py-4">
-                        <img src="{{ asset('assets') }}/media/front/1.png" class="card-img mw-50" alt="Fresh Level">
+                    <div class="card-img-wrapper d-flex justify-content-center align-items-center ">
+                        <img src="{{ asset('assets') }}/media/front/4.png" class="card-img rounded-0" alt="Fresh Level">
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-3 fw-semibold">ابدأ رحلتك
@@ -61,8 +56,9 @@
                         <div class="ribbon-label bg-primary fs-4 fw-semibold">Junior <i
                                 class="fas fa-seedling fa-3x text-white px-3 fs-2"></i></div>
                     </div>
-                    <div class="card-img-wrapper d-flex justify-content-center align-items-center py-4">
-                        <img src="{{ asset('assets') }}/media/front/2.png" class="card-img  mw-50" alt="Fresh Level">
+                    <div class="card-img-wrapper d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('assets') }}/media/front/5.png" class="card-img  rounded-0"
+                            alt="Fresh Level">
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-3 fw-semibold">تعلم بناء المشاريع العملية
@@ -80,8 +76,9 @@
                         <div class="ribbon-label bg-primary fs-4 fw-semibold">Mid-Senior <i
                                 class="fas fa-briefcase fa-3x text-white px-3 fs-2"></i></div>
                     </div>
-                    <div class="card-img-wrapper d-flex justify-content-center align-items-center py-4">
-                        <img src="{{ asset('assets') }}/media/front/3.png" class="card-img  mw-50" alt="Fresh Level">
+                    <div class="card-img-wrapper d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('assets') }}/media/front/6.png" class="card-img  rounded-0"
+                            alt="Fresh Level">
                     </div>
                     <div class="card-body">
                         <p class="card-text fs-3 fw-semibold">تصميم أنظمة متقدمة

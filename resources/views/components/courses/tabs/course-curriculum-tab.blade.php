@@ -6,20 +6,8 @@
 </style>
 <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
     @if ($course->sections->isEmpty())
-        <div class="">
-            <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-5 ">
-                <i class="ki-duotone ki-notification-bing fs-2hx text-primary me-4 mb-5 mb-sm-0"><span
-                        class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                <div class="d-flex flex-column pe-0 pe-sm-10">
-                    <h5 class="fw-semibold">لم يتم إضافة أقسام لهذه الدورة بعد.
-                    </h5>
-                    <a href="#"
-                        class="d-flex align-items-center text-primary opacity-75-hover fs-6 fw-semibold">بناء منهج
-                        الدورة
-                        <i class="ki-outline ki-exit-right-corner fs-4 ms-1"></i></a>
-                </div>
-            </div>
-        </div>
+        <span class="fw-semibold">لم يتم إضافة أقسام لهذه الدورة بعد.
+        </span>
     @endif
     <div class="accordion" id="kt_accordion_1">
         @foreach ($course->sections->sortBy('order') as $key => $section)

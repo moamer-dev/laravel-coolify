@@ -4,6 +4,8 @@
         $user->technologies = $user->getTechnologyStacks();
         Debugbar::info($user);
     }
+    use App\Models\LearningPath;
+    $learningPaths = LearningPath::where('is_active', true)->get();
 @endphp
 <div id="kt_app_header" class="app-header">
     <div class="app-header-primary">

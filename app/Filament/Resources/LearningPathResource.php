@@ -53,7 +53,9 @@ class LearningPathResource extends Resource
                             Forms\Components\Textarea::make('description')
                                 ->columnSpanFull(),
                             Forms\Components\FileUpload::make('image')
-                                ->image(),
+                                ->image()
+                                ->directory('featuredImages')
+                                ->fetchFileInformation(false),
                         ])->columns(2),
                     Section_Model::make('Options')
                         ->schema([
