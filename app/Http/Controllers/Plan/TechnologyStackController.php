@@ -8,11 +8,11 @@ use App\Http\Controllers\Controller;
 
 class TechnologyStackController extends Controller
 {
-    public function technology_view($slug)
-    {
-        $technology = TechnologyStack::where('slug', $slug)
-            ->with(['courses.projects', 'quizzes', 'series'])
-            ->first();
-        return view('front.front-technology-view', compact('technology'));
-    }
+    // public function technology_view($slug)
+    // {
+    //     $technology = TechnologyStack::where('slug', $slug)
+    //         ->with(['courses.projects', 'quizzes', 'series'])
+    //         ->first();
+    //     return view('front.front-technology-view', compact('technology'));
+    // }
 }

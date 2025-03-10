@@ -55,25 +55,25 @@ class LearningPathController extends Controller
         ]);
     }
 
-    public function front_view($slug)
-    {
-        $path = LearningPath::where('slug', $slug)->first()->load('learningStacks.technologyStacks');
-        //dd($path);
-        return view('front.front-path-view', compact('path'));
-    }
+    // public function front_view($slug)
+    // {
+    //     $path = LearningPath::where('slug', $slug)->first()->load('learningStacks.technologyStacks');
+    //     //dd($path);
+    //     return view('front.front-path-view', compact('path'));
+    // }
 
     public function todo_path()
     {
         $userId = Auth::user()->id;
         $user = User::with('learningPaths.learningStacks.modules.tasks.subtasks')->find($userId);
         //dd($user);
-        return view('dashboard.learning-path.todo', compact('user'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+        return view('dashboard.learning-path.todo', compact('user'));
     }
 
     public function task_view($id)
     {
         $task = Task::find($id);
-        return view('dashboard.learning-path.task-view', compact('task'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+        return view('dashboard.learning-path.task-view', compact('task'));
     }
 
     public function subtask_view($id, $subtask = null)
@@ -81,6 +81,14 @@ class LearningPathController extends Controller
         $task = Task::find($id);
         //$subtask_progress_status = Auth::user()->progress()->where('subtask_id', $subtask)->first()->status;
         $subtask_to_view = Subtask::with('comments')->find($subtask);
-        return view('dashboard.learning-path.task-view', compact('task', 'subtask_to_view'), ['title' => 'خطة المسار', 'subtitle' => 'يمكنك مشاهدة مساراتك التعليمية من هنا']);
+        return view('dashboard.learning-path.task-view', compact('task', 'subtask_to_view'));
+    }
+
+    public function user_technologies()
+    {
+        $userId = Auth::user()->id;
+        $user = User::find($userId)->load('profile');
+        $user_technologies = $user->getTechnologyStacks();
+        return view('dashboard.learning-center.user-technologies', compact('user_technologies'));
     }
 }

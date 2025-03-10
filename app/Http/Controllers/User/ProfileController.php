@@ -14,25 +14,39 @@ use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
+    private $profile_header_items;
+    private $user;
+
+    public function __construct(Request $request)
+    {
+        $this->profile_header_items = get_data('profile_header_items');
+        $this->user = $request->user();
+    }
+
     public function overview(Request $request): View
     {
-        $user = $request->user()->load('profile');
-        $user->learningStacks = $user->getLearningStacks();
-        $notifications = $user->notifications;
-        $unreadNotifications = $user->unreadNotifications;
-        return view('dashboard.profile.profile-index', compact('user'), ['title' => 'بياناتي', 'subtitle' =>  'المعلومات الشخصية']);
+        $user = $this->user->load('profile') ?? null;
+        if ($user) {
+            $user->learningStacks = $user->getLearningStacks();
+            $notifications = $user->notifications;
+            $unreadNotifications = $user->unreadNotifications;
+        }
+        $profile_header_items = $this->profile_header_items;
+        return view('dashboard.profile.profile-index', compact('user', 'profile_header_items'));
     }
 
     public function settings(Request $request): View
     {
-        $user = $request->user()->load('profile');
-        return view('dashboard.profile.settings', compact('user'), ['title' => 'إعدادات الحساب', 'subtitle' =>  'يمكنك تحديث معلوماتك الشخصية من هنا']);
+        $user = $this->user->load('profile') ?? null;
+        $profile_header_items = $this->profile_header_items;
+        return view('dashboard.profile.settings', compact('user', 'profile_header_items'));
     }
 
     public function billing(Request $request): View
     {
-        $user = $request->user()->load('profile');
-        return view('dashboard.profile.billing', compact('user'), ['title' => 'إعدادات الدفع', 'subtitle' =>  'يمكنك تحديث بيانات الدفع من هنا']);
+        $user = $this->user->load('profile') ?? null;
+        $profile_header_items = $this->profile_header_items;
+        return view('dashboard.profile.billing', compact('user', 'profile_header_items'));
     }
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
@@ -65,7 +79,7 @@ class ProfileController extends Controller
     public function update_path(PathUpdateRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        $user = $request->user();
+        $user = $this->user;
         if (empty($validated['learning_paths'])) {
             $user->learningPaths()->detach();
         } else {
@@ -78,7 +92,7 @@ class ProfileController extends Controller
     public function update_level_id(Request $request): RedirectResponse
     {
         //dd($request->all());
-        $user = $request->user();
+        $user = $this->user;
         $user->profile->update([
             'level_id' => $request->level_id,
         ]);
@@ -106,21 +120,57 @@ class ProfileController extends Controller
 
     public function learningCenter(Request $request): View
     {
-        $user = $request->user()->load('profile', 'learningPaths');
-        $pathCourses = $user->pathCourses();
-        $pathQuizzes = $user->pathQuizzes();
-        $pathProjects = $user->pathProjects()->load('courses');
-        $pathSeries = $user->pathSeries();
-        $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count() + $pathSeries->count();
-        $assement_quiz = $pathQuizzes->where('type', 'assessment')->first();
-        //dd($assement_quiz);
-        return view('dashboard.learning-center.index-learning-center', compact('user', 'pathCourses', 'pathQuizzes', 'pathProjects', 'pathSeries', 'tasksCount', 'assement_quiz'), ['title' => 'مركز التعلم', 'subtitle' =>  'تجد هنا جميع المواد التعليمية التي تم تسجيلك بها']);
+        $user = $this->user->load('profile', 'learningPaths');
+        if ($user) {
+            $pathCourses = $user->pathCourses();
+            $pathQuizzes = $user->pathQuizzes();
+            $pathProjects = $user->pathProjects()->load('courses');
+            $pathSeries = $user->pathSeries();
+            $userTechnologies = $user->getTechnologyStacks()->take(6);
+        }
+        if ($pathCourses->count() > 0) {
+            $tasksCount = $pathCourses->count() + $pathQuizzes->count() + $pathProjects->count() + $pathSeries->count();
+        } else {
+            $tasksCount = 0;
+        }
+        if ($pathQuizzes) {
+            $assement_quiz = $pathQuizzes->where('type', 'assessment')->first();
+        }
+        $statistic_data = [
+            'دورات' => $pathCourses->count(),
+            'إختبارات' => $pathQuizzes->count(),
+            'مشاريع' => $pathProjects->count(),
+            'سلاسل تعليمية' => $pathSeries->count(),
+        ];
+        return view('dashboard.learning-center.index-learning-center', compact('user', 'statistic_data', 'assement_quiz', 'tasksCount', 'userTechnologies'));
     }
 
     public function learning_path(Request $request): View
     {
-        $learningPaths = LearningPath::all();
+        $learningPaths = LearningPath::where('is_active', true)->get();
         $user = $request->user()->load('learningPaths.learningStacks.technologyStacks');
-        return view('dashboard.profile.learning-path', compact('user', 'learningPaths'), ['title' => 'مسارات التعلم', 'subtitle' =>  'يمكنك إختيار مسار تعليمي لتبدأ فيه']);
+        $profile_header_items = $this->profile_header_items;
+        return view('dashboard.profile.learning-path', compact('user', 'learningPaths', 'profile_header_items'));
+    }
+
+    public function dashboard(Request $request): View
+    {
+        $dashboard_options = get_data('dashboard_options');
+        $user = $this->user;
+        if ($user) {
+            $data = [
+                'level' => $user->profile->level->name,
+                'courses' => $user->pathCourses()->count(),
+                'quizzes' => $user->pathQuizzes()->count(),
+                'projects' => $user->pathProjects()->count(),
+            ];
+        }
+        return view('dashboard.index-dashboard', compact('dashboard_options', 'data'));
+    }
+
+    public function progress(): View
+    {
+        $user = $this->user;
+        return view('dashboard.index-progress');
     }
 }
