@@ -161,6 +161,6 @@ class User extends Authenticatable implements MustVerifyEmail
                     $pathQuery->where('users.id', $this->id);
                 });
             });
-        })->get();
+        })->where('is_active', true)->get();
     }
 }
