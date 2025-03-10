@@ -6,37 +6,30 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Learn\CourseController;
 use App\Http\Controllers\Learn\SeriesController;
 use App\Http\Controllers\Plan\LearningPathController;
-use App\Http\Controllers\Plan\TechnologyStackController;
 use App\Http\Controllers\Quiz\QuizAttemptController;
-use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Front\FrontController;
 use App\Livewire\Quizzes\Quiz;
-use App\Models\Post;
-use App\Models\LearningPath;
 
-Route::get('/new', function () {
-    return view('/new');
-});
 
-Route::get('/', function () {
-    $paths = LearningPath::with(['learningStacks.technologyStacks'])->where('is_active', 1)->get();
-    $posts = Post::where('status', 'published')->orderBy('created_at', 'desc')->limit(4)->get();
-    return view('/front/landing', compact('paths', 'posts'));
-})->name('home');
-Route::get('/blog/{slug}', [PostController::class, 'post_view'])->name('post-view');
-Route::get('/path/{slug}', [LearningPathController::class, 'front_view'])->name('path-front-view');
-Route::get('/path/technology/{slug}', [TechnologyStackController::class, 'technology_view'])->name('technology-view');
 Route::get('/learn', function () {
     return view('dashboard.learn.index', ['title' => 'المصاد التعليمية', 'subtitle' => 'دورات - مشاريع - سلسلات - اختبارات']);
 })->name('learn');
-Route::get('user/dashboard', function () {
-    return view('dashboard.index-dashboard', ['title' => 'لوحة التحكم', 'subtitle' => 'يمكنك إدارة كل شئ خاص بحسابك ومسارات تعلمك من هنا']);
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::controller(FrontController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/blog/{slug}', 'post_view')->name('post-view');
+    Route::get('/path/{slug}', 'front_view')->name('path-front-view');
+    Route::get('/path/technology/{slug}', 'technology_view')->name('technology-view');
+});
 
 Route::middleware('auth')->group(function () {
     // Profile-related routes
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile/overview', 'overview')->name('profile.overview');
         Route::get('/user/learning-center/overview', 'learningCenter')->name('profile.learningCenter');
+        Route::get('/user/dashboard', 'dashboard')->name('dashboard');
+        Route::get('/user/progress', 'progress')->name('user.progress');
         Route::get('/profile/settings', 'settings')->name('profile.settings');
         Route::get('/profile/billing', 'billing')->name('profile.billing');
         Route::get('/profile/learning-path', 'learning_path')->name('profile.learning-path');
@@ -72,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/paths', 'view')->name('user.path-view');
         Route::get('/user/paths/visualize', 'visualize')->name('user.path-visualize');
         Route::get('/user/learning-center/plan', 'todo_path')->name('user.path-todo');
+        Route::get('/user/learning-center/technologies', 'user_technologies')->name('user.teschnologies');
         Route::get('/user/learning-center/plan/task/{id}/{subtask?}', 'subtask_view')->name('user.subtask-view');
     });
 });
