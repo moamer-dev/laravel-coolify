@@ -4,6 +4,7 @@ namespace App\Livewire\User\LearningPaths;
 
 use Livewire\Component;
 use App\Models\Module;
+use Illuminate\Http\Request;
 
 class ModuleTasks extends Component
 {
@@ -11,10 +12,10 @@ class ModuleTasks extends Component
     public $userProgress;
     public $color;
 
-    public function mount(Module $module)
+    public function mount(Module $module, Request $request)
     {
         $this->module = $module;
-        $this->userProgress = auth()->user()->progress;
+        $this->userProgress = $request->user()->progress;
         $this->getRandomColor();
     }
 

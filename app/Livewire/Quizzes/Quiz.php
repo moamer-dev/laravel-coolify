@@ -163,9 +163,6 @@ class Quiz extends Component
 
     public function render()
     {
-        return view('livewire.quizzes.quiz', [
-            'title' => $this->quiz->title,
-            'subtitle' => '',
-        ]);
+        return view('livewire.quizzes.quiz');
     }
 }
