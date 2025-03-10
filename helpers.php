@@ -137,6 +137,12 @@ function feature_image_or_default($photo = null)
     }
 }
 
+function get_data($options = null)
+{
+    $data = include resource_path('data/data.php');
+    return  $data[$options];
+}
+
 function status_name($status = null)
 {
     switch ($status) {
