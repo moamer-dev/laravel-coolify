@@ -23,6 +23,7 @@ use App\Models\Course;
 use App\Models\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Filament\Resources\QuizResource\RelationManagers\QuestionRelationManager;
@@ -59,9 +60,10 @@ class QuizResource extends Resource
                                 ->label('Slug')
                                 ->required()
                                 ->readOnly(),
-                            Textarea::make('description')
+                            RichEditor::make('description')
+                                ->required()
                                 ->label('Description')
-                                ->placeholder('Description'),
+                                ->columnSpanFull(),
                             TextInput::make('retake_attempts')
                                 ->label('Retake Attempts')
                                 ->placeholder('Retake Attempts')
