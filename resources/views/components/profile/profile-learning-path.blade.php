@@ -3,19 +3,19 @@
 @endphp --}}
 <div class="card d-flex flex-row-fluid flex-center">
     <form method="post" action="{{ route('profile.update-path') }}"
-        class="card-body py-20 w-100 px-9 fv-plugins-bootstrap5 fv-plugins-framework">
+        class="card-body py-10 w-100 px-9 fv-plugins-bootstrap5 fv-plugins-framework">
         @csrf
         @method('patch')
         <div class="current" data-kt-stepper-element="content">
             <div class="w-100">
                 <div class="pb-10 pb-lg-15">
-                    <h2 class="fw-bold d-flex align-items-center text-gray-900">إختيار مسارات التعلم الخاصة بك</h2>
+                    <h2 class="fw-bold d-flex align-items-center text-gray-900 fs-3">إختيار مسارات التعلم الخاصة بك</h2>
                     <div class="text-muted fw-semibold fs-6">يمكنك إختيار اكثر من مسار تعلم للبدء</div>
                 </div>
                 <div class="fv-row fv-plugins-icon-container">
                     <div class="row">
                         @foreach ($learningPaths as $learningPath)
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-12 col-md-6 col-lg-3">
                                 <input type="checkbox" class="btn-check" name="learning_paths[]"
                                     value="{{ $learningPath->id }}" id="learning_path_{{ $learningPath->id }}"
                                     {{ in_array($learningPath->id, $user->learningPaths->pluck('id')->toArray()) ? 'checked' : '' }}>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+            <button type="submit" class="btn btn-primary btn-sm">حفظ البيانات</button>
         </div>
     </form>
 </div>

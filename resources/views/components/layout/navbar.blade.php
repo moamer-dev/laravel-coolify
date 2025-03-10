@@ -46,6 +46,15 @@
                             <span class="d-none d-lg-inline">Share</span>
                         </a>
                     </div>
+                    <div class="app-navbar-item ms-1">
+                        <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"
+                            data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                            data-kt-menu-placement="bottom-end">
+                            <i class="ki-outline ki-night-day theme-light-show fs-2"></i>
+                            <i class="ki-outline ki-moon theme-dark-show fs-2"></i>
+                        </div>
+                        @include('components.navbar.nav-theme')
+                    </div>
                     @auth
                         <div class="app-navbar-item ms-1">
                             <div class="btn btn-sm btn-icon btn-custom h-35px w-35px"

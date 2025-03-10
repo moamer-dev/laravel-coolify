@@ -31,7 +31,13 @@
                     <!-- Card -->
                     @include('components.courses.course-objectives-card')
                     <!-- Card -->
-                    @include('components.shared.need-help-cta')
+                    @include('components.shared.need-help-cta', [
+                        'title' => 'تعرف علي طريقة التعلم في زيتونة',
+                        'btn_text' => 'طريقة التعلم',
+                        'btn_href' => route('user.path-todo'),
+                        'btn_secondary_text' => 'شاهد الفيديو',
+                        'btn_secondary_href' => '#',
+                    ])
                 </div>
             </div>
             <!-- Related Courses -->

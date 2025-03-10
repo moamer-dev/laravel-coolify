@@ -2,12 +2,12 @@
     <!--begin::Header-->
     <div class="card-header border-0 pt-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-gray-900">Active Lessons</span>
+            <span class="card-label fw-bold text-gray-900">دورات متاحة</span>
             <span class="text-muted mt-1 fw-semibold fs-7">Avg. 72% completed lessons</span>
         </h3>
         <!--begin::Toolbar-->
         <div class="card-toolbar">
-            <a href="#" class="btn btn-sm btn-light">All Lessons</a>
+            <a href="#" class="btn btn-sm btn-light">جميع الدورات</a>
         </div>
         <!--end::Toolbar-->
     </div>

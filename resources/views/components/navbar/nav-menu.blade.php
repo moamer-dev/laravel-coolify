@@ -321,7 +321,8 @@
                                                 @foreach ($learningStack->technologyStacks->where('is_active', true) as $technologyStack)
                                                     <div class="menu-item p-0 m-0">
                                                         <!--begin:Menu link-->
-                                                        <a href="pages/user-profile/overview.html" class="menu-link">
+                                                        <a href="{{ route('technology-view', $technologyStack->slug) }}"
+                                                            class="menu-link">
                                                             <span
                                                                 class="menu-title">{{ $technologyStack->name }}</span>
                                                         </a>

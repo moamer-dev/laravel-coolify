@@ -8,7 +8,7 @@
         --bs-nav-link-color: none !important;
     }
 </style>
-<section class="py-10" id="paths" style="direction: ltr">
+<section class="py-10" id="technologies" style="direction: ltr">
     <div class="container">
         <div class="text-center pb-10">
             <h2 class="fw-bold display-6">التكنولوجيات المتاحة</h2>

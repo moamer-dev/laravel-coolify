@@ -57,6 +57,11 @@
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             @include('components.layout.navbar')
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                @php
+                    $sidebar_items = get_data('sidebar_items');
+                    $sidebar_learing_center_items = get_data('sidebar_learing_center_items');
+                    $sidebar_account_items = get_data('sidebar_account_items');
+                @endphp
                 @include('components.layout.sidebar')
                 <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
                     <div class="d-flex flex-column flex-column-fluid">

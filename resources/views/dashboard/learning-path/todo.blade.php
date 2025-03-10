@@ -40,15 +40,8 @@
                     role="tabpanel" aria-labelledby="tab-{{ $learningPath->id }}">
                     <div class="row">
                         @foreach ($learningPath->learningStacks as $stack)
-                            {{-- @if ($stack->modules->isEmpty())
-                                @include('components.shared.no-content-notification', [
-                                    'message' => 'لم يتم إضافة مسارات تعليمية لك بعد.',
-                                    'subMessage' => 'يمكنك استعراض جميع المسارات التعليمية المتاحة لك.',
-                                    'link' => '#',
-                                ])
-                            @endif --}}
-                            @foreach ($stack->modules as $module)
-                                <div class="col-12 col-md-6 col-lg-6 col-xl-3">
+                            @foreach ($stack->modules->sortByDesc('order') as $module)
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     @livewire('user.learning-paths.module-tasks', ['module' => $module], key($module->id))
                                 </div>
                             @endforeach

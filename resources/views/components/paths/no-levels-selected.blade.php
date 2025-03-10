@@ -3,9 +3,10 @@
         <div class="card h-md-100">
             <div class="card-body d-flex flex-column flex-center">
                 <div class="mb-2 w-100">
-                    <h1 class="fw-semibold text-gray-800 text-center lh-lg mt-4">لم تقم بتحديد مستواك بعد
+                    <h1 class="fw-semibold text-gray-800 text-center lh-lg mt-4  fs-3">لم تقم بتحديد مستواك بعد
                         <br>
-                        <span class="fw-bolder">لتحديد مستواك يمكنك إجراء إختبار تقييمي أو إذا كنت تفضل يمكنك إختيار
+                        <span class="fw-bolder fs-4">لتحديد مستواك يمكنك إجراء إختبار تقييمي أو إذا كنت تفضل يمكنك
+                            إختيار
                             المستوى بدون تحديد إختبار</span>
                     </h1>
                     <div class="py-10 text-center">
@@ -18,12 +19,12 @@
                 @if ($assement_quiz)
                     <div class="text-center mb-1">
                         <a href="{{ route('quiz.index', $assement_quiz->slug) }}"
-                            class="btn btn-md btn-primary me-2">إجراء إختبار تقييمي</a>
+                            class="btn btn-sm btn-primary me-2">إجراء إختبار تقييمي</a>
                     </div>
                 @endif
                 <!-- Separate Form Div -->
                 <div class="text-center mt-4">
-                    <h3 class="fw-bold text-gray-800 mt-3 mb-5">أو إختيار المستوى بدون إختبار</h3>
+                    <h3 class="fw-bold text-gray-800 mt-3 mb-5 fs-4">أو إختيار المستوى بدون إختبار</h3>
                     <form action="{{ route('profile.update-level-id') }}" method="post">
                         @csrf
                         @method('patch')
@@ -38,8 +39,8 @@
                             <option value="3" {{ optional($user->profile)->level_id == 3 ? 'selected' : '' }}>متقدم
                             </option>
                         </select>
-                        <button type="submit" class="btn btn-md btn-light mt-3">إختيار المستوى</button>
-                        <a class="btn btn-md btn-light mt-3" href="account/settings.html">مركز المساعدة</a>
+                        <button type="submit" class="btn btn-sm btn-light mt-3">إختيار المستوى</button>
+                        <a class="btn btn-sm btn-light mt-3" href="account/settings.html">مركز المساعدة</a>
                     </form>
                 </div>
             </div>

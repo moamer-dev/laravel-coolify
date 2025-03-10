@@ -13,22 +13,15 @@
                 <i
                     class="ki-solid ki-setting-4 fs-5 text-gray-500 position-absolute top-50 end-0 translate-middle-y fw-bold me-3"></i>
             </div>
-            <div class="m-0">
-                <a href="{{ route('dashboard') }}"
-                    class="btn btn-sm d-flex flex-stack {{ request()->is('user/dashboard*') ? 'border border-300 bg-gray-100i' : '' }} btn-color-gray-700 btn-active-color-gray-900 px-3 mb-2">
-                    <span class="d-flex align-item-center">
-                        <i class="ki-outline ki-abstract-41 fs-4 me-2 text-primary"></i>لوحة التحكم</span>
-                </a>
-                <a href="{{ route('profile.learningCenter') }}"
-                    class="btn btn-sm d-flex flex-stack {{ request()->is('user/learning-center/overview*') ? 'border border-300 bg-gray-100i' : '' }} btn-color-gray-700 btn-active-color-gray-900 px-3 mb-2">
-                    <span class="d-flex align-item-center">
-                        <i class="ki-outline ki-calendar fs-4 me-2 text-primary"></i>مركز التعلم</span>
-                </a>
-                <a href="{{ route('user.notifications') }}"
-                    class="btn btn-sm d-flex flex-stack {{ request()->is('user/notifications*') ? 'border border-300 bg-gray-100i' : '' }} btn-color-gray-700 btn-active-color-gray-900 px-3 mb-2">
-                    <span class="d-flex align-item-center">
-                        <i class="ki-outline ki-calendar fs-4 me-2 text-primary"></i>الإشعارات</span>
-                </a>
+            <div class="m-0 fs-7">
+                @foreach ($sidebar_items as $item)
+                    <a href="{{ route($item['route']) }}"
+                        class="btn btn-sm d-flex flex-stack {{ request()->is($item['path']) ? 'border border-300 bg-gray-100i' : '' }} btn-color-gray-700 btn-active-color-gray-900 px-3 mb-2">
+                        <span class="d-flex align-item-center">
+                            <i
+                                class="ki-outline {{ $item['icon'] }} fs-4 me-2 text-{{ $item['color'] }}"></i>{{ $item['title'] }}</span>
+                    </a>
+                @endforeach
             </div>
         </div>
         <div class="menu-sidebar menu menu-fit menu-column menu-rounded menu-title-gray-700 menu-icon-gray-700 menu-arrow-gray-700 fw-semibold fs-6 align-items-stretch flex-grow-1"
@@ -43,83 +36,19 @@
                     <span class="menu-title">مركز التعلم</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-state-gray-900 menu-fit open">
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.learningCenter') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-element-11 fs-4 text-gray-700"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('user/learning-center/overview*') ? 'text-primary' : '' }}">مركز
-                                التعلم</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.learning-path') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-picture fs-4 text-info"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/learning-path*') ? 'text-primary' : '' }}">إختيارات
-                                مسارات التعلم</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('user.path-todo') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-subtitle fs-4 text-danger"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('user/learning-center/plan*') ? 'text-primary' : '' }}">خطة
-                                التعلم</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.billing') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-calendar fs-4 text-success"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/billing*') ? 'text-primary' : '' }}">الإحصائيات</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.learning-path') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-picture fs-4 text-info"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/learning-path*') ? 'text-primary' : '' }}">التكنولوجيات</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('user.quiz-attempts') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-element-2 fs-4 text-warning"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/quiz-attempts*') ? 'text-primary' : '' }}">محاولات
-                                الإختبارات</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
+                <div class="menu-sub menu-sub-accordion menu-state-gray-900 menu-fit open fs-7">
+                    @foreach ($sidebar_learing_center_items as $item)
+                        <div class="menu-item menu-accordion menu-fit">
+                            <a href="{{ route($item['route']) }}" class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline {{ $item['icon'] }} fs-4 text-{{ $item['color'] }}"></i>
+                                </span>
+                                <span
+                                    class="menu-title {{ request()->is($item['path']) ? 'text-primary' : '' }}">{{ $item['title'] }}
+                                </span>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="menu-item py-1">
@@ -129,49 +58,26 @@
                 </div>
                 <!--end:Menu content-->
             </div>
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion show">
                 <span class="menu-link">
                     <span class="menu-title">حسابي</span>
                     <span class="menu-arrow"></span>
                 </span>
-                <div class="menu-sub menu-sub-accordion menu-state-gray-900 menu-fit open">
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.overview') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-element-11 fs-4 text-gray-700"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/overview*') ? 'text-primary' : '' }}">بياناتي</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.settings') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-subtitle fs-4 text-danger"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/settings*') ? 'text-primary' : '' }}">الإعدادات</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="menu-item menu-accordion menu-fit">
-                        <a href="{{ route('profile.billing') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-outline ki-calendar fs-4 text-success"></i>
-                            </span>
-                            <span
-                                class="menu-title {{ request()->is('profile/billing*') ? 'text-primary' : '' }}">إعدادات
-                                الدفع</span>
-                            <span class="menu-badge">
-                                <i class="btn btn-sm btn-icon btn-action"></i>
-                            </span>
-                        </a>
-                    </div>
+                <div class="menu-sub menu-sub-accordion menu-state-gray-900 menu-fit open fs-7">
+                    @foreach ($sidebar_account_items as $item)
+                        <div class="menu-item menu-accordion menu-fit">
+                            <a href="{{ route($item['route']) }}" class="menu-link">
+                                <span class="menu-icon">
+                                    <i class="ki-outline {{ $item['icon'] }} fs-4 text-{{ $item['color'] }}"></i>
+                                </span>
+                                <span
+                                    class="menu-title {{ request()->is($item['path']) ? 'text-primary' : '' }}">{{ $item['title'] }}</span>
+                                <span class="menu-badge">
+                                    <i class="btn btn-sm btn-icon btn-action"></i>
+                                </span>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

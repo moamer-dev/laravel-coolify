@@ -1,29 +1,19 @@
 <section class="pt-5 pb-5">
-    <div class="row g-5 g-xl-10">
-        <!--begin::Col-->
-        <div class="col-xl-4">
-            <!--begin::Engage widget 1-->
-            <div class="card h-md-100">
-                <!--begin::Body-->
+    <div class="row g-5 g-xxl-10">
+        <div class="col-xxl-4 mb-xxl-10">
+            <div class="card">
                 <div class="card-body d-flex flex-column flex-center">
-                    <!--begin::Heading-->
                     <div class="mb-2 w-100">
                         @if (!$isSubmitted && $isStarted)
                             <div class="d-flex align-items-center">
-                                <!-- Controls Section -->
                                 <div class="d-flex align-items-center mx-3" style="flex: 5; direction: ltr">
-                                    <!-- Previous Button -->
                                     <button wire:click="next" class="btn btn-outline-primary btn-sm"
                                         style="direction: ltr">
                                         <i class="bi bi-arrow-left"></i>
                                     </button>
-
-                                    <!-- Progress Text -->
                                     <span class="fw-semibold text-gray-800 mx-2">
                                         {{ $currentStep + 1 }} / {{ count($quiz->questions) }}
                                     </span>
-
-                                    <!-- Next Button -->
                                     <button wire:click="previous" class="btn btn-outline-primary btn-sm"
                                         style="direction: ltr">
                                         <i class="bi bi-arrow-right"></i>
@@ -39,43 +29,25 @@
                                 </div>
                             </div>
                         @endif
-
-
-                        <!-- Title -->
-                        <h1 class="fw-semibold text-gray-800 text-center lh-lg mt-4">بيانات الإختبار
-                            <br>التفاصيل
-                        </h1>
-
-                        <!-- Illustration -->
                         <div class="py-10 text-center">
+                            <div class="text-gray-800 mb-10 text-start">{!! $quiz->description !!}</div>
                             <img src="assets/media/svg/illustrations/easy/2.svg" class="theme-light-show w-200px"
                                 alt="">
                             <img src="assets/media/svg/illustrations/easy/2-dark.svg" class="theme-dark-show w-200px"
                                 alt="">
                         </div>
                     </div>
-                    <!--end::Heading-->
-
-                    <!-- Links -->
                     <div class="text-center mb-1">
                         <a href="{{ route('user.quiz-attempts') }}" class="btn btn-sm btn-primary me-2">محاولات
                             إختباراتي</a>
                         <a class="btn btn-sm btn-light" href="account/settings.html">مركز المساعدة</a>
                     </div>
-                    <!--end::Links-->
                 </div>
-                <!--end::Body-->
             </div>
-
-
-            <!--end::Engage widget 1-->
         </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-8">
-            <!--begin::Table Widget 4-->
+        <div class="col-xxl-8 mb-5 mb-xl-10">
             @if (!$isSubmitted && !$isStarted)
-                <div class="card mb-5 mb-xl-8 h-md-100">
+                <div class="card mb-5 mb-xl-8">
                     <div class="card-body pb-0">
                         <div class="d-flex align-items-center mb-5">
                             <div class="d-flex align-items-center flex-grow-1">
@@ -93,11 +65,9 @@
                         <div class="mb-5">
                             <div class="bgi-no-repeat bgi-size-cover rounded min-h-250px mb-5"
                                 style="background-image:url('assets/media/stock/900x600/20.jpg');"></div>
-                            <h5 class="card-title">قم بقراءة هذة التعليمات قبل البدء في الاأختبار</h5>
-                            <div class="text-gray-800 mb-5">{{ $quiz->description }}</div>
                             <div class="separator mb-4"></div>
                             <div class="d-flex align-items-center mb-5">
-                                <a href="#" wire:click.prevent="startQuiz" class="btn btn-primary mt-4">بدء
+                                <a href="#" wire:click.prevent="startQuiz" class="btn btn-primary btn-sm mt-4">بدء
                                     الإختبار</a>
                             </div>
                         </div>
@@ -162,12 +132,14 @@
 
                                 <div class="mt-4">
                                     @if ($currentStep > 0)
-                                        <button wire:click="previous" class="btn btn-light-primary">السابق</button>
+                                        <button wire:click="previous"
+                                            class="btn btn-sm btn-light-primary">السابق</button>
                                     @endif
                                     @if ($currentStep == count($quiz->questions) - 1)
-                                        <button wire:click="submitQuiz" class="btn btn-primary ms-2">إنهاء</button>
+                                        <button wire:click="submitQuiz"
+                                            class="btn btn-sm btn-primary ms-2">إنهاء</button>
                                     @else
-                                        <button wire:click="next" class="btn btn-light-primary">التالي</button>
+                                        <button wire:click="next" class="btn btn-sm btn-light-primary">التالي</button>
                                     @endif
                                 </div>
                             @endif
@@ -201,7 +173,7 @@
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
                                     <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">إجمالي الأسئلة</h4>
+                                        <h4 class="mb-0 fs-5">إجمالي الأسئلة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span
@@ -214,13 +186,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- col -->
                             <div class="col">
-                                <!-- card -->
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
-                                    <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">الإجابات الصحيحة</h4>
+                                        <h4 class="mb-0 fs-5">الإجابات الصحيحة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span
@@ -234,11 +203,9 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <!-- card -->
                                 <div class="card bg-gray-100 shadow-none mb-3 mb-lg-0">
-                                    <!-- card body -->
                                     <div class="card-body">
-                                        <h4 class="mb-0">الإجابات الخاطئة</h4>
+                                        <h4 class="mb-0 fs-5">الإجابات الخاطئة</h4>
                                         <div class="mt-5 d-flex justify-content-between align-items-center lh-1">
                                             <div>
                                                 <span class="fs-3 text-danger fw-semibold">{{ $worngAnswers }}</span>
@@ -274,20 +241,17 @@
                             @if ($quiz->is_reviewable)
                                 <div class="table-responsive">
                                     <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                                        <!--begin::Table head-->
                                         <thead>
                                             <tr class="border-0">
-                                                <th class="p-0 text-gray-900 fw-bolder fs-5">السؤال</th>
-                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">إجابتك
+                                                <th class="p-0 text-gray-900 fw-bolder fs-6">السؤال</th>
+                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-6">إجابتك
                                                 </th>
-                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-5">الإجابة
+                                                <th class="p-0 min-w-150px text-gray-900 fw-bolder fs-6">الإجابة
                                                     الصحيحة</th>
-                                                <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-5">الحالة
+                                                <th class="p-0 min-w-100px text-gray-900 fw-bolder fs-6">الحالة
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <!--end::Table head-->
-                                        <!--begin::Table body-->
                                         <tbody>
                                             @foreach ($quiz->questions as $question)
                                                 @php
@@ -306,10 +270,9 @@
                                                         <div class="d-flex align-items-center">
                                                             <div class="d-flex justify-content-start flex-column">
                                                                 <span
-                                                                    class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">
+                                                                    class="text-gray-900 text-hover-primary mb-1 fs-6">
                                                                     {!! $question->title !!}</span>
                                                             </div>
-                                                            <!--end::Name-->
                                                         </div>
                                                     </td>
                                                     <td class="">
@@ -339,19 +302,16 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                        <!--end::Table body-->
                                     </table>
                                 </div>
                             @endif
                         </div>
                         <div class="separator mb-4"></div>
-                        <button wire:click="resetQuiz" class="btn btn-primary">إعادة الإختبار</button>
+                        <button wire:click="resetQuiz" class="btn btn-sm btn-primary">إعادة الإختبار</button>
                     </div>
                 </div>
 
             @endif
-            <!--end::Table Widget 4-->
         </div>
-        <!--end::Col-->
     </div>
 </section>
