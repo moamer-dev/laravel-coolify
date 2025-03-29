@@ -15,7 +15,7 @@
     <meta property="og:url" content="https://zaytonaah.com/" />
     <meta property="og:site_name" content="Zaytonaah" />
     <link rel="canonical" href="https://zaytonaah.com/" />
-    <link rel="shortcut icon" href="{{ asset('assets') }}/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="{{ asset('assets') }}/media/logos/icon_light.svg" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
