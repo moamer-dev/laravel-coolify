@@ -296,14 +296,13 @@
             <div class="menu-active-bg px-4 px-lg-0">
                 <div class="d-flex w-100 overflow-auto">
                     <ul class="nav nav-stretch nav-line-tabs fw-bold fs-6 p-0 p-lg-10 flex-nowrap flex-grow-1">
-                        @foreach ($learningPaths as $learningPath)
+                        @foreach ($learningPaths->where('is_active', true) as $learningPath)
                             <li class="nav-item mx-lg-1">
                                 <a class="nav-link py-3 py-lg-6 {{ $loop->first ? 'active text-active-primary' : '' }}"
                                     href="#" data-bs-toggle="tab"
                                     data-bs-target="#kt_app_header_menu_paths_{{ $learningPath->slug }}">{{ $learningPath->title }}</a>
                             </li>
                         @endforeach
-
                     </ul>
                 </div>
                 <div class="tab-content py-4 py-lg-8 px-lg-7">
