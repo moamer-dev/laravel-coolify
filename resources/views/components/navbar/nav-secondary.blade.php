@@ -89,7 +89,7 @@
                             <div class="menu-separator d-block d-lg-none"></div>
                         </div>
                     </div>
-                    <div class="menu-item">
+                    {{-- <div class="menu-item">
                         <a class="menu-link" href="utilities/modals/wizards/create-app.html">
                             <span class="menu-icon">
                                 <i class="ki-outline ki-plus fs-3"></i>
@@ -154,7 +154,7 @@
                             <!--end:Menu item-->
                         </div>
                         <!--end:Menu sub-->
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
             <span class="menu-arrow d-lg-none"></span>
         </span>
     </div>
-    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
+    {{-- <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
         <span class="menu-link">
             <span class="menu-title">التدريب</span>
@@ -285,7 +285,7 @@
             </div>
             <!--end:Dashboards menu-->
         </div>
-    </div>
+    </div> --}}
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion me-0 me-lg-2">
         <span class="menu-link">
@@ -323,8 +323,7 @@
                                                         <!--begin:Menu link-->
                                                         <a href="{{ route('technology-view', $technologyStack->slug) }}"
                                                             class="menu-link">
-                                                            <span
-                                                                class="menu-title">{{ $technologyStack->name }}</span>
+                                                            <span class="menu-title">{{ $technologyStack->name }}</span>
                                                         </a>
                                                         <!--end:Menu link-->
                                                     </div>
@@ -345,7 +344,7 @@
         </div>
     </div>
 
-    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
+    {{-- <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
         <span class="menu-link">
             <span class="menu-title">مركز المساعدة</span>
@@ -354,10 +353,8 @@
         <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
             <div class="menu-item">
                 <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/base/utilities"
-                    target="_blank"
-                    title="Check out over 200 in-house components, plugins and ready for use solutions"
-                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                    data-bs-placement="right">
+                    target="_blank" title="Check out over 200 in-house components, plugins and ready for use solutions"
+                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                     <span class="menu-icon">
                         <i class="ki-outline ki-rocket fs-2"></i>
                     </span>
@@ -385,8 +382,7 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link"
-                    href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog"
+                <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog"
                     target="_blank">
                     <span class="menu-icon">
                         <i class="ki-outline ki-code fs-2"></i>
@@ -395,7 +391,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-end"
         class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
         <span class="menu-link">
