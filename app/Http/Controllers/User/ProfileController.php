@@ -159,7 +159,7 @@ class ProfileController extends Controller
         $user = $this->user;
         if ($user) {
             $data = [
-                'level' => $user->profile->level->name,
+                'level' => $user->profile->level?->name,
                 'courses' => $user->pathCourses()->count(),
                 'quizzes' => $user->pathQuizzes()->count(),
                 'projects' => $user->pathProjects()->count(),
